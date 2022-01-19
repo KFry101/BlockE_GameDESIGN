@@ -26,7 +26,7 @@ print("var1=", var1)
 print("var2=", var2)
 print("var3= %.0f"% var3) 
 print("var4=", var4)
-print("The result of ((3*var1 - 2*(var2)**2 /var3)/var4) is  %6.3F"% Result, end=------)
+print("The result of ((3*var1 - 2*(var2)**2 /var3)/var4) is  %6.3F"% Result,)
 
 print("the \"quotes\" tabs \t backlash \\")
 
