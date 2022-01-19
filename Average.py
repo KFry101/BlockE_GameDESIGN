@@ -11,7 +11,7 @@ os.system('cls')
 test1=89
 test2=78.5
 test3=86
-Flag=False
+
 
 
 # to display things on the screen, we use the function Print
