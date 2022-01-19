@@ -20,7 +20,7 @@ var4=5
 
 Result= (3*var1 - 2*(var2)**2 /var3)/var4
 
-#Printing Format
+#Printing Formats
 
 print("var1=", var1) 
 print("var2=", var2)
