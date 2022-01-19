@@ -16,7 +16,7 @@ var3=2.9
 var4=5
 
 #Calculate equation
-#2**4
+
 
 Result= (3*var1 - 2*(var2)**2 /var3)/var4
 
