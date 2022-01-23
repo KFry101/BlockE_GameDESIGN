@@ -16,6 +16,4 @@ print("###################################\n")
 #Select your choice
 
 print("#     Select your Choice     #")
-input(" A:1-10     B:1-50    C:1-100:  ")
-
-
+userchoice= input(" A:1-10     B:1-50    C:1-100:  ")
