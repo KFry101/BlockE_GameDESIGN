@@ -19,6 +19,7 @@ print("#          3. Guess 1-100         #")
 print("#                                 #")
 print("###################################")
 
+print("Please enter a number from 1 to 3")
 #Select your choice
 check = True
 while check:
@@ -26,7 +27,6 @@ while check:
         choice= int(input("Choice:  "))
         if choice > 0 and choice < 4:
             check = False
-        print("Please enter a number from 1 to 3")
     except ValueError:
         print("Sorry, try again")
 
