@@ -11,7 +11,7 @@ import random
 # choices 1 -50
 # choices 1-100
 print("###################################")
-print("#     Guess a number Menu         #")
+print("#      Guess a number Menu        #")
 print("#                                 #")
 print("#          1. Guess 1-10          #")
 print("#          2. Guess 1-50          #")
