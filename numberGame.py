@@ -10,6 +10,7 @@ import random
 # choices  1-10
 # choices 1 -50
 # choices 1-100
+
 print("###################################")
 print("#      Guess a number Menu        #")
 print("#                                 #")
@@ -21,6 +22,7 @@ print("###################################")
 
 print("Please enter a number from 1 to 3")
 #Select your choice
+
 check = True
 while check:
     try:
