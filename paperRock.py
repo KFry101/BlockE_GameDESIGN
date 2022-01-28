@@ -7,8 +7,8 @@ import os
 os.system('cls')
 
 
-import random
 
+import random
 # user= input("Rock, paper, or scissor ")
 # computer=1
 
@@ -28,8 +28,7 @@ import random
     #if, elif, and else statments and print ()
         #if user is paper, if computer = 1 print("Its a tie") , etc
 
-import os
-os.system('cls')
+comp=random.randint(1,3)
 
 print("                            ")
 print("###################################")
@@ -44,33 +43,59 @@ print("  [3] Scissors                     ")
 print("                               ")
 
 
-comp=random.randint(1,3)
-check = True
-while check:
-    try:
-         choice= int(input("Player choice: "))
-         if choice > 0 and choice < 4:
-            check = False       
-    except ValueError:
-        print("Sorry, try again")
+while True:
+    check = True
+    while check:
+        try:
+            choice= int(input("Player choice: "))
+            if choice > 0 and choice < 4:
+                check = False       
+        except ValueError:
+            print("Sorry, try again")
 
-if choice==1:
-    choiceType= 'Rock'
-elif choice==2:
-    choiceType= 'Paper'
-else:
-    choiceType= 'Scissors'
+    #number to words
+    if choice==1:
+        choiceType= 'Rock'
+    elif choice==2:
+        choiceType= 'Paper'
+    else:
+        choiceType= 'Scissors'
 
-if comp==1:
-    compType= 'Rock'
-elif comp==2:
-    compType= 'Paper'
-else:
-    compType= 'Scissors'
+    if comp==1:
+        compType= 'Rock'
+    elif comp==2:
+        compType= 'Paper'
+    else:
+        compType= 'Scissors'
 
-print("Player's choice is: " + choiceType, "\n" )
-print("Computer's choice is: " + compType, )
+    #display
+    print("Player's choice is: " + choiceType )
+    print("Computer's choice is: " + compType, "\n")
+    print(choiceType+ " V/s " + compType)
 
 
+    #winning system
+    if choice== comp:
+        print ("It's a Tie!")
+    elif choice==1:
+        if comp==2:
+            print ("Computer Wins!")
+        elif comp==3:
+            print ("Player Wins!")
+    elif choice==2:
+        if comp==1:
+            print ("Player Wins!")
+        elif comp==3:
+            print ("Computer Wins!")
+    else:
+        if comp==2:
+            print ("Player Wins!")
+        elif comp==1:
+            print ("Computer Wins!")   
+    print("\n")
 
-
+    print("Do you want to play again? (Y/N)")
+    ans= input()
+    if ans== 'n' or ans=='N':
+        break #this is to break out of while True
+print('\n')
