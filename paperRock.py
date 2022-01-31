@@ -21,6 +21,7 @@ import random
 # elif 'sc' in user:
 #     user= int(3)
 
+
 #Psuedocode
 #add menu 1=paper, 2=rock 3=scissors
 #needs user input() for rock paper or scissors
@@ -29,7 +30,11 @@ import random
     #if, elif, and else statments and print ()
         #if user is paper, if computer = 1 print("Its a tie") , etc
 
+
+
+
 comp=random.randint(1,3)
+choice=""
 def menu():
     print("                            ")
     print("###################################")
@@ -43,8 +48,8 @@ def menu():
     print("  [3] Scissors                     ")
     print("                               ")
 
-menu()
-while True:
+
+    global choice
     check = True
     while check:
         try:
@@ -54,57 +59,58 @@ while True:
         except ValueError:
             print("Sorry, try again")
 
-    #number to words
-    gameOn=True
-    while gameOn:
-        if choice==1:
-            choiceType= 'Rock'
-        elif choice==2:
-            choiceType= 'Paper'
-        else:
-            choiceType= 'Scissors'
+menu()
 
+#number to words
+gameOn=True
+while gameOn:
+    if choice==1:
+        choiceType= 'Rock'
+    elif choice==2:
+        choiceType= 'Paper'
+    else:
+        choiceType= 'Scissors'
+
+    if comp==1:
+        compType= 'Rock'
+    elif comp==2:
+        compType= 'Paper'
+    else:
+        compType= 'Scissors'
+
+    #display
+    print("Player's choice is: " + choiceType,"\n" )
+    print("Computer's choice is: " + compType,)
+    print(choiceType+ " V/s " + compType, )
+
+
+    #winning system
+    if choice== comp:
+        print ("It's a Tie!")
+    elif choice==1:
+        if comp==2:
+            print ("Computer Wins!")
+        elif comp==3:
+            print ("Player Wins!")
+    elif choice==2:
         if comp==1:
-            compType= 'Rock'
-        elif comp==2:
-            compType= 'Paper'
-        else:
-            compType= 'Scissors'
+            print ("Player Wins!")
+        elif comp==3:
+            print ("Computer Wins!")
+    else:
+        if comp==2:
+            print ("Player Wins!")
+        elif comp==1:
+            print ("Computer Wins!") 
 
-        #display
-        print("Player's choice is: " + choiceType,"\n" )
-        print("Computer's choice is: " + compType,)
-        print(choiceType+ " V/s " + compType)
-
-
-        #winning system
-        if choice== comp:
-            print ("It's a Tie!")
-        elif choice==1:
-            if comp==2:
-                print ("Computer Wins!")
-            elif comp==3:
-                print ("Player Wins!")
-        elif choice==2:
-            if comp==1:
-                print ("Player Wins!")
-            elif comp==3:
-                print ("Computer Wins!")
-        else:
-            if comp==2:
-                print ("Player Wins!")
-            elif comp==1:
-                print ("Computer Wins!")  
-        gameOn=False 
-        print("\n")
-
-    #to play again
-
+  #playagain chack
     print("Do you want to play again? (Y/N)")
     ans= input()
     if ans=='y' or ans== 'Y':
         os.system ('cls')
         menu()
-    else:
-        break #this is to break out of while True
-   
+
+    else: 
+        gameOn=False 
+    print("\n")
+
