@@ -3,6 +3,7 @@
 
 #Rock, paper, scissors Game
 
+from asyncio import to_thread
 import os
 os.system('cls')
 
@@ -29,20 +30,20 @@ import random
         #if user is paper, if computer = 1 print("Its a tie") , etc
 
 comp=random.randint(1,3)
+def menu():
+    print("                            ")
+    print("###################################")
+    print("#   Rock, paper, scissors Game    #")
+    print("###################################")
+    print("                               ")
+    print("Winning Rules of the Rock paper scissor game as follows: \n""Rock vs paper->paper wins \n""Rock vs scissor->Rock wins \n""paper vs scissor->scissor wins\n")
+    print(" Enter choice ")
+    print("  [1] Rock                         ")
+    print("  [2] Paper                        ")
+    print("  [3] Scissors                     ")
+    print("                               ")
 
-print("                            ")
-print("###################################")
-print("#   Rock, paper, scissors Game    #")
-print("###################################")
-print("                               ")
-print("Winning Rules of the Rock paper scissor game as follows: \n""Rock vs paper->paper wins \n""Rock vs scissor->Rock wins \n""paper vs scissor->scissor wins\n")
-print(" Enter choice ")
-print("  [1] Rock                         ")
-print("  [2] Paper                        ")
-print("  [3] Scissors                     ")
-print("                               ")
-
-
+menu()
 while True:
     check = True
     while check:
@@ -54,48 +55,56 @@ while True:
             print("Sorry, try again")
 
     #number to words
-    if choice==1:
-        choiceType= 'Rock'
-    elif choice==2:
-        choiceType= 'Paper'
-    else:
-        choiceType= 'Scissors'
+    gameOn=True
+    while gameOn:
+        if choice==1:
+            choiceType= 'Rock'
+        elif choice==2:
+            choiceType= 'Paper'
+        else:
+            choiceType= 'Scissors'
 
-    if comp==1:
-        compType= 'Rock'
-    elif comp==2:
-        compType= 'Paper'
-    else:
-        compType= 'Scissors'
-
-    #display
-    print("Player's choice is: " + choiceType )
-    print("Computer's choice is: " + compType, "\n")
-    print(choiceType+ " V/s " + compType)
-
-
-    #winning system
-    if choice== comp:
-        print ("It's a Tie!")
-    elif choice==1:
-        if comp==2:
-            print ("Computer Wins!")
-        elif comp==3:
-            print ("Player Wins!")
-    elif choice==2:
         if comp==1:
-            print ("Player Wins!")
-        elif comp==3:
-            print ("Computer Wins!")
-    else:
-        if comp==2:
-            print ("Player Wins!")
-        elif comp==1:
-            print ("Computer Wins!")   
-    print("\n")
+            compType= 'Rock'
+        elif comp==2:
+            compType= 'Paper'
+        else:
+            compType= 'Scissors'
+
+        #display
+        print("Player's choice is: " + choiceType,"\n" )
+        print("Computer's choice is: " + compType,)
+        print(choiceType+ " V/s " + compType)
+
+
+        #winning system
+        if choice== comp:
+            print ("It's a Tie!")
+        elif choice==1:
+            if comp==2:
+                print ("Computer Wins!")
+            elif comp==3:
+                print ("Player Wins!")
+        elif choice==2:
+            if comp==1:
+                print ("Player Wins!")
+            elif comp==3:
+                print ("Computer Wins!")
+        else:
+            if comp==2:
+                print ("Player Wins!")
+            elif comp==1:
+                print ("Computer Wins!")  
+        gameOn=False 
+        print("\n")
+
+    #to play again
 
     print("Do you want to play again? (Y/N)")
     ans= input()
-    if ans== 'n' or ans=='N':
+    if ans=='y' or ans== 'Y':
+        os.system ('cls')
+        menu()
+    else:
         break #this is to break out of while True
-print('\n')
+   
