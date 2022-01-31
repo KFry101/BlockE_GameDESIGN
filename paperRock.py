@@ -3,7 +3,7 @@
 
 #Rock, paper, scissors Game
 
-from asyncio import to_thread
+
 import os
 os.system('cls')
 
@@ -11,7 +11,7 @@ os.system('cls')
 
 import random
 # user= input("Rock, paper, or scissor ")
-# computer=1
+# computer =1
 
 # if 'pap' in user:
 #     user= int(1)
@@ -23,7 +23,7 @@ import random
 
 
 #Psuedocode
-#add menu 1=paper, 2=rock 3=scissors
+#add menu 1=paper, 2=rock 3=scissor
 #needs user input() for rock paper or scissors
 #need computer to generate random number (1,3)
 #set up a system for rock beats scissors, paper beats rock, etc.
@@ -103,7 +103,7 @@ while gameOn:
         elif comp==1:
             print ("Computer Wins!") 
 
-  #playagain chack
+  #asking to play agian
     print("Do you want to play again? (Y/N)")
     ans= input()
     if ans=='y' or ans== 'Y':
