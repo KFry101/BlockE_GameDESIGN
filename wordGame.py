@@ -2,6 +2,7 @@
 #2/8.22
 #a word game with 3 levels
 
+
 import os, random
 os.system ('cls')
 
@@ -22,7 +23,6 @@ def menu():
     print("#       1. Fruit                         #")
     print("#       2. Animals                       #")
     print("#       3. Computer Parts                #")
-    print("#       4. Periodic Table                #")
     print("#                                        #")
     print("##########################################")
     print("""Game Rules: choose a catagorie and
@@ -45,17 +45,9 @@ def select():
      
     fruits= ['grapes', 'watermelon', 'apple', 'orange', 'tomato', 'kiwi', 'papaya', 'strawberries', 'blackberries' ]
     animals=['cats', "wolves", "parrots","squirrel","dolphin", "shark", "fox","lizard", "turtle", "gecko","elephant"]
-    compParts=[ 'mouse','screen','keyboard', "console", "trackpad", "motherboard","ram","cpu",]
+    compParts=['mouse','screen','keyboard', "console", "trackpad", "motherboard","ram","cpu",]
     
 
-
-    if choice==1:
-        word=random.choice(fruits)
-    elif choice==2:
-        word=random.choice(animals)
-    else:
-        word=random.choice(compParts)
-    
 
     check = True
     while check:
@@ -65,6 +57,15 @@ def select():
                 check = False
         except ValueError:
             print("Sorry, try again")
+    
+    if choice==1:
+        word=random.choice(fruits)
+    elif choice==2:
+        word=random.choice(animals)
+    else:
+        word=random.choice(compParts)
+   
+    
 print(word)
 #guessing fuction
 def guessFunction():
@@ -84,6 +85,7 @@ gameOn=True
 tries=0
 letterGuessed=""
 select()
+tries=0
 while gameOn:
     guessFunction()
     letterGuessed += guess 
@@ -111,18 +113,23 @@ while gameOn:
         print("\n")
 
     if countLetter == len(word):
+        points=(len(word)*5-2*(tries))
         print('\nYay')
-        print("Your score is",(len(word)*5-2*(tries)))
+        print("Your score is", points )
    
         print("Do you want to play again? (Y/N)")
         ans= input()
         if ans=='y' or ans== 'Y':
             os.system ('cls')
             menu()
+            tries=0
             select()
+            tries=0
+            letterGuessed=''
+            guess=''
         else: 
             gameOn=False 
-        print("\n")
+            print("\nThank for playing\n")
 
 
     
