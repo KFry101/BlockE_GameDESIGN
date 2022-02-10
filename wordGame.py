@@ -107,7 +107,11 @@ while gameOn:
         if ans=='y' or ans== 'Y':
                 os.system ('cls')
                 menu()
+                tries=0
                 select()
+                tries=0
+                letterGuessed=''
+                guess=''
         else: 
                 gameOn=False 
         print("\n")
