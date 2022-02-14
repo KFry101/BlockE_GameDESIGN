@@ -2,9 +2,20 @@
 #2/8.22
 #a word game with 3 levels
 
-
-import os, random
+import os, random, time
 os.system ('cls')
+
+#quit game code of the menu
+def quit():
+    os.system ('cls')
+    print("THANKS FOR PLAYING")
+    time.sleep(1) #delay for 1 seconds
+    print("COME BACK SOON")
+    time.sleep(2) #delay for 2 seconds
+    os.system ('cls')
+    exit()
+
+
 
 animals=""
 fruits=""
@@ -23,6 +34,8 @@ def menu():
     print("#       1. Fruit                         #")
     print("#       2. Animals                       #")
     print("#       3. Computer Parts                #")
+    print("#                                        #")
+    print("#       4. Exit Game                     #")
     print("#                                        #")
     print("##########################################")
     print("""Game Rules: choose a catagorie and
@@ -45,7 +58,7 @@ def select():
      
     fruits= ['grapes', 'watermelon', 'apple', 'orange', 'tomato', 'kiwi', 'papaya', 'strawberries', 'blackberries' ]
     animals=['cats', "wolves", "parrots","squirrel","dolphin", "shark", "fox","lizard", "turtle", "gecko","elephant"]
-    compParts=['mouse','screen','keyboard', "console", "trackpad", "motherboard","ram","cpu",]
+    compParts=['mouse','screen','keyboard', "console", "trackpad", "motherboard","ram","cpu", "camera", "microphone"]
     
 
 
@@ -53,7 +66,7 @@ def select():
     while check:
         try:
             choice= int(input("Choice:  "))
-            if choice > 0 and choice < 4:
+            if choice > 0 and choice < 5:
                 check = False
         except ValueError:
             print("Sorry, try again")
@@ -62,8 +75,11 @@ def select():
         word=random.choice(fruits)
     elif choice==2:
         word=random.choice(animals)
-    else:
+    elif choice==3:
         word=random.choice(compParts)
+    else:
+        quit()
+
    
     
 print(word)
@@ -81,11 +97,25 @@ def guessFunction():
         except ValueError:
             print('enter a valid letter')
 
+#what happen when they what it play again
+def playAgain():
+    os.system ('cls')
+    menu()
+    select()
+    global tries
+    global letterGuessed
+    tries=0
+    letterGuessed=''
+    guess=''
+    letter=''
+
+
 gameOn=True
 tries=0
 letterGuessed=""
 select()
 tries=0
+highscore=0
 while gameOn:
     guessFunction()
     letterGuessed += guess 
@@ -105,13 +135,7 @@ while gameOn:
         print("Do you want to play again? (Y/N)")
         ans= input()
         if ans=='y' or ans== 'Y':
-                os.system ('cls')
-                menu()
-                tries=0
-                select()
-                tries=0
-                letterGuessed=''
-                guess=''
+                playAgain()
         else: 
                 gameOn=False 
         print("\n")
@@ -120,56 +144,23 @@ while gameOn:
         points=(len(word)*5-2*(tries))
         print('\nYay')
         print("Your score is", points )
+        if points > highscore:
+            highscore=points
+        points=0
    
         print("Do you want to play again? (Y/N)")
         ans= input()
         if ans=='y' or ans== 'Y':
-            os.system ('cls')
-            menu()
-            tries=0
-            select()
-            tries=0
-            letterGuessed=''
-            guess=''
+            playAgain()
         else: 
             gameOn=False 
+            print("Your highscore was ", highscore)
             print("\nThank for playing\n")
+            time.sleep(2)
+            os.system('cls')
+            exit()
 
 
-    
-
-    
-# gameOn=True
-# check=True
-# turns=0
-# while gameOn:
-#     letter=input("Guess a letter: " )
-#     turns= turns+1
-#     for i in range (len(word)):
-#         if letter== word[i]:
-#             print( letter, end=" ")
-#         else:
-#             print("_", end=" ")
-#     if len(letter)>1 or not letter.isalpha():  #isalpha varible HAS to be alphabet
-#         print("Please enter a valid guess")
-#     else:
-#         if letter== word[i]:
-#             letter=input("Guess a letter: " )
-#             turns= turns+1
-#         else:
-#             letter=input(" Guess a letter: " )
-#             turns= turns+1
-#     for i in range (len(word)):
-#         if  letter== word[i]:
-#             print( letter, end=" ")
-#             turns=turns+1
-#         else:
-#             print("_", end=" ")
-#     if turns== 5 and gameOn: #doesn't work??????
-#         print("\nSorry you did not guess the word")
-#         gameOn = False
-# print ("the word was " + word)
-        
-    
+   
          
 
