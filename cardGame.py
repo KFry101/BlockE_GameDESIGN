@@ -10,3 +10,4 @@ suits= 2
 royals=3
 
 #make a list with this
+#deck of cards with each suit
