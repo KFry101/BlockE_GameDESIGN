@@ -92,6 +92,7 @@ def select():
         word=random.choice(compParts)
     elif choice==4:
         leaderBoard()
+        print(highscore)
     else:
         quit()
     
