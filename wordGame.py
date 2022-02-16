@@ -16,7 +16,7 @@ def contin():
     
 #menu way of seeing the scores and leaderboard
 def leaderBoard():
-    sdf
+    2
 #quit game code of the menu
 def quit():
     os.system ('cls')
