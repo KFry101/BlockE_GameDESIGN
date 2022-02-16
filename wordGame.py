@@ -5,6 +5,15 @@
 import os, random, time
 os.system ('cls')
 
+cont=''
+def contin():
+    global cont
+    cont=input(str("Enter anything to continue "))
+    if cont.isalpha():
+        os.system('cls')
+        menu()
+        select()
+    
 #menu way of seeing the scores and leaderboard
 def leaderBoard():
     sdf
@@ -19,7 +28,7 @@ def quit():
     exit()
 
 
-contin=""
+cont=""
 animals=""
 fruits=""
 guess=''
@@ -43,7 +52,7 @@ def menu():
     print("##########################################")
     print("""Game Rules: choose a catagorie and
      enter letters to guess the word\n""")
-    #word bank
+    
    
 
 
@@ -58,13 +67,14 @@ def select():
     global compParts 
     global guess
     global countLetter
-    global contin 
+    global cont 
+    #the wordlist for choices
     fruits= ['grapes', 'watermelon', 'apple', 'orange', 'tomato', 'kiwi', 'papaya', 'strawberries', 'blackberries' ]
     animals=['cats', "wolves", "parrots","squirrel","dolphin", "shark", "fox","lizard", "turtle", "gecko","elephant"]
     compParts=['mouse','screen','keyboard', "console", "trackpad", "motherboard","ram","cpu", "camera", "microphone"]
     
 
-
+    #choicing your choice
     check = True
     while check:
         try:
@@ -81,7 +91,7 @@ def select():
     elif choice==3:
         word=random.choice(compParts)
     elif choice==4:
-        leaderBoard
+        leaderBoard()
     else:
         quit()
     
@@ -91,7 +101,7 @@ def select():
 print(word)
 #guessing fuction
 def guessFunction():
-    global contin
+    global cont
     global guess
     check=True
     while check:
@@ -145,15 +155,7 @@ while gameOn:
         # else: 
         #         gameOn=False 
         print("\n")
-        contin=input("Enter anything to continue ")
-        if contin.isalpha():
-            os.system('cls')
-            menu()
-            select()
-        else:
-            os.system('cls')
-            menu()
-            select()
+        contin()
 
     if countLetter == len(word):
         points=(len(word)*5-2*(tries))
@@ -162,15 +164,7 @@ while gameOn:
         if points > highscore:
             highscore=points
         points=0
-        contin=input("Enter anything to continue ")
-        if contin.isalpha():
-            os.system('cls')
-            menu()
-            select()
-        else:
-            os.system('cls')
-            menu()
-            select()
+        contin()
    
         # print("Do you want to play again? (Y/N)")
         # ans= input()
