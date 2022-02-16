@@ -34,8 +34,8 @@ def menu():
     print("#       1. Fruit                         #")
     print("#       2. Animals                       #")
     print("#       3. Computer Parts                #")
-    print("#                                        #")
-    print("#       4. Exit Game                     #")
+    print("#       4. Leader board                  #")
+    print("#       5. Exit Game                     #")
     print("#                                        #")
     print("##########################################")
     print("""Game Rules: choose a catagorie and
@@ -77,8 +77,10 @@ def select():
         word=random.choice(animals)
     elif choice==3:
         word=random.choice(compParts)
-    else:
-        quit()
+    elif choice==4:
+        #leader board
+    else
+    
 
    
     
@@ -132,13 +134,16 @@ while gameOn:
     if tries>5:
         print ("\n run out of tries")
         print ("the word was " + word)
-        print("Do you want to play again? (Y/N)")
-        ans= input()
-        if ans=='y' or ans== 'Y':
-                playAgain()
-        else: 
-                gameOn=False 
+        # print("Do you want to play again? (Y/N)")
+        # ans= input()
+        # if ans=='y' or ans== 'Y':
+        #         playAgain()
+        # else: 
+        #         gameOn=False 
         print("\n")
+        os.system('cls')
+        menu()
+        select()
 
     if countLetter == len(word):
         points=(len(word)*5-2*(tries))
@@ -147,18 +152,21 @@ while gameOn:
         if points > highscore:
             highscore=points
         points=0
+        os.system('cls')
+        menu()
+        select()
    
-        print("Do you want to play again? (Y/N)")
-        ans= input()
-        if ans=='y' or ans== 'Y':
-            playAgain()
-        else: 
-            gameOn=False 
-            print("Your highscore was ", highscore)
-            print("\nThank for playing\n")
-            time.sleep(2)
-            os.system('cls')
-            exit()
+        # print("Do you want to play again? (Y/N)")
+        # ans= input()
+        # if ans=='y' or ans== 'Y':
+        #     playAgain()
+        # else: 
+        #     gameOn=False 
+        #     print("Your highscore was ", highscore)
+        #     print("\nThank for playing\n")
+        #     time.sleep(2)
+        #     os.system('cls')
+        #     exit()
 
 
    
