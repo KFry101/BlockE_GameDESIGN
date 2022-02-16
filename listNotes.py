@@ -45,4 +45,9 @@ print(fruits.count("grapes"))
 
 list2=[3,6,8,9,10]
 fruits.append(list2)
-print(fruits)
+print("append \n", fruits)
+fruits.pop(-1)
+fruits.extend(list2)
+print ("extend \n", fruits)
+fruits.insert(2,"dragonfruit")
+print (fruits)
