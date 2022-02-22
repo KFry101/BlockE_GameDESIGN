@@ -7,38 +7,6 @@
 #deck of cards with each suit
 
 
-from operator import truediv
-import random, os, time
-os.system('cls')
-
-
-
-
-# class card():
-#     global suit
-#     global rank
-
-#     def __init__(self,suits,rank):
-#         self.suit= suits
-#         self.rank=rank
-#         self.value=value
-
-numberCards=[]
-for i in range (2,11):
-    numberCards.append(i)
-    numberCards[i-2]=str(numberCards[i-2])
-print (numberCards)
-
-
-# suits=''
-# #variables of thing about the cards
-# suits= ['♠', '♦', '♥', '♣']
-# rank= ['Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Jack','Queen','King','Ace']
-
-# values={'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six' : 6 , 'Seven' :7, 'Eight': 8,'Nine':9,
-#           'Ten':10,'Jack':11, 'Queen': 12,'King': 13,'Ace':14 }
-
-#first let's import random since we will be shuffling
 import random, os
 os.system('cls')
 
@@ -50,7 +18,7 @@ suits = ['♠', '♦', '♥', '♣']
 royals = ["J", "Q", "K", "A"]
 tempPlayer1=[]  
 tempPlayer2=[]
-
+halfDeck=0
 def theDeck():
     global suits
     global royals
@@ -88,7 +56,8 @@ def printDeck(): #to print the deck
 def shuffleDeal():
     global player1
     global player2
-
+    global tempPlayer1
+    global tempPlayer2
     #now let's shuffle our deck!
     #Shuffle the deck cards
     random.shuffle(deck)
@@ -103,9 +72,9 @@ def shuffleDeal():
             player2.append(deck[l])
 
 
-    print("player1 ",player1)
+    print("player1 ",len(player1))
     print()
-    print("player2 ",player2)
+    print("player2 ",len(player2))
 
 theDeck()
 shuffleDeal()
@@ -113,43 +82,50 @@ shuffleDeal()
 gameOn=True
 def splitDeck():
     global halfDeck
-    global plyr1
-    global plyr2
     halfDeck=int(len(deck)/2)
-    plyr1=0
-    plyr2=0
     #ask user to hit a key to release cards
 
 splitDeck()
 
-while gameOn:      
+while gameOn:  
     for i in range (0,halfDeck):
-        click=input("Press a any key to get cards")
-        print("Player 1     Player 2")
+        click=input("\nPress any key to get cards: ")
+        print("Player 1     Player 2",i)
         print("     "+player1[i]+"      "+player2[i])
         if player1[i]>player2[i]:
-            tempPlayer1.extend(player1[i])
-            tempPlayer1.extend(player2[i])
-            player1.pop(i)
-            player2.pop(i)
+            tempPlayer1.append(player1[i])
+            tempPlayer1.append(player2[i])
+            # player1.pop(i)
+            # player2.pop(i)
 
         elif player1[i]<player2[i]:
-            tempPlayer2.extend(player1[i])
-            tempPlayer2.extend(player2[i])
-            player1.pop(i)
-            player2.pop(i)
-        print("Player I: "+str(plyr1)+"     Player II: "+ str(plyr2))
-
-    if len(tempPlayer2==0):
+            tempPlayer2.append(player1[i])
+            tempPlayer2.append(player2[i])
+            # player1.pop(i)
+            # player2.pop(i)
+    print("End Round")
+    print ("Player 1 has ", len(tempPlayer1), " cards   and   Player 2 has ", len(tempPlayer2)," cards" ) #added this for my own flare
+    if (len(tempPlayer2))==0:
         print("Player one won the game ")
         gameOn=False
-    elif len(tempPlayer1==0):
+    elif (len(tempPlayer1))==0:
         print("Player two won the game ")
         gameOn=False
     else:
-        player1.extend(tempPlayer1)
+        for j in range (0,halfDeck):
+            player1.pop(0)
+            player2.pop(0)
+        player1.extend(tempPlayer1)   
         player2.extend(tempPlayer2)
+        tempPlayer1.clear()   #This was the missing piece. the Temp list kept the old temp cards from old lists/past rounds. 
+        tempPlayer2.clear()   #That why there was a hand with 75 cards one time.
+        if len(player1)<len(player2):
+            halfDeck=len(player1)
+        elif len(player2)<len(player1):
+            halfDeck=len(player2)
+
         
+            
 
 
 
