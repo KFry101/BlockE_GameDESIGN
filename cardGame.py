@@ -87,10 +87,11 @@ def splitDeck():
 
 splitDeck()
 
-while gameOn:  
+while gameOn:
+    print()  
     for i in range (0,halfDeck):
         click=input("\nPress any key to get cards: ")
-        print("Player 1     Player 2",i)
+        print("Player 1     Player 2","      Turn: ", i)
         print("     "+player1[i]+"      "+player2[i])
         if player1[i]>player2[i]:
             tempPlayer1.append(player1[i])
@@ -112,7 +113,24 @@ while gameOn:
         print("Player two won the game ")
         gameOn=False
     else:
+        if len(tempPlayer1)<len(tempPlayer2):
+            halfDeck=len(tempPlayer1)
+        elif len(tempPlayer2)<len(tempPlayer1):
+         halfDeck=len(tempPlayer2)
+        other1= player1[halfDeck: ]
+        other2=player2[halfDeck: ]
+        print(other1)
+        print(player1)
+        print(other2)
+        print(player2)
+        if len(player1)>len(player2):
+            tempPlayer1.extend(other1)
+        elif len(player2)>len(player1):
+            tempPlayer2.extend(other2)
+        print (tempPlayer1)
+        print(tempPlayer2)
         for j in range (0,halfDeck):
+
             player1.pop(0)
             player2.pop(0)
         player1.extend(tempPlayer1)   
