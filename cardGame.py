@@ -19,17 +19,6 @@ royals = ["J", "Q", "K", "A"]
 tempPlayer1=[]  
 tempPlayer2=[]
 halfDeck=0
-
-def menu():
-    print("#################################")
-    print("#                               #")
-    print("#        Welcome to War         #")
-    print("#                               #")
-    print("#################################")
-
-
-
-
 def theDeck():
     global suits
     global royals
@@ -87,7 +76,6 @@ def shuffleDeal():
     print("       and      ")
     print("Player 2  has",len(player2))
 
-menu()
 theDeck()
 shuffleDeal()
 
@@ -99,8 +87,7 @@ def splitDeck():
 
 splitDeck()
 
-while gameOn:
-    print()  
+while gameOn: 
     for i in range (0,halfDeck):
         click=input("\nClick enter to play: ")
         print("Player 1     Player 2","      Turn: ", i+1)
@@ -116,13 +103,7 @@ while gameOn:
             tempPlayer2.append(player2[i])
             # player1.pop(i)
             # player2.pop(i)
-    print("\nRound Ended\n")
-    time.sleep(1)
-    print("Current card count:")
-    time.sleep(1)
-    print ("""Player 1 has """, len(tempPlayer1), """ cards  
-        and  
-Player 2 has """, len(tempPlayer2),""" cards""" ) #added this for my own flare
+   
     if (len(tempPlayer2))==0:
         print("Player one won the game ")
         gameOn=False
@@ -130,29 +111,52 @@ Player 2 has """, len(tempPlayer2),""" cards""" ) #added this for my own flare
         print("Player two won the game ")
         gameOn=False
     else:
-        if len(tempPlayer1)<len(tempPlayer2):
+        if len(tempPlayer2)>len(tempPlayer1):
+            halfDeck=len(tempPlayer2)
+        elif len(tempPlayer1)>len(tempPlayer2):
             halfDeck=len(tempPlayer1)
-        elif len(tempPlayer2)<len(tempPlayer1):
-         halfDeck=len(tempPlayer2)
+        
         other1= player1[halfDeck: ]
         other2=player2[halfDeck: ]
-        if len(player1)>len(player2):
-            tempPlayer1.extend(other1)
-        elif len(player2)>len(player1):
-            tempPlayer2.extend(other2)
-        
-        for j in range (0,halfDeck):
+        print(len(tempPlayer1))
+        print(len(other1))
+        print (len(tempPlayer2))
+        print (len(other2))
+        print(halfDeck)
 
-            player1.pop(0)
-            player2.pop(0)
+        if len(player1)>len(tempPlayer1):
+            tempPlayer1.extend(other1)
+        elif len(player2)>len(tempPlayer2):
+            tempPlayer2.extend(other2)
+       
+        print("")
+        print(player1)
+        print (tempPlayer1)
+        print (player2)
+
+        if len(player1)<len(player2):
+            halfDeck=len(tempPlayer2)
+        elif len(player2)<len(player1):
+            halfDeck=len(tempPlayer1)
+        
+        # for j in range (0,halfDeck):
+        #     player1.pop(0)
+        #     player2.pop(0)
+        player1.clear()
+        player2.clear()
         player1.extend(tempPlayer1)   
         player2.extend(tempPlayer2)
         tempPlayer1.clear()   #This was the missing piece. the Temp list kept the old temp cards from old lists/past rounds. 
         tempPlayer2.clear()   #That why there was a hand with 75 cards one time.
+        print(len(player1))
+        print(len(player2))
         if len(player1)<len(player2):
             halfDeck=len(player1)
         elif len(player2)<len(player1):
             halfDeck=len(player2)
+        print(halfDeck)
+        print( "player 1 has ",len(player1), "  and   Player 2 has", len(player2))
+
 
         
             
