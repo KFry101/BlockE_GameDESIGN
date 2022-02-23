@@ -7,7 +7,7 @@
 #deck of cards with each suit
 
 
-import random, os
+import random, os, time
 os.system('cls')
 
 deck=[]
@@ -19,6 +19,17 @@ royals = ["J", "Q", "K", "A"]
 tempPlayer1=[]  
 tempPlayer2=[]
 halfDeck=0
+
+def menu():
+    print("#################################")
+    print("#                               #")
+    print("#        Welcome to War         #")
+    print("#                               #")
+    print("#################################")
+
+
+
+
 def theDeck():
     global suits
     global royals
@@ -42,7 +53,7 @@ def theDeck():
             deck.append(card)
             #this adds the information to the "full deck" we want to make
     #you can print the deck here, if you want to see how it looks
-    print(deck)
+
     #now let's see the deck!
 
 def printDeck(): #to print the deck
@@ -71,11 +82,12 @@ def shuffleDeal():
         else:
             player2.append(deck[l])
 
+    print("Starting card count: ")
+    print("Player 1 has ",len(player1))
+    print("       and      ")
+    print("Player 2  has",len(player2))
 
-    print("player1 ",len(player1))
-    print()
-    print("player2 ",len(player2))
-
+menu()
 theDeck()
 shuffleDeal()
 
@@ -90,8 +102,8 @@ splitDeck()
 while gameOn:
     print()  
     for i in range (0,halfDeck):
-        click=input("\nPress any key to get cards: ")
-        print("Player 1     Player 2","      Turn: ", i)
+        click=input("\nClick enter to play: ")
+        print("Player 1     Player 2","      Turn: ", i+1)
         print("     "+player1[i]+"      "+player2[i])
         if player1[i]>player2[i]:
             tempPlayer1.append(player1[i])
@@ -104,8 +116,13 @@ while gameOn:
             tempPlayer2.append(player2[i])
             # player1.pop(i)
             # player2.pop(i)
-    print("End Round")
-    print ("Player 1 has ", len(tempPlayer1), " cards   and   Player 2 has ", len(tempPlayer2)," cards" ) #added this for my own flare
+    print("\nRound Ended\n")
+    time.sleep(1)
+    print("Current card count:")
+    time.sleep(1)
+    print ("""Player 1 has """, len(tempPlayer1), """ cards  
+        and  
+Player 2 has """, len(tempPlayer2),""" cards""" ) #added this for my own flare
     if (len(tempPlayer2))==0:
         print("Player one won the game ")
         gameOn=False
@@ -119,16 +136,11 @@ while gameOn:
          halfDeck=len(tempPlayer2)
         other1= player1[halfDeck: ]
         other2=player2[halfDeck: ]
-        print(other1)
-        print(player1)
-        print(other2)
-        print(player2)
         if len(player1)>len(player2):
             tempPlayer1.extend(other1)
         elif len(player2)>len(player1):
             tempPlayer2.extend(other2)
-        print (tempPlayer1)
-        print(tempPlayer2)
+        
         for j in range (0,halfDeck):
 
             player1.pop(0)
