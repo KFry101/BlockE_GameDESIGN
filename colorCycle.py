@@ -16,7 +16,6 @@ YELLOW=(240, 180, 14)
 
 running=True
 while running:
-    global screen
     screen= pygame.display.set_mode([500,500])
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
