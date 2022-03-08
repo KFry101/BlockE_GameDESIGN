@@ -10,7 +10,7 @@ os.system('cls')
 #initalize pygame
 p.init()
 
-#define colors
+#define colors with RGB values
 white=[255, 255, 255]
 red=[255, 0, 0]
 mag=[255, 0, 255]
@@ -21,7 +21,7 @@ m=[47,192,229]
 WIDTH=600 #pixels
 HEIGHT=700
 screen=p.display.set_mode((WIDTH,HEIGHT))
-p.display.set_caption("My window")
+p.display.set_caption("My window") #title of window
 
 #  screen.fill(m)
 # p.display.update()
@@ -39,11 +39,13 @@ p.display.set_caption("My window")
 #define rectangle
 x=20
 y=30
+
 #w and h of rectangale
 wbox=50
 hbox=50
 square=p.Rect(x,y,wbox,hbox)
 square2=p.Rect(x+200, y+200, wbox, hbox)
+#++ to x goes right and y goes down; -- to x goes left and y goes up
 
 #window stays open until closed by user
 run=True
