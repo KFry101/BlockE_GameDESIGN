@@ -7,12 +7,15 @@ import pygame, os,time
 os.system('cls')
 pygame.init()
 
-PURPLE=(49, 16, 115)
-FOREST=(16, 46, 12)
-NAVY=(5, 31, 64)
-YELLOW=(240, 180, 14)
-
-
+purple=(49, 16, 115)
+forest=(16, 46, 12)
+navy=(5, 31, 64)
+yellow=(240, 180, 14)
+white=[255, 255, 255]
+aqua=[51, 153, 255]
+blood=(102,0,0)
+litpur=(203,195,227)
+mag=[255, 0, 255]
 
 running=True
 while running:
@@ -21,19 +24,19 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 #COLOR 1
-    screen.fill(PURPLE)
+    screen.fill(purple)
     pygame.display.update()
     time.sleep(2)
 #COLOR 2
-    screen.fill(FOREST)
+    screen.fill(forest)
     pygame.display.update()
     time.sleep(2)
 #COLOR3
-    screen.fill(NAVY)
+    screen.fill(navy)
     pygame.display.update()
     time.sleep(2)
 #COLOR 4
-    screen.fill(YELLOW)
+    screen.fill(yellow)
     pygame.display.update()
     time.sleep(2)
 
