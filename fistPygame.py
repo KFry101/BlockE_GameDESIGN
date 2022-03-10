@@ -17,6 +17,7 @@ mag=[255, 0, 255]
 aqua=[51, 153, 255]
 m=[47,192,229]
 
+
 #CREATE THE SCREEN
 WIDTH=600 #pixels
 HEIGHT=700

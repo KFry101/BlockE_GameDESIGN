@@ -16,6 +16,7 @@ aqua=[51, 153, 255]
 blood=(102,0,0)
 litpur=(203,195,227)
 mag=[255, 0, 255]
+orange=(255, 85, 0)
 
 running=True
 while running:
