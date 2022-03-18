@@ -50,7 +50,7 @@ colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':
 background=colors.get('pink')
 sq_color=colors.get('navy')
 cr_color=colors.get('white')
-inscribSq_color=colors.get('white')
+inscribSq_color=colors.get('litpur')
 
 MAX=10
 jumpCount=10
