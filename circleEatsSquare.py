@@ -4,6 +4,7 @@
 
 #objective of game: rectange to run away from circle;if the 2 collide, rect disappears and circle gets bigger
 
+
 import os, random, math
 import pygame
 
@@ -29,7 +30,7 @@ rad=15
 xc=random.randint(rad, WIDTH-rad)
 yc=random.randint(rad, HEIGHT-rad)
 #inner box
-ibox=rad(math.sqrt(2))
+ibox=rad*math.sqrt(2)
 xi= xc-(ibox/2)
 yi= yc-(ibox/2)
 inscribSq=pygame.Rect(xi,yi,ibox,ibox)
@@ -49,6 +50,7 @@ colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':
 background=colors.get('pink')
 sq_color=colors.get('navy')
 cr_color=colors.get('white')
+inscribSq_color=colors.get('white')
 
 MAX=10
 jumpCount=10
@@ -92,17 +94,29 @@ while check:
         yc -= move
     if keys[pygame.K_DOWN] and yc<=HEIGHT-(rad+move):
         yc+= move
+    
 
     checkCollide=square.collidepoint((xc,yc))
     if checkCollide:
         square.x=random.randint(wbox, WIDTH-wbox)
         square.y=random.randint(hbox, HEIGHT-hbox)
         rad+=grow
+    
+    sqCollide=square.colliderect((inscribSq))
+    if sqCollide:
+        square.x=random.randint(wbox, WIDTH-wbox)
+        square.y=random.randint(hbox, HEIGHT-hbox)
+        rad+=grow
+    ibox=rad*math.sqrt(2)
+    xi= xc-(ibox/2)
+    yi= yc-(ibox/2)
+    inscribSq=pygame.Rect(xi,yi,ibox,ibox)
 
 
 
-    pygame.draw.rect(screen,sq_color, square)
+    pygame.draw.rect(screen,sq_color, square)    
     pygame.draw.circle(screen,cr_color, (xc,yc), rad)
+    pygame.draw.rect(screen,inscribSq_color, inscribSq)
 
     pygame.display.update()
     pygame.time.delay(10)
