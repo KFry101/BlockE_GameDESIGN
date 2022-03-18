@@ -30,8 +30,8 @@ xc=random.randint(rad, WIDTH-rad)
 yc=random.randint(rad, HEIGHT-rad)
 #inner box
 ibox=rad(math.sqrt(2))
-xi= xc-ibox
-yi= yc-ibox
+xi= xc-(ibox/2)
+yi= yc-(ibox/2)
 inscribSq=pygame.Rect(xi,yi,ibox,ibox)
 #create the rect object
 square=pygame.Rect(xs, ys, wbox, hbox)
