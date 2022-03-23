@@ -38,7 +38,7 @@ square=pygame.Rect(xs, ys, wbox, hbox)
 
 #create the screen
 screen=pygame.display.set_mode((WIDTH,HEIGHT))
-pygame.display.set_caption("My Game")
+pygame.display.set_caption("Circle eats Square")
 
 #Define Colors
 colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':[5, 31, 64], 
@@ -49,7 +49,25 @@ colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':
 background=colors.get('pink')
 sq_color=colors.get('navy')
 cr_color=colors.get('white')
-inscribSq_color=colors.get('litpur')
+inscribSq_color=colors.get('white')
+
+
+randColor=''
+def changeClr():
+    print(background)
+    global randColor
+    colorCheck=True
+    while colorCheck:
+        randColor=random.choice(list(colors))
+        print("rand Clr = ", randColor)
+        if colors.get(randColor) == background:
+            print("backgrnd = randclr")
+            randColor=random.choice(list(colors))
+        else:
+            colorCheck=False
+changeClr()
+sq_color=colors.get(randColor)    
+
 
 MAX=10
 jumpCount=10
@@ -105,6 +123,8 @@ while check:
     if sqCollide:
         square.x=random.randint(wbox, WIDTH-wbox)
         square.y=random.randint(hbox, HEIGHT-hbox)
+        changeClr()
+        sq_color=colors.get(randColor)  
         rad+=grow
     ibox=rad*math.sqrt(2)
     xi= xc-(ibox/2)
