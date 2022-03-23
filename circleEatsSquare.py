@@ -4,7 +4,6 @@
 
 #objective of game: rectange to run away from circle;if the 2 collide, rect disappears and circle gets bigger
 
-
 import os, random, math
 import pygame
 
