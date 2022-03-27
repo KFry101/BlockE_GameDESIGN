@@ -27,7 +27,7 @@ SETT=False
 LEV_1=False
 
 #lists fr messages
-MenuList=["Instruction", 'Setting', 'Level 1', 'Level 2', "Level 3", "Scoreboard", "Exit"]
+MenuList=["Instructions", 'Settings', 'Level 1', 'Level 2', "Level 3", "Scoreboard", "Exit"]
 SettingList=['Screen Size', 'Background Color', 'Circle Color']
 
 #screen
@@ -35,10 +35,10 @@ screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Circle Eats Square")
 
 #Fonts
-TITLE_FNT= p.font.SysFont("timesnewroman", 90)
+TITLE_FNT= p.font.SysFont("timesnewroman", 80)
 SUBT_FNT= p.font.SysFont("timesnewroman", 25)
 MENU_FNT= p.font.SysFont("arial", 50)
-INST_FNT= p.font.SysFont('arial', 30)
+INST_FNT= p.font.SysFont('comicsans', 30)
 
 
 #THE GAME VARIABLES
@@ -110,12 +110,14 @@ def mainmenu(Mlist):
     p.display.update()
 
 def instr():  
-    txt=INST_FNT.render("Control the circle with the arrow keys and absorb", 1,(5, 31, 64))
+    txt=INST_FNT.render("Control the circle with the arrow keys", 1,(5, 31, 64))
     screen.blit(txt,(90,200))
-    txt=INST_FNT.render("the square. If there is a second player,", 1, (5, 31, 64)) 
-    screen.blit(txt,(90,230))
-    txt=INST_FNT.render("square with the wasd keys.",1, (5, 31, 64))
-    screen.blit(txt, (90,260))
+    txt=INST_FNT.render("and absorb the square. If there is a ", 1, (5, 31, 64)) 
+    screen.blit(txt,(90,240))
+    txt=INST_FNT.render("second player, control the square with",1, (5, 31, 64))
+    screen.blit(txt, (90,280))
+    txt=INST_FNT.render("the wasd keys.",1, (5, 31, 64))
+    screen.blit(txt, (90,320))
     p.display.update()
 
 randColor=''
