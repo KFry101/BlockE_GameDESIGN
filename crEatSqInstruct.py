@@ -17,7 +17,7 @@ def instr():
     txt=TITLE_FNT.render('Circle Eats Square', 1, (255, 255, 255))
     wind.fill((200,75,125))
     wind.blit(txt,(50,50))
-    txt=SUBT_FNT.render("The Game", 1, (255, 255, 255))
+    
     wind.blit(txt,(525,125))
     txt= MENU_FNT.render("Instructions:", 1, (5, 31, 64))
     wind.blit(txt, (80,150))
