@@ -68,6 +68,27 @@ for i in range(7):
 p.display.update()
 p.time.delay(10000)
 
+def instr():
+    TITLE_FNT= p.font.SysFont("timesnewroman", 80)
+    SUBT_FNT= p.font.SysFont("timesnewroman", 25)
+    MENU_FNT= p.font.SysFont("comicsans", 40)
+    INST_FNT= p.font.SysFont('arial', 25)
+    txt=TITLE_FNT.render('Circle Eats Square', 1, (255, 255, 255))
+    screen.fill((200,75,125))
+    screen.blit(txt,(50,50))
+    
+    screen.blit(txt,(525,125))
+    txt= MENU_FNT.render("Instructions:", 1, (5, 31, 64))
+    screen.blit(txt, (80,150))
+    txt=INST_FNT.render("Control the circle with the arrow keys and absorb the square.", 1,(5, 31, 64))
+    screen.blit(txt,(90,200))
+    txt=INST_FNT.render("If there is a second player, control the square with the wasd keys.", 1, (5, 31, 64)) 
+    screen.blit(txt,(90,225))
+    txt=MENU_FNT.render("Return to Menu", 1, (255, 255, 255))
+    screen.blit(txt,(200,550))
+    p.display.update()
+
+    p.time.delay(10000)
 # txt= MENU_FNT.render("Instructions", 1, (5, 31, 64))
 #xt= WIDTH/2-txt.get_width()/2
 #screen.blit(txt,(xt,50))
