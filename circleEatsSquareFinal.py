@@ -185,7 +185,7 @@ while check:
                     MAIN=True
                 if SETT:
                     SETT=False
-                MAIN=True
+                    MAIN=True
 
     #THE GAME Level 1
     if LEV_1:
