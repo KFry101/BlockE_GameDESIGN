@@ -25,7 +25,8 @@ MAIN=True
 INSTR=False
 SETT=False
 LEV_1=False
-
+PSCORE=False
+SCOREBOARD=False
 #lists fr messages
 MenuList=["Instructions", 'Settings', 'Level 1', 'Level 2', "Level 3", "Scoreboard", "Exit"]
 SettingList=['Screen Size', 'Background Color', 'Circle Color']
@@ -36,7 +37,7 @@ p.display.set_caption("Circle Eats Square")
 
 #Fonts
 TITLE_FNT= p.font.SysFont("timesnewroman", 80)
-SUBT_FNT= p.font.SysFont("timesnewroman", 25)
+SUBT_FNT= p.font.SysFont("comicsans", 40)
 MENU_FNT= p.font.SysFont("arial", 50)
 INST_FNT= p.font.SysFont('comicsans', 30)
 
@@ -46,6 +47,8 @@ INST_FNT= p.font.SysFont('comicsans', 30)
 check=True
 move=5
 grow=5
+eaten=0
+sec=0
 #squareG variables
 xsg=20
 ysg=20
@@ -155,7 +158,21 @@ while check:
         TitleMenu("Settings")
         ReturnBut()
         mainmenu(SettingList)
-             
+    if PSCORE:
+        screen.fill(background)
+        TitleMenu("Your Score")
+        ReturnBut()
+        txt=INST_FNT.render("Your score is:", 1,(5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,200))
+        score= ((eaten)*5-2*(3))
+        #3 is a place hold so I have a working code. 
+        #I would rather have a varible (Secs) that tracking the time it took to achieve win
+        txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,250))
+
+
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False
@@ -186,7 +203,10 @@ while check:
                 if SETT:
                     SETT=False
                     MAIN=True
-
+                if PSCORE:
+                    PSCORE=False
+                    MAIN=True
+    
     #THE GAME Level 1
     if LEV_1:
         screen.fill(background)
@@ -228,7 +248,10 @@ while check:
             squareG.x=random.randint(wbox, WIDTH-wbox)
             squareG.y=random.randint(hbox, HEIGHT-hbox)
             rad+=grow
-        
+        ibox=rad*math.sqrt(2)
+        xig= xc-(ibox/2)
+        yig= yc-(ibox/2)
+        inscribSq=p.Rect(xig,yig,ibox,ibox)
         sqCollide=squareG.colliderect((inscribSq))
         if sqCollide:
             squareG.x=random.randint(wbox, WIDTH-wbox)
@@ -236,14 +259,17 @@ while check:
             changeClr()
             sq_color=colors.get(randColor)  
             rad+=grow
-        ibox=rad*math.sqrt(2)
-        xig= xc-(ibox/2)
-        yig= yc-(ibox/2)
-        inscribSq=p.Rect(xig,yig,ibox,ibox)
-
+            eaten+=1
+            # secs=Something to track the amount of time played
+    
+      
         p.draw.rect(screen,sq_color, squareG)    
         p.draw.circle(screen,cr_color, (xc,yc), rad)
         p.draw.rect(screen,inscribSq_color, inscribSq)
 
-        p.display.update()
-        p.time.delay(10)
+        if eaten>=10:
+            LEV_1=False
+            PSCORE=True
+
+    p.display.update()
+    p.time.delay(10)

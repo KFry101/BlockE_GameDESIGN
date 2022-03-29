@@ -72,13 +72,15 @@ sq_color=colors.get(randColor)
 MAX=10
 jumpCount=10
 JUMP=False
+
 #THE GAME
 while check:
+    points=0
     screen.fill(background)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             check = False
-   
+    
     #Game Controls    
     keys=pygame.key.get_pressed()
     #square control
@@ -118,7 +120,11 @@ while check:
         square.x=random.randint(wbox, WIDTH-wbox)
         square.y=random.randint(hbox, HEIGHT-hbox)
         rad+=grow
-    
+        ibox=rad*math.sqrt(2)
+   
+    xi= xc-(ibox/2)
+    yi= yc-(ibox/2)
+    inscribSq=pygame.Rect(xi,yi,ibox,ibox)
     sqCollide=square.colliderect((inscribSq))
     if sqCollide:
         square.x=random.randint(wbox, WIDTH-wbox)
@@ -126,11 +132,9 @@ while check:
         changeClr()
         sq_color=colors.get(randColor)  
         rad+=grow
-    ibox=rad*math.sqrt(2)
-    xi= xc-(ibox/2)
-    yi= yc-(ibox/2)
-    inscribSq=pygame.Rect(xi,yi,ibox,ibox)
+        points+=1
 
+   
 
 
     pygame.draw.rect(screen,sq_color, square)    
@@ -139,4 +143,5 @@ while check:
 
     pygame.display.update()
     pygame.time.delay(10)
+    print(points)
  
