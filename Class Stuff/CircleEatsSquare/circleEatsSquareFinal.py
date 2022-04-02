@@ -178,6 +178,9 @@ def changeClr():
 changeClr()
 sq_color=colors.get(randColor)    
 
+
+######################################################################################################################
+
 MAX=10
 jumpCount=10
 JUMP=False
@@ -253,82 +256,81 @@ while check:
     if event.type ==p.MOUSEBUTTONDOWN:
         mouse_pos=p.mouse.get_pos()
         print(mouse_pos)
-        xm=mouse_pos[0]
-        ym=mouse_pos[1]
+        
     if MAIN:
         eaten=0
         rad=15
-        if ((xm >50 and xm <80) and (ym >250 and ym <280))or INSTR:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <280))or INSTR:
             MAIN=False
             screen.fill(background)
             INSTR=True
-        if((xm >50 and xm <80) and (ym >300 and ym <330))or SETT:
+        if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <330))or SETT:
             MAIN=False 
             SETT=True
             p.time.delay(300)
             mouse_pos=(0,0)    
-        if ((xm >50 and xm <80) and (ym >350 and ym <380))or LEV_1:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <380))or LEV_1:
             MAIN=False
             LEV_1=True
             ticksStart=p.time.get_ticks()
-        if ((xm >50 and xm <80) and (ym >400 and ym <430))or LEV_2:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <430))or LEV_2:
             MAIN=False
             LEV_2=True
             ticksStart=p.time.get_ticks()
-        if ((xm >50 and xm <80) and (ym >450 and ym <480))or LEV_3:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >450 and mouse_pos[1] <480))or LEV_3:
             MAIN=False
             LEV_3=True
             ticksStart=p.time.get_ticks()
-        if ((xm >50 and xm <80) and (ym >500 and ym <530))or SCOREBOARD:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >500 and mouse_pos[1] <530))or SCOREBOARD:
             MAIN=False
             SCOREBOARD=True
-        if ((xm >50 and xm <80) and (ym >550 and ym <580))or EXIT:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >550 and mouse_pos[1] <580))or EXIT:
             MAIN=False
             EXIT=True
 
 
     if SETT:
-        if ((xm >50 and xm <80) and (ym >250 and ym <290))or BACKCLR:
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290))or BACKCLR:
             SETT=False
             screen.fill(background)
             BACKCLR=True
             p.time.delay(300)
             mouse_pos=(0,0)
-        if((xm >50 and xm <80) and (ym >300 and ym <340))or CRCLR:
+        if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340))or CRCLR:
             SETT=False
             CRCLR=True
             p.time.delay(300)
             mouse_pos=(0,0)
 
     if BACKCLR:
-        if ((xm >306 and xm <393) and (ym >560 and ym <595)) or SETT:
+        if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
             BACKCLR=False
             SETT=True
             p.time.delay(300)
             mouse_pos=(0,0)
-        if ((xm >50 and xm <80) and (ym >250 and ym <290)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
             background=colors.get('aqua')  
-        if ((xm >50 and xm <80) and (ym >300 and ym <340)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
             background=colors.get('mag')     
-        if ((xm >50 and xm <80) and (ym >350 and ym <390)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
             background=colors.get('yellow')
-        if ((xm >50 and xm <80) and (ym >400 and ym <440)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
             background=colors.get('orange')   
     
     if CRCLR:
-        if ((xm >50 and xm <80) and (ym >250 and ym <290)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
             cr_color=colors.get('forest') 
             inscribSq_color=colors.get('forest')  
-        if ((xm >50 and xm <80) and (ym >300 and ym <340)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
             cr_color=colors.get('white') 
             inscribSq_color=colors.get('white')   
-        if ((xm >50 and xm <80) and (ym >350 and ym <390)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
             cr_color=colors.get('litpur')  
             inscribSq_color=colors.get('litpur')  
-        if ((xm >50 and xm <80) and (ym >400 and ym <440)):
+        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
             cr_color=colors.get('navy')  
             inscribSq_color=colors.get('navy')  
-        if ((xm >306 and xm <393) and (ym >560 and ym <595)) or SETT:
+        if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
             CRCLR=False
             SETT=True
             p.time.delay(300)
@@ -336,7 +338,7 @@ while check:
              
     #return to Menu
     if not MAIN and not LEV_1:
-        if ((xm >210 and xm <490) and (ym >561 and ym <595))or MAIN:
+        if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
             if INSTR:
                 INSTR=False
                 MAIN=True
