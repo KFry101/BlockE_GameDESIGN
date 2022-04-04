@@ -1,9 +1,8 @@
 #Katie Frymire
 #3/8/22
 #make a pacman like game, move thing around screen, how to draw shape, how to use keys to move objects, dictionary
-
 #objective of game: rectange to run away from circle;if the 2 collide, rect disappears and circle gets bigger
-
+#C:\Users\Katie\coding and game design\BlockE_GameDESIGN\Class Stuff\colorCycle.py
 from decimal import ROUND_UP
 import os, random, math,datetime
 import pygame as p
@@ -32,9 +31,6 @@ LEV_2=False
 LEV_3=False
 PSCORE1=False
 SCOREBOARD=False
-# SCRB1=False
-# SCRB2=False
-# SCRB3=False
 EXIT=False
 
 #lists fr messages
@@ -77,7 +73,6 @@ inscribSq=p.Rect(xig,yig,ibox,ibox)
 squareG=p.Rect(xsg, ysg, wbox, hbox)
 square=p.Rect(xs,ys,wb,hb)
 
-
 #Define Colors
 colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':[5, 31, 64], 
 'forest':[16, 46, 12],'aqua':[51, 153, 255], 'pink': [200,75,125], 'litpur':[203,160,227],
@@ -94,7 +89,6 @@ sqM_color=colors.get('navy')
 txt=''
 txty=''
 xt=''
-
 def TitleMenu(message):
     txt=TITLE_FNT.render(message, 1, (255, 255, 255))
     screen.fill((background))
@@ -155,15 +149,12 @@ def scoreb():
     if len(stuff)>5:
         n=5
     else:
-        n=(len(stuff))
-    
+        n=(len(stuff))-1
     for i in range(n, -1, -1):
         txt=INST_FNT.render(stuff[i], 1, (5, 31, 64))
         screen.blit(txt, (90,yi))
         yi+= 50
     myFile.close()
-
-
 
 randColor=''
 def changeClr():
@@ -178,9 +169,7 @@ def changeClr():
 changeClr()
 sq_color=colors.get(randColor)    
 
-
 ######################################################################################################################
-
 MAX=10
 jumpCount=10
 JUMP=False
@@ -223,19 +212,12 @@ while check:
         score= ((eaten)*5-2*(timePlyR))
         txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
         xt= WIDTH/2-txt.get_width()/2
-        screen.blit(txt,(xt,250)) 
-       #For the name in leaderboard
-        # txt= INST_FNT.render("Enter your name:", 1,(5,31,64))
-        # xt= WIDTH/2-txt.get_width()/2
-        # screen.blit(txt,(xt,380)) 
-        
+        screen.blit(txt,(xt,250))       
     if SCOREBOARD:
         screen.fill(background)
         TitleMenu("ScoreBoard") 
         ReturnBut("Return to Menu")
-        scoreb()
-
-       
+        scoreb()     
         
     if EXIT:
         screen.fill(background)
@@ -249,8 +231,7 @@ while check:
 
     for event in p.event.get():
         if event.type == p.QUIT:
-            check = False
-   
+            check = False 
     #Mouse Controls
     #Menu Navigation
     if event.type ==p.MOUSEBUTTONDOWN:
@@ -287,7 +268,6 @@ while check:
         if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >550 and mouse_pos[1] <580))or EXIT:
             MAIN=False
             EXIT=True
-
 
     if SETT:
         if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290))or BACKCLR:
