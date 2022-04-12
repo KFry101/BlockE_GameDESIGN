@@ -19,35 +19,33 @@ xs=50
 ys=250
 wb=30
 hb=30
-
 #declare constants
 MAIN=True
 INSTR=False
 SETT=False
 BACKCLR=False
 CRCLR=False
+SIZE=False
 LEV_1=False
 LEV_2=False
 LEV_3=False
 PSCORE1=False
 SCOREBOARD=False
 EXIT=False
-
 #lists fr messages
 MenuList=["Instructions", 'Settings', '  Level 1', '  Level 2', "  Level 3", "Scoreboard", "Exit"]
-SettingList=[ 'Background Color', 'Circle Color']
+SettingList=[ 'Background Color', 'Circle Color','Screen size']
 BackColorList=['Aqua',"Magenta", "Yellow", "Orange"]
 CrClrList=['Green', "White", "Lilac", "Navy"]
+SizeList=['800x800', '1000x1000','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Circle Eats Square")
-
 #Fonts
 TITLE_FNT= p.font.SysFont("timesnewroman", 80)
 SUBT_FNT= p.font.SysFont("comicsans", 40)
 MENU_FNT= p.font.SysFont("arial", 50)
 INST_FNT= p.font.SysFont('comicsans', 30)
-
 #THE GAME VARIABLES
 #declare consants,variables, lists and dictionary
 check=True
@@ -72,19 +70,16 @@ inscribSq=p.Rect(xig,yig,ibox,ibox)
 #create the rect object
 squareG=p.Rect(xsg, ysg, wbox, hbox)
 square=p.Rect(xs,ys,wb,hb)
-
 #Define Colors
 colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':[5, 31, 64], 
 'forest':[16, 46, 12],'aqua':[51, 153, 255], 'pink': [200,75,125], 'litpur':[203,160,227],
 'mag':[255, 0, 255], 'yellow':[240, 180, 14] }
-
 #Get colors
 background=colors.get('pink')
 sq_color=colors.get('navy')
 cr_color=colors.get('white')
 inscribSq_color=colors.get('white')
 sqM_color=colors.get('navy')
-
 #GLobalization setup
 txt=''
 txty=''
@@ -117,18 +112,18 @@ def mainmenu(Mlist):
         txty+=50
         p.draw.rect(screen, sqM_color, square)
         square.y+=50
-    p.display.update()
-
-def instr():  
+  
+def instr(): 
+     
     txt=INST_FNT.render("Control the circle with the arrow keys", 1,(5, 31, 64))
-    screen.blit(txt,(90,200))
+    xt= WIDTH/2-txt.get_width()/2
+    screen.blit(txt,(xt,200))
     txt=INST_FNT.render("and absorb the square. If there is a ", 1, (5, 31, 64)) 
-    screen.blit(txt,(90,240))
+    screen.blit(txt,(xt,240))
     txt=INST_FNT.render("second player, control the square with",1, (5, 31, 64))
-    screen.blit(txt, (90,280))
+    screen.blit(txt, (xt,280))
     txt=INST_FNT.render("the wasd keys. You got to be quick!",1, (5, 31, 64))
-    screen.blit(txt, (90,320))
-    p.display.update()
+    screen.blit(txt, (xt,320)) 
 
 def keepScore(score):
     date=datetime.datetime.now()
@@ -143,20 +138,16 @@ def keepScore(score):
 def scoreb():
     myFile=open('Class Stuff\CircleEatsSquare\ScrBrd.txt', 'r')
     yi=150
-    stuff=myFile.readlines()
-    stuff.sort()
-    print(len(stuff))
-    if len(stuff)>5:
-        n=5
-    else:
-        n=(len(stuff))-1
-    for i in range(n, -1, -1):
-        txt=INST_FNT.render(stuff[i], 1, (5, 31, 64))
-        screen.blit(txt, (90,yi))
-        yi+= 50
+    stuff= myFile.readlines()
     myFile.close()
+    stuff.sort(reverse=True)
 
-randColor=''
+    for i in stuff[0:5]:
+        txt=INST_FNT.render(i,1,"navy")
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt, (xt,yi))
+        yi+=50
+
 def changeClr():
     global randColor
     colorCheck=True
@@ -167,13 +158,31 @@ def changeClr():
         else:
             colorCheck=False
 changeClr()
-sq_color=colors.get(randColor)    
+sq_color=colors.get(randColor)  
+
+def changeScreenSize(xm,ym):
+    global HEIGHT, WIDTH, screen
+    if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+        HEIGHT=800
+        WIDTH=800
+        print('here!')
+
+    if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+        HEIGHT=1000
+        WIDTH=1000
+        
+    if ((mouse_pos[0] >0 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+        HEIGHT=700
+        WIDTH=700
+    screen=p.display.set_mode((WIDTH,HEIGHT))
 
 ######################################################################################################################
 MAX=10
 jumpCount=10
 JUMP=False
 mouse_pos=(0,0)
+xm= mouse_pos[0]
+ym=mouse_pos[1]
 while check:
     keys=p.key.get_pressed()
     if MAIN:
@@ -200,6 +209,11 @@ while check:
         TitleMenu("Circle Color")
         ReturnBut("Back")
         mainmenu(CrClrList)
+    if SIZE:
+        screen.fill(background)
+        TitleMenu("Screen Size")
+        ReturnBut("Back")
+        mainmenu(SizeList)     
     if PSCORE1:
         timePlayed=((ticksEnd/1000)-(ticksStart/1000))
         timePlyR=round_up(timePlayed)
@@ -217,8 +231,7 @@ while check:
         screen.fill(background)
         TitleMenu("ScoreBoard") 
         ReturnBut("Return to Menu")
-        scoreb()     
-        
+        scoreb()           
     if EXIT:
         screen.fill(background)
         txt=INST_FNT.render("Thank you for Playing", 1,(5, 31, 64))
@@ -238,100 +251,114 @@ while check:
         mouse_pos=p.mouse.get_pos()
         print(mouse_pos)
         
-    if MAIN:
-        eaten=0
-        rad=15
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <280))or INSTR:
-            MAIN=False
-            screen.fill(background)
-            INSTR=True
-        if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <330))or SETT:
-            MAIN=False 
-            SETT=True
-            p.time.delay(300)
-            mouse_pos=(0,0)    
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <380))or LEV_1:
-            MAIN=False
-            LEV_1=True
-            ticksStart=p.time.get_ticks()
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <430))or LEV_2:
-            MAIN=False
-            LEV_2=True
-            ticksStart=p.time.get_ticks()
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >450 and mouse_pos[1] <480))or LEV_3:
-            MAIN=False
-            LEV_3=True
-            ticksStart=p.time.get_ticks()
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >500 and mouse_pos[1] <530))or SCOREBOARD:
-            MAIN=False
-            SCOREBOARD=True
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >550 and mouse_pos[1] <580))or EXIT:
-            MAIN=False
-            EXIT=True
+        if MAIN:
+            eaten=0
+            rad=15
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <280))or INSTR:
+                MAIN=False
+                screen.fill(background)
+                INSTR=True
+            if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <330))or SETT:
+                MAIN=False 
+                SETT=True
+                p.time.delay(300)
+                mouse_pos=(0,0)    
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <380))or LEV_1:
+                MAIN=False
+                LEV_1=True
+                ticksStart=p.time.get_ticks()
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <430))or LEV_2:
+                MAIN=False
+                LEV_2=True
+                ticksStart=p.time.get_ticks()
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >450 and mouse_pos[1] <480))or LEV_3:
+                MAIN=False
+                LEV_3=True
+                ticksStart=p.time.get_ticks()
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >500 and mouse_pos[1] <530))or SCOREBOARD:
+                MAIN=False
+                SCOREBOARD=True
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >550 and mouse_pos[1] <580))or EXIT:
+                MAIN=False
+                EXIT=True
 
-    if SETT:
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290))or BACKCLR:
-            SETT=False
-            screen.fill(background)
-            BACKCLR=True
-            p.time.delay(300)
-            mouse_pos=(0,0)
-        if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340))or CRCLR:
-            SETT=False
-            CRCLR=True
-            p.time.delay(300)
-            mouse_pos=(0,0)
-
-    if BACKCLR:
-        if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
-            BACKCLR=False
-            SETT=True
-            p.time.delay(300)
-            mouse_pos=(0,0)
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
-            background=colors.get('aqua')  
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
-            background=colors.get('mag')     
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
-            background=colors.get('yellow')
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
-            background=colors.get('orange')   
-    
-    if CRCLR:
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
-            cr_color=colors.get('forest') 
-            inscribSq_color=colors.get('forest')  
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
-            cr_color=colors.get('white') 
-            inscribSq_color=colors.get('white')   
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
-            cr_color=colors.get('litpur')  
-            inscribSq_color=colors.get('litpur')  
-        if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
-            cr_color=colors.get('navy')  
-            inscribSq_color=colors.get('navy')  
-        if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
-            CRCLR=False
-            SETT=True
-            p.time.delay(300)
-            mouse_pos=(0,0)
-             
-    #return to Menu
-    if not MAIN and not LEV_1:
-        if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
-            if INSTR:
-                INSTR=False
-                MAIN=True
-            if SETT:
+        if SETT:
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290))or BACKCLR:
                 SETT=False
-                MAIN=True
-            if PSCORE1:
-                PSCORE1=False
-                MAIN=True
-                keepScore(score)
-            if SCOREBOARD:
-                SCOREBOARD=False
-                MAIN=True
+                screen.fill(background)
+                BACKCLR=True
+                p.time.delay(300)
+                mouse_pos=(0,0)
+            if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340))or CRCLR:
+                SETT=False
+                CRCLR=True
+                p.time.delay(300)
+                mouse_pos=(0,0)
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+                SETT=False
+                SIZE=True
+                p.time.delay(400)
+                mouse_pos=(0,0) 
+
+        if BACKCLR:
+            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+                BACKCLR=False
+                SETT=True
+                p.time.delay(400)
+                mouse_pos=(0,0)
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+                background=colors.get('aqua')  
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+                background=colors.get('mag')     
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+                background=colors.get('yellow')
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
+                background=colors.get('orange')   
+        
+        if CRCLR:
+
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+                cr_color=colors.get('forest') 
+                inscribSq_color=colors.get('forest')  
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+                cr_color=colors.get('white') 
+                inscribSq_color=colors.get('white')   
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+                cr_color=colors.get('litpur')  
+                inscribSq_color=colors.get('litpur')  
+            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
+                cr_color=colors.get('navy')  
+                inscribSq_color=colors.get('navy')  
+            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+                CRCLR=False
+                SETT=True
+                p.time.delay(400)
+                mouse_pos=(0,0)
+        if SIZE:
+            print("i am here!!!")
+            changeScreenSize(xm,ym)
+            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+                SIZE=False
+                SETT=True
+                p.time.delay(400)
+                mouse_pos=(0,0)
+                
+        #return to Menu
+        if not MAIN and not LEV_1:
+            if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
+                if INSTR:
+                    INSTR=False
+                    MAIN=True
+                if SETT:
+                    SETT=False
+                    MAIN=True
+                if PSCORE1:
+                    PSCORE1=False
+                    MAIN=True
+                    keepScore(score)
+                if SCOREBOARD:
+                    SCOREBOARD=False
+                    MAIN=True
 
     #THE GAME Level 1
     if LEV_1:
@@ -518,6 +545,7 @@ while check:
             LEV_3=False
             PSCORE1=True
             ticksEnd=p.time.get_ticks()
-            print(ticksStart, ticksEnd)        
+            print(ticksStart, ticksEnd)  
+        
     p.display.update()
     p.time.delay(9)
