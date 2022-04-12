@@ -1,7 +1,6 @@
 #Katie Frymire
 #4/5/22
 
-
 import os, random, math,datetime
 import pygame as p
 os.system('cls')
@@ -29,6 +28,7 @@ chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png
 #clock
 clock = p.time.Clock()
 
+#Variables
 x=30
 y=636
 wc=64
@@ -43,10 +43,8 @@ walkCount=0
 def drawWindow():
     global walkCount
     screen.blit(biM,(0,0))
-    
     if walkCount + 1 >= 27:
          walkCount = 0
-
     if left:
         screen.blit(walkLeft[walkCount//3], (x,y))
         walkCount += 1
@@ -55,9 +53,7 @@ def drawWindow():
         walkCount +=1
     else:
         screen.blit(chara, (x,y))
-    
     p.display.update()
-
 
 #main loop
 while check:
@@ -79,7 +75,7 @@ while check:
         right=False
         walkCount=0
     if not JUMP:
-        if keys[p.K_SPACE]:
+        if keys[p.K_SPACE] or keys[p.K_UP]:
             JUMP=True
     else:
         if jumpCount>=-MAX:
