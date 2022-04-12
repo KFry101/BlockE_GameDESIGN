@@ -23,7 +23,8 @@ walkRight = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\R1.pn
 walkLeft = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L1.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L2.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L3.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L4.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L5.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L6.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L7.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L8.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L9.png')]
 biM=p.image.load('Class Stuff\images\\bi mountain.jpg')
 brW=p.image.load('Class Stuff\images\\broke window.jpg')
-rip=p.image.load('')
+rip=p.image.load('Class Stuff\images\Gravestone.png')
+rip=p.transform.scale(rip,(64,64))
 chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png")
 
 #clock
