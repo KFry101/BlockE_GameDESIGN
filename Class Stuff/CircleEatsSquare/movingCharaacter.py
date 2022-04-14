@@ -1,7 +1,7 @@
 #Katie Frymire
 #4/5/22
 
-import os, random, math,datetime
+import os, random, math,datetime, time
 import pygame as p
 os.system('cls')
 
@@ -10,9 +10,10 @@ p.init()
 
 #Constants
 JUMP=False
-MAX=10
+MAX=12
 WIDTH=700
 HEIGHT=700
+DEATH=False
 
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
@@ -23,9 +24,11 @@ walkRight = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\R1.pn
 walkLeft = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L1.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L2.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L3.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L4.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L5.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L6.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L7.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L8.png'), p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L9.png')]
 biM=p.image.load('Class Stuff\images\\bi mountain.jpg')
 brW=p.image.load('Class Stuff\images\\broke window.jpg')
-rip=p.image.load('Class Stuff\images\Gravestone.png')
-rip=p.transform.scale(rip,(64,64))
+rip=p.image.load('Class Stuff\images\pngegg.png')
+rip=p.transform.scale(rip,(50,65))
 chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png")
+bg=biM
+spr=chara
 
 #clock
 clock = p.time.Clock()
@@ -37,14 +40,14 @@ wc=64
 hc=64
 move= 5
 check=True
-jumpCount=10
+jumpCount=12
 left= False
 right=False
 walkCount=0
 
 def drawWindow():
     global walkCount
-    screen.blit(biM,(0,0))
+    screen.blit(bg,(0,0))
     if walkCount + 1 >= 27:
          walkCount = 0
     if left:
@@ -54,15 +57,39 @@ def drawWindow():
         screen.blit(walkRight[walkCount//3], (x,y))
         walkCount +=1
     else:
-        screen.blit(chara, (x,y))
+        screen.blit(spr, (x,y))
+
     p.display.update()
 
 #main loop
 while check:
     clock.tick(27)
+    #basic death slow fall
+    if DEATH:
+        clock.tick(24)
+        screen.blit(chara,(x+14,y))
+        JUMP=False
+        if y<636:
+            y+=7
+        elif y>=636:
+            spr=rip
+        if spr==rip and keys[p.K_LEFT] or keys[p.K_RIGHT]:
+            spr=chara
+            x=-14
+            y=636
+            jumpCount=12
+            MAX=12
+            DEATH=False
+            JUMP=False
+        
+            
+   #chara controls
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False
+        if event.type ==p.MOUSEBUTTONDOWN:
+            mouse_pos=p.mouse.get_pos()
+            print(mouse_pos)
     keys=p.key.get_pressed()
     if keys[p.K_LEFT] and x >=-14:
         x -= move
@@ -76,17 +103,32 @@ while check:
         left=False
         right=False
         walkCount=0
+    if bg==biM:
+        if x>=WIDTH-50:
+            bg=brW
+            x=-13
+            y=636
+    if bg==brW:
+        if x<=-14:
+            bg=biM
+            x=WIDTH-50
+    
     if not JUMP:
         if keys[p.K_SPACE] or keys[p.K_UP]:
             JUMP=True
     else:
         if jumpCount>=-MAX:
-            y -= jumpCount*abs(jumpCount)/2
+            y-= jumpCount*abs(jumpCount)/2
             jumpCount-=1
         else:
             jumpCount=MAX
             JUMP=False
-
+    
+    if JUMP and not DEATH:
+        if bg==biM:
+            if x>=436  and x<=570 and y>=370 and y<=410:
+                DEATH=True
+                
     drawWindow()
 
 p.quit()
