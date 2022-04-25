@@ -44,10 +44,12 @@ jumpCount=12
 left= False
 right=False
 walkCount=0
-
 def drawWindow():
     global walkCount
     screen.blit(bg,(0,0))
+    
+    hitbox=p.Rect(x+14,y,36,36)
+    p.draw.rect(screen,(0,0,0), hitbox) 
     if walkCount + 1 >= 27:
          walkCount = 0
     if left:

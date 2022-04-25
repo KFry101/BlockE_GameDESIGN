@@ -1,7 +1,8 @@
 #katie frymire
 #the level one of the final gmae
 
-import os, time, datetime, math 
+from dataclasses import replace
+import os, time, datetime, math
 import pygame as p
 os.system('cls')
 
@@ -43,13 +44,35 @@ forest=p.transform.scale(forest,(700,600))
 frst2=p.image.load('FinalGame\images\\forest.jpeg')
 frst2=p.transform.scale(forest,(700,600))
 medplat=p.image.load('FinalGame\images\\notaslonggrass.png')
+medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longgrassplat.png')
+longplat=p.transform.scale(longplat,(200,30))
+key=p.image.load('FinalGame\images\keywhitefl.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENT
+key=p.transform.scale(key,(60,60))
+clsdoor=p.image.load('FinalGame\images\clsdoor.png')
+opdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
 spr=chara
 
+def keyPlat(px,py): 
+    
+    screen.blit(longplat,(px,py))
+    xk=px+longplat.get_width()/2-25
+    screen.blit(key,(xk,py-50))
+
+def doorPlat(dx,dy):
+    global xd
+    screen.blit(medplat,(dx,dy))
+    xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
+    screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+
 def drawWindow():
-    global walkCount
+    global walkCount 
+    global hitbox
+    hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
+    p.draw.rect(screen,(0,0,0), hitbox) 
     screen.blit(bg,(0,0))
+   
     if walkCount + 1 >= 27:
          walkCount = 0
     if left:
@@ -60,7 +83,18 @@ def drawWindow():
         walkCount +=1
     else:
         screen.blit(spr, (x,y))
-
+    if bg==forest:
+        #steping plats
+        screen.blit(medplat,(WIDTH-560,HEIGHT-275))
+        screen.blit(medplat,(WIDTH-320, HEIGHT-390))
+        screen.blit(longplat,(WIDTH-100, HEIGHT-500))
+        #door plat 
+        doorPlat(WIDTH-660,HEIGHT-440)
+    if bg==frst2:
+        screen.blit(longplat,(WIDTH-750, HEIGHT-500))
+        #key plat
+        keyPlat(WIDTH-450, HEIGHT-390)
+    
     p.display.update()
 
 while check:   
@@ -85,10 +119,13 @@ while check:
         left=False
         right=False
         walkCount=0
-    if bg==forest: #screen with the door
+    if bg==forest: #screen with the door and
         if x>=WIDTH-50:
             bg=frst2
             x=-13
+        #this screen's platforms
+
+        
     if bg==frst2: #screen with the key
         if x<=-14:
             bg=forest
@@ -104,6 +141,8 @@ while check:
         else:
             jumpCount=MAX
             JUMP=False
+
+    
     drawWindow()
 
 
