@@ -9,15 +9,19 @@ os.system('cls')
 #intailize p
 p.init()
 
+
+
 #Constants
 JUMP=False
 MAX=10
 WIDTH=700
 HEIGHT=600
-DEATH=False
+
+
+
 
 #variables
-check=True
+run=True
 move=5
 jumpCount=10
 left= False
@@ -26,9 +30,16 @@ walkCount=0
 x=30
 y=418
  
+ 
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Level 1")
+
+#hidden collision items
+# hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
+# p.draw.rect(screen,(0,255,0), hitbox) 
+# plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
+# p.draw.rect(screen,(255,0,0),plat1)
 
 #clock
 clock = p.time.Clock()
@@ -50,18 +61,16 @@ longplat=p.transform.scale(longplat,(200,30))
 key=p.image.load('FinalGame\images\keywhitefl.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENT
 key=p.transform.scale(key,(60,60))
 clsdoor=p.image.load('FinalGame\images\clsdoor.png')
-opdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
+openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
 spr=chara
 
 def keyPlat(px,py): 
-    
     screen.blit(longplat,(px,py))
     xk=px+longplat.get_width()/2-25
     screen.blit(key,(xk,py-50))
 
 def doorPlat(dx,dy):
-    global xd
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
     screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
@@ -69,20 +78,15 @@ def doorPlat(dx,dy):
 def drawWindow():
     global walkCount 
     global hitbox
+    global plat1
+    #hidden collision items
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
     p.draw.rect(screen,(0,0,0), hitbox) 
+    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
+    p.draw.rect(screen,(255,0,0),plat1)
+    # background
     screen.blit(bg,(0,0))
-   
-    if walkCount + 1 >= 27:
-         walkCount = 0
-    if left:
-        screen.blit(walkLeft[walkCount//3], (x,y))
-        walkCount += 1
-    elif right:
-        screen.blit(walkRight[walkCount//3], (x,y))
-        walkCount +=1
-    else:
-        screen.blit(spr, (x,y))
+   #actual graphics
     if bg==forest:
         #steping plats
         screen.blit(medplat,(WIDTH-560,HEIGHT-275))
@@ -94,15 +98,39 @@ def drawWindow():
         screen.blit(longplat,(WIDTH-750, HEIGHT-500))
         #key plat
         keyPlat(WIDTH-450, HEIGHT-390)
+    if walkCount + 1 >= 27:
+         walkCount = 0
+    if left:
+        screen.blit(walkLeft[walkCount//3], (x,y))
+        walkCount += 1
+    elif right:
+        screen.blit(walkRight[walkCount//3], (x,y))
+        walkCount +=1
+    else:
+        screen.blit(spr, (x,y))
+    #actual graphics
+    # if bg==forest:
+    #     #steping plats
+    #     screen.blit(medplat,(WIDTH-560,HEIGHT-275))
+    #     screen.blit(medplat,(WIDTH-320, HEIGHT-390))
+    #     screen.blit(longplat,(WIDTH-100, HEIGHT-500))
+    #     #door plat 
+    #     doorPlat(WIDTH-660,HEIGHT-440)
+    # if bg==frst2:
+    #     screen.blit(longplat,(WIDTH-750, HEIGHT-500))
+    #     #key plat
+    #     keyPlat(WIDTH-450, HEIGHT-390)
     
     p.display.update()
 
-while check:   
+while run:   
     clock.tick(27)
+    #the collide variable
+    
     for event in p.event.get():
         if event.type == p.QUIT:
-            check = False
-    if event.type ==p.MOUSEBUTTONDOWN:
+            run = False
+        if event.type==p.MOUSEBUTTONDOWN:
             mouse_pos=p.mouse.get_pos()
             print(mouse_pos)
     #chara controls
@@ -119,18 +147,16 @@ while check:
         left=False
         right=False
         walkCount=0
+
     if bg==forest: #screen with the door and
         if x>=WIDTH-50:
             bg=frst2
             x=-13
-        #this screen's platforms
 
-        
     if bg==frst2: #screen with the key
         if x<=-14:
             bg=forest
             x=WIDTH-50
-    
     if not JUMP:
         if keys[p.K_SPACE] or keys[p.K_UP]:
             JUMP=True
@@ -141,6 +167,13 @@ while check:
         else:
             jumpCount=MAX
             JUMP=False
+    #collision rules  
+    hitbox=p.Rect(x+14,y+14,36,50)
+    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
+    if p.Rect.colliderect(hitbox, plat1):
+        y = plat1.y-64
+          
+    
 
     
     drawWindow()
