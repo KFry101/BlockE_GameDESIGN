@@ -1,7 +1,6 @@
 #katie frymire
 #the level one of the final gmae
 
-from dataclasses import replace
 import os, time, datetime, math
 import pygame as p
 os.system('cls')
@@ -29,17 +28,14 @@ right=False
 walkCount=0
 x=30
 y=418
+key=False
+
  
  
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Level 1")
 
-#hidden collision items
-# hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
-# p.draw.rect(screen,(0,255,0), hitbox) 
-# plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
-# p.draw.rect(screen,(255,0,0),plat1)
 
 #clock
 clock = p.time.Clock()
@@ -59,7 +55,7 @@ medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longgrassplat.png')
 longplat=p.transform.scale(longplat,(200,30))
 key=p.image.load('FinalGame\images\keywhitefl.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENT
-key=p.transform.scale(key,(60,60))
+key=p.transform.scale(key,(70,70))
 clsdoor=p.image.load('FinalGame\images\clsdoor.png')
 openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
@@ -68,7 +64,7 @@ spr=chara
 def keyPlat(px,py): 
     screen.blit(longplat,(px,py))
     xk=px+longplat.get_width()/2-25
-    screen.blit(key,(xk,py-50))
+    screen.blit(key,(xk,py-70))
 
 def doorPlat(dx,dy):
     screen.blit(medplat,(dx,dy))
@@ -78,14 +74,37 @@ def doorPlat(dx,dy):
 def drawWindow():
     global walkCount 
     global hitbox
-    global plat1
-    #hidden collision items
+    global plats1
+    global plat
+    global plat1, plat2, plat3, platd
+    #hidden collision items DRAWN
+    #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
     p.draw.rect(screen,(0,0,0), hitbox) 
-    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
-    p.draw.rect(screen,(255,0,0),plat1)
+    #the platforms
+    plats1=[]
+    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 3)
+    plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,3)
+    plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 3)
+    platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 3)
+    ground=p.Rect(0, HEIGHT-150, WIDTH, 1)
+    plats1.append(plat1)
+    plats1.append(plat2)
+    plats1.append(plat3)
+    plats1.append(platd)
+    plats1.append(ground)
+    if bg==forest:
+        for plat in plats1:
+            p.draw.rect(screen,(255,0,0),plat)
+    plats2=[]
+
+    plats2.append(ground)
+    if bg==frst2:
+        for plat in plats2:
+            p.draw.rect(screen,(255,0,0),plat)
+
     # background
-    screen.blit(bg,(0,0))
+    # screen.blit(bg,(0,0))
    #actual graphics
     if bg==forest:
         #steping plats
@@ -93,11 +112,12 @@ def drawWindow():
         screen.blit(medplat,(WIDTH-320, HEIGHT-390))
         screen.blit(longplat,(WIDTH-100, HEIGHT-500))
         #door plat 
-        doorPlat(WIDTH-660,HEIGHT-440)
+        doorPlat(WIDTH-660,HEIGHT-420)
     if bg==frst2:
-        screen.blit(longplat,(WIDTH-750, HEIGHT-500))
+        screen.blit(longplat,(-50, HEIGHT-500))
         #key plat
         keyPlat(WIDTH-450, HEIGHT-390)
+# the character moveent  
     if walkCount + 1 >= 27:
          walkCount = 0
     if left:
@@ -107,20 +127,7 @@ def drawWindow():
         screen.blit(walkRight[walkCount//3], (x,y))
         walkCount +=1
     else:
-        screen.blit(spr, (x,y))
-    #actual graphics
-    # if bg==forest:
-    #     #steping plats
-    #     screen.blit(medplat,(WIDTH-560,HEIGHT-275))
-    #     screen.blit(medplat,(WIDTH-320, HEIGHT-390))
-    #     screen.blit(longplat,(WIDTH-100, HEIGHT-500))
-    #     #door plat 
-    #     doorPlat(WIDTH-660,HEIGHT-440)
-    # if bg==frst2:
-    #     screen.blit(longplat,(WIDTH-750, HEIGHT-500))
-    #     #key plat
-    #     keyPlat(WIDTH-450, HEIGHT-390)
-    
+        screen.blit(spr, (x,y))    
     p.display.update()
 
 while run:   
@@ -167,12 +174,47 @@ while run:
         else:
             jumpCount=MAX
             JUMP=False
-    #collision rules  
+ #collision rules  
+ #Items for the collision itselfdfsdgwrhryeh
+    #hitbox
     hitbox=p.Rect(x+14,y+14,36,50)
-    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 30)
-    if p.Rect.colliderect(hitbox, plat1):
-        y = plat1.y-64
-          
+    #platforms
+    plats1=[]
+    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 5)
+    plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,5)
+    plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 5)
+    platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
+    ground=p.Rect(0, HEIGHT-150, WIDTH, 25)
+    plats1.append(plat1)
+    plats1.append(plat2)
+    plats1.append(plat3)
+    plats1.append(platd)
+    plats1.append(ground)
+    if bg==forest:
+        for plat in plats1:
+            collide=p.Rect.colliderect(hitbox, plat)
+            if collide:
+                y = plat.y-63
+                acc=0
+    plats2=[]
+    plat4=p.Rect(-50, HEIGHT-500, 200, 5)
+    plat5=p.Rect(WIDTH-450, HEIGHT-390, 200, 5)
+    plats2.append(ground)
+    plats2.append(plat4)
+    plats2.append(plat5)
+    if bg==frst2:
+        for plat in plats2:
+            collide=p.Rect.colliderect(hitbox, plat)
+            if collide:
+                y = plat.y-63
+                acc=0
+    if not collide: #gravity
+        acc+=3
+        y+=acc
+        
+
+
+            
     
 
     
