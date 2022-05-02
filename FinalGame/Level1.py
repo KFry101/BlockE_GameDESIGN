@@ -54,8 +54,9 @@ medplat=p.image.load('FinalGame\images\\notaslonggrass.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longgrassplat.png')
 longplat=p.transform.scale(longplat,(200,30))
-key=p.image.load('FinalGame\images\keywhitefl.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENT
+key=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
 key=p.transform.scale(key,(70,70))
+keylist=[p.image.load('FinalGame\images\wKey1.gif'), p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif')]
 clsdoor=p.image.load('FinalGame\images\clsdoor.png')
 openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
@@ -209,7 +210,7 @@ while run:
                 y = plat.y-63
                 acc=0
     if not collide: #gravity
-        acc+=3
+        acc+=1
         y+=acc
         
 
