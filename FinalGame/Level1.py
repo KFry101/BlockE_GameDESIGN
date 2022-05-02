@@ -26,6 +26,7 @@ jumpCount=10
 left= False
 right=False
 walkCount=0
+keycount=0
 x=30
 y=418
 key=False
@@ -54,23 +55,54 @@ medplat=p.image.load('FinalGame\images\\notaslonggrass.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longgrassplat.png')
 longplat=p.transform.scale(longplat,(200,30))
-key=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
-key=p.transform.scale(key,(70,70))
-keylist=[p.image.load('FinalGame\images\wKey1.gif'), p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif'),p.image.load('FinalGame\images\wKey1.gif')]
+key1=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
+key1=p.transform.scale(key1,(70,70))
+key2=p.image.load('FinalGame\images\wKey2.gif')
+key2=p.transform.scale(key2,(70,70))
+key3=p.image.load('FinalGame\images\wKey3.gif')
+key3=p.transform.scale(key3,(70,70))
+key4=p.image.load('FinalGame\images\wKey4.gif')
+key4=p.transform.scale(key4,(70,70))
+key5=p.image.load('FinalGame\images\wKey5.gif')
+key5=p.transform.scale(key5,(70,70))
+key6=p.image.load('FinalGame\images\wKey6.gif')
+key6=p.transform.scale(key6,(70,70))
+key7=p.image.load('FinalGame\images\wKey7.gif')
+key7=p.transform.scale(key7,(70,70))
+key8=p.image.load('FinalGame\images\wKey8.gif')
+key8=p.transform.scale(key8,(70,70))
+key9=p.image.load('FinalGame\images\wKey9.gif')
+key9=p.transform.scale(key9,(70,70))
+key10=p.image.load('FinalGame\images\wKey10.gif')
+key10=p.transform.scale(key10,(70,70))
+key11=p.image.load('FinalGame\images\wKey11.gif')
+key11=p.transform.scale(key11,(70,70))
+key12=p.image.load('FinalGame\images\wKey12.gif')
+key12=p.transform.scale(key12,(70,70))
+
+keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
 clsdoor=p.image.load('FinalGame\images\clsdoor.png')
 openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
 spr=chara
-
-def keyPlat(px,py): 
-    screen.blit(longplat,(px,py))
-    xk=px+longplat.get_width()/2-25
-    screen.blit(key,(xk,py-70))
-
 def doorPlat(dx,dy):
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
     screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+
+def keyPlat(px,py): 
+    global keycount
+    global xk
+    screen.blit(longplat,(px,py))
+    xk=px+longplat.get_width()/2-25
+    if keycount + 1 >= 36:
+        keycount=0
+    if not key:
+        screen.blit(keylist[keycount//3], (xk,py-70))
+        keycount+=1
+
+
+
 
 def drawWindow():
     global walkCount 
@@ -78,6 +110,7 @@ def drawWindow():
     global plats1
     global plat
     global plat1, plat2, plat3, platd
+    global xk
     #hidden collision items DRAWN
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
@@ -98,14 +131,15 @@ def drawWindow():
         for plat in plats1:
             p.draw.rect(screen,(255,0,0),plat)
     plats2=[]
-
     plats2.append(ground)
     if bg==frst2:
         for plat in plats2:
             p.draw.rect(screen,(255,0,0),plat)
+        p.draw.rect(screen, (0,0,255), keybox)
 
     # background
-    # screen.blit(bg,(0,0))
+    screen.blit(bg,(0,0))
+
    #actual graphics
     if bg==forest:
         #steping plats
@@ -203,12 +237,18 @@ while run:
     plats2.append(ground)
     plats2.append(plat4)
     plats2.append(plat5)
+    px=WIDTH-450
+    xck=px+longplat.get_width()/2
+    keybox=p.Rect(xck, HEIGHT-440, 18, 32)
     if bg==frst2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
                 y = plat.y-63
                 acc=0
+        collidekey=p.Rect.colliderect(hitbox,keybox)
+        if collidekey:
+            key=True
     if not collide: #gravity
         acc+=1
         y+=acc
