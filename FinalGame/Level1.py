@@ -30,7 +30,7 @@ keycount=0
 doorCount=0
 x=30
 y=418
-key=False
+key=True
 doorSeq=False
 Ending=False
 
@@ -89,6 +89,13 @@ openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\
 darkness=p.image.load('FinalGame\images\doorBlack.png')
 bg=forest
 spr=chara
+def fadeout():
+    fadeout = p.Surface((WIDTH, HEIGHT))
+    fadeout.fill((0,0,0))
+    for i in range(255):
+        fadeout.set_alpha(i+1)
+        screen.blit(fadeout, (0, 0))
+
 
 def doorPlat(dx,dy):
     global doorCount
@@ -96,18 +103,18 @@ def doorPlat(dx,dy):
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
     ds=1
-    screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
+    screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     if doorCount + 1 >=12:
         ds=0
         doorCount=11
         p.time.delay(100)
         Ending=True
     if not doorSeq and not key:
-        doorCount=0
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     elif not doorSeq and key: 
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     elif doorSeq and key:
+        screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
         screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
         ds=1
         doorCount+=ds
@@ -130,6 +137,7 @@ def drawWindow():
     global plat
     global plat1, plat2, plat3, platd
     global xk
+
     #hidden collision items DRAWN
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
@@ -181,16 +189,15 @@ def drawWindow():
         screen.blit(walkRight[walkCount//3], (x,y))
         walkCount +=1
     else:
-        screen.blit(spr, (x,y))    
+        screen.blit(spr, (x,y))  
+
+    fs=p.Rect(0,0,WIDTH,HEIGHT)
     if Ending:
-        p.time.wait(100)
-        fscreen=p.Rect(0,0,WIDTH,HEIGHT)
-        fade= 1
-        if fade <=255:
-           
-            p.draw.rect(screen,(255,255,255, fade), fscreen) 
-            fade=fade+1
-            
+        fadeout()
+   
+
+        
+                
     p.display.update()
 
 
@@ -294,14 +301,10 @@ while run:
         acc+=1
         y+=acc
 
-        
-
-
-            
-    
-
     
     drawWindow()
+
+ 
 
 
 
