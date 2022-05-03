@@ -84,8 +84,8 @@ key11=p.transform.scale(key11,(70,70))
 key12=p.image.load('FinalGame\images\wKey12.gif')
 key12=p.transform.scale(key12,(70,70))
 keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
-clsdoor=p.image.load('FinalGame\images\clsdoor.png')
-openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
+clsdoor=p.image.load('FinalGame\images\door1.png')
+openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
 spr=chara
 
