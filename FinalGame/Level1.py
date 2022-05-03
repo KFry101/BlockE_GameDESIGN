@@ -32,7 +32,7 @@ x=30
 y=418
 key=False
 doorSeq=False
-ending=False
+Ending=False
 
 
  
@@ -86,28 +86,32 @@ key12=p.transform.scale(key12,(70,70))
 keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
 clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
+darkness=p.image.load('FinalGame\images\doorBlack.png')
 bg=forest
 spr=chara
 
 def doorPlat(dx,dy):
     global doorCount
+    global Ending
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
     ds=1
-
-    if doorCount + 1 >= 9:
+    screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
+    if doorCount + 1 >=12:
         ds=0
-        doorCount=8
+        doorCount=11
+        p.time.delay(100)
+        Ending=True
     if not doorSeq and not key:
+        doorCount=0
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
-    elif not doorSeq and key:
+    elif not doorSeq and key: 
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     elif doorSeq and key:
-        screen.blit(openingdoor[doorCount//3], (xd,dy-clsdoor.get_height()))
+        screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
+        ds=1
         doorCount+=ds
-        Ending=True
     
-
 def keyPlat(px,py): 
     global keycount
     global xk
@@ -178,7 +182,18 @@ def drawWindow():
         walkCount +=1
     else:
         screen.blit(spr, (x,y))    
+    if Ending:
+        p.time.wait(100)
+        fscreen=p.Rect(0,0,WIDTH,HEIGHT)
+        fade= 1
+        if fade <=255:
+           
+            p.draw.rect(screen,(255,255,255, fade), fscreen) 
+            fade=fade+1
+            
     p.display.update()
+
+
 
 while run:   
     clock.tick(27)
@@ -278,6 +293,7 @@ while run:
     if not collide: #gravity
         acc+=1
         y+=acc
+
         
 
 
