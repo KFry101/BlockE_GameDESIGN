@@ -27,9 +27,13 @@ left= False
 right=False
 walkCount=0
 keycount=0
+doorCount=0
 x=30
 y=418
 key=False
+doorSeq=False
+ending=False
+
 
  
  
@@ -79,16 +83,30 @@ key11=p.image.load('FinalGame\images\wKey11.gif')
 key11=p.transform.scale(key11,(70,70))
 key12=p.image.load('FinalGame\images\wKey12.gif')
 key12=p.transform.scale(key12,(70,70))
-
 keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
 clsdoor=p.image.load('FinalGame\images\clsdoor.png')
 openingdoor=[p.image.load('FinalGame\images\clsdoor.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 bg=forest
 spr=chara
+
 def doorPlat(dx,dy):
+    global doorCount
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
-    screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+    ds=1
+
+    if doorCount + 1 >= 9:
+        ds=0
+        doorCount=8
+    if not doorSeq and not key:
+        screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+    elif not doorSeq and key:
+        screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+    elif doorSeq and key:
+        screen.blit(openingdoor[doorCount//3], (xd,dy-clsdoor.get_height()))
+        doorCount+=ds
+        Ending=True
+    
 
 def keyPlat(px,py): 
     global keycount
@@ -100,9 +118,6 @@ def keyPlat(px,py):
     if not key:
         screen.blit(keylist[keycount//3], (xk,py-70))
         keycount+=1
-
-
-
 
 def drawWindow():
     global walkCount 
@@ -231,24 +246,35 @@ while run:
             if collide:
                 y = plat.y-63
                 acc=0
+            dx=WIDTH-660
+            wd=clsdoor.get_width()
+            hd=clsdoor.get_height()
+            xcd=dx+medplat.get_width()/2-clsdoor.get_width()/2
+            doorbox=p.Rect(xcd,HEIGHT-420-hd, wd ,hd) #manually put dy
+            collidedoor=p.Rect.colliderect(hitbox, doorbox)
+            if collidedoor:
+                doorSeq=True
+            if not collidedoor:
+                doorSeq=False
     plats2=[]
     plat4=p.Rect(-50, HEIGHT-500, 200, 5)
     plat5=p.Rect(WIDTH-450, HEIGHT-390, 200, 5)
     plats2.append(ground)
     plats2.append(plat4)
     plats2.append(plat5)
-    px=WIDTH-450
-    xck=px+longplat.get_width()/2
-    keybox=p.Rect(xck, HEIGHT-440, 18, 32)
     if bg==frst2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
                 y = plat.y-63
                 acc=0
+        px=WIDTH-450
+        xck=px+longplat.get_width()/2
+        keybox=p.Rect(xck, HEIGHT-440, 18, 32) #manually put py
         collidekey=p.Rect.colliderect(hitbox,keybox)
         if collidekey:
             key=True
+
     if not collide: #gravity
         acc+=1
         y+=acc
