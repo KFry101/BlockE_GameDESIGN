@@ -57,7 +57,7 @@ cave=p.transform.scale(cave,(700,600))
 cve2=p.image.load('FinalGame\images\cave.png')
 cve2=p.transform.scale(cve2,(700,600))
 smlPlat=p.image.load("FinalGame\images\cubecave.png")
-smlPlat=p.transform.scale(smlPlat,(30,30))
+smlPlat=p.transform.scale(smlPlat,(35,35))
 medplat=p.image.load('FinalGame\images\mediumcaveplat.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longcaveplat.png')
@@ -177,13 +177,14 @@ def drawWindow():
    #actual graphics
     if bg==cave:
         #steping plats
-        screen.blit(medplat,(WIDTH-560,HEIGHT-275))
-        screen.blit(medplat,(WIDTH-320, HEIGHT-390))
+        # screen.blit(medplat,(WIDTH-560,HEIGHT-275))
+        screen.blit(medplat,((WIDTH/3)-medplat.get_width(), HEIGHT-300))
         screen.blit(longplat,(WIDTH-100, HEIGHT-500))
+        screen.blit(smlPlat,((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69))
         #door plat 
         doorPlat(WIDTH-660,HEIGHT-420)
         screen.blit(spikes,(WIDTH-320, HEIGHT-390))
-        screen.blit(smlPlat,(WIDTH-400,HEIGHT-150))
+        
     if bg==cve2:
         screen.blit(longplat,(-50, HEIGHT-500))
         #key plat
@@ -231,15 +232,24 @@ while run:
         #     MAX=12
         #     DEATH=False
         #     JUMP=False
-
+   
     for event in p.event.get():
         if event.type == p.QUIT:
             run = False
         if event.type==p.MOUSEBUTTONDOWN:
             mouse_pos=p.mouse.get_pos()
             print(mouse_pos)
+        # if event.type ==  p.K_LSHIFT:
+        #     move=5
+        if event.type == p.K_LSHIFT:
+            move=10
+    keys=p.key.get_pressed()  
+       
     #chara controls
-    keys=p.key.get_pressed()
+    if keys[p.K_LSHIFT]:
+        move=10
+    else:
+        move=5
     if keys[p.K_LEFT] and x >=-14:
         x -= move
         left=True
@@ -278,7 +288,7 @@ while run:
     hitbox=p.Rect(x+14,y+14,36,50)
     #platforms
     plats1=[]
-    plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 5)
+    plat1 = p.Rect((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69, 30, 5)
     plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,5)
     plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 5)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
@@ -324,13 +334,8 @@ while run:
             key=True
 
     if not collide: #gravity
-        acc+=1.5
+        acc+=1
         y+=acc
 
     
     drawWindow()
-
- 
-
-
-
