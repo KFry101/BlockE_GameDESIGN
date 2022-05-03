@@ -29,7 +29,7 @@ walkCount=0
 keycount=0
 doorCount=0
 x=30
-y=418
+y=506
 key=False
 doorSeq=False
 Ending=False
@@ -51,13 +51,13 @@ walkLeft = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L1.png
 rip=p.image.load('Class Stuff\images\pngegg.png')
 rip=p.transform.scale(rip,(50,65))
 chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png")
-forest=p.image.load('FinalGame\images\\forest.jpeg')
-forest=p.transform.scale(forest,(700,600))
-frst2=p.image.load('FinalGame\images\\forest.jpeg')
-frst2=p.transform.scale(forest,(700,600))
-medplat=p.image.load('FinalGame\images\\notaslonggrass.png')
+cave=p.image.load('FinalGame\images\cave.png')
+cave=p.transform.scale(cave,(700,600))
+cve2=p.image.load('FinalGame\images\cave.png')
+cve2=p.transform.scale(cve2,(700,600))
+medplat=p.image.load('FinalGame\images\mediumcaveplat.png')
 medplat=p.transform.scale(medplat,(150,30))
-longplat=p.image.load('FinalGame\images\longgrassplat.png')
+longplat=p.image.load('FinalGame\images\longcaveplat.png')
 longplat=p.transform.scale(longplat,(200,30))
 key1=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
 key1=p.transform.scale(key1,(70,70))
@@ -87,7 +87,8 @@ keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
 clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 darkness=p.image.load('FinalGame\images\doorBlack.png')
-bg=forest
+#CHANGING IMAGE VARIABLES
+bg=cave
 spr=chara
 
 # def fadeout():
@@ -149,18 +150,18 @@ def drawWindow():
     plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,3)
     plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 3)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 3)
-    ground=p.Rect(0, HEIGHT-150, WIDTH, 1)
+    ground=p.Rect(0, HEIGHT-30, WIDTH, 1)
     plats1.append(plat1)
     plats1.append(plat2)
     plats1.append(plat3)
     plats1.append(platd)
     plats1.append(ground)
-    if bg==forest:
+    if bg==cave:
         for plat in plats1:
             p.draw.rect(screen,(255,0,0),plat)
     plats2=[]
     plats2.append(ground)
-    if bg==frst2:
+    if bg==cve2:
         for plat in plats2:
             p.draw.rect(screen,(255,0,0),plat)
         p.draw.rect(screen, (0,0,255), keybox)
@@ -169,14 +170,14 @@ def drawWindow():
     screen.blit(bg,(0,0))
 
    #actual graphics
-    if bg==forest:
+    if bg==cave:
         #steping plats
         screen.blit(medplat,(WIDTH-560,HEIGHT-275))
         screen.blit(medplat,(WIDTH-320, HEIGHT-390))
         screen.blit(longplat,(WIDTH-100, HEIGHT-500))
         #door plat 
         doorPlat(WIDTH-660,HEIGHT-420)
-    if bg==frst2:
+    if bg==cve2:
         screen.blit(longplat,(-50, HEIGHT-500))
         #key plat
         keyPlat(WIDTH-450, HEIGHT-390)
@@ -228,14 +229,14 @@ while run:
         right=False
         walkCount=0
 
-    if bg==forest: #screen with the door and
+    if bg==cave: #screen with the door and
         if x>=WIDTH-50:
-            bg=frst2
+            bg=cve2
             x=-13
 
-    if bg==frst2: #screen with the key
+    if bg==cve2: #screen with the key
         if x<=-14:
-            bg=forest
+            bg=cave
             x=WIDTH-50
     if not JUMP:
         if keys[p.K_SPACE] or keys[p.K_UP]:
@@ -257,13 +258,13 @@ while run:
     plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,5)
     plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 5)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
-    ground=p.Rect(0, HEIGHT-150, WIDTH, 25)
+    ground=p.Rect(0, HEIGHT-30, WIDTH, 25)
     plats1.append(plat1)
     plats1.append(plat2)
     plats1.append(plat3)
     plats1.append(platd)
     plats1.append(ground)
-    if bg==forest:
+    if bg==cave:
         for plat in plats1:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
@@ -285,7 +286,7 @@ while run:
     plats2.append(ground)
     plats2.append(plat4)
     plats2.append(plat5)
-    if bg==frst2:
+    if bg==cve2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
@@ -299,6 +300,7 @@ while run:
             key=True
 
     if not collide: #gravity
+        acc=0
         acc+=1
         y+=acc
 
