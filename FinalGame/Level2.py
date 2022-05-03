@@ -15,13 +15,14 @@ JUMP=False
 MAX=10
 WIDTH=700
 HEIGHT=600
-
+DEATH=False
 
 
 
 #variables
 run=True
 move=5
+
 jumpCount=10
 left= False
 right=False
@@ -29,7 +30,7 @@ walkCount=0
 keycount=0
 doorCount=0
 x=30
-y=506
+y=507
 key=False
 doorSeq=False
 Ending=False
@@ -39,7 +40,7 @@ Ending=False
  
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
-p.display.set_caption("Level 1")
+p.display.set_caption("Level 2")
 
 
 #clock
@@ -55,38 +56,43 @@ cave=p.image.load('FinalGame\images\cave.png')
 cave=p.transform.scale(cave,(700,600))
 cve2=p.image.load('FinalGame\images\cave.png')
 cve2=p.transform.scale(cve2,(700,600))
+smlPlat=p.image.load("FinalGame\images\cubecave.png")
+smlPlat=p.transform.scale(smlPlat,(30,30))
 medplat=p.image.load('FinalGame\images\mediumcaveplat.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longcaveplat.png')
 longplat=p.transform.scale(longplat,(200,30))
-key1=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
+key1=p.image.load('FinalGame\images\\bKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
 key1=p.transform.scale(key1,(70,70))
-key2=p.image.load('FinalGame\images\wKey2.gif')
+key2=p.image.load('FinalGame\images\\bKey2.gif')
 key2=p.transform.scale(key2,(70,70))
-key3=p.image.load('FinalGame\images\wKey3.gif')
+key3=p.image.load('FinalGame\images\\bKey3.gif')
 key3=p.transform.scale(key3,(70,70))
-key4=p.image.load('FinalGame\images\wKey4.gif')
+key4=p.image.load('FinalGame\images\\bKey4.gif')
 key4=p.transform.scale(key4,(70,70))
-key5=p.image.load('FinalGame\images\wKey5.gif')
+key5=p.image.load('FinalGame\images\\bKey5.gif')
 key5=p.transform.scale(key5,(70,70))
-key6=p.image.load('FinalGame\images\wKey6.gif')
+key6=p.image.load('FinalGame\images\\bKey6.gif')
 key6=p.transform.scale(key6,(70,70))
-key7=p.image.load('FinalGame\images\wKey7.gif')
+key7=p.image.load('FinalGame\images\\bKey7.gif')
 key7=p.transform.scale(key7,(70,70))
-key8=p.image.load('FinalGame\images\wKey8.gif')
+key8=p.image.load('FinalGame\images\\bKey8.gif')
 key8=p.transform.scale(key8,(70,70))
-key9=p.image.load('FinalGame\images\wKey9.gif')
+key9=p.image.load('FinalGame\images\\bKey9.gif')
 key9=p.transform.scale(key9,(70,70))
-key10=p.image.load('FinalGame\images\wKey10.gif')
+key10=p.image.load('FinalGame\images\\bKey10.gif')
 key10=p.transform.scale(key10,(70,70))
-key11=p.image.load('FinalGame\images\wKey11.gif')
+key11=p.image.load('FinalGame\images\\bKey11.gif')
 key11=p.transform.scale(key11,(70,70))
-key12=p.image.load('FinalGame\images\wKey12.gif')
+key12=p.image.load('FinalGame\images\\bKey12.gif')
 key12=p.transform.scale(key12,(70,70))
 keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
 clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 darkness=p.image.load('FinalGame\images\doorBlack.png')
+spikes=p.image.load("FinalGame\images\cavespike.png")
+spikes=p.transform.scale(spikes, (70, 30))
+tallSpike=p.transform.scale(spikes,(70,50))
 #CHANGING IMAGE VARIABLES
 bg=cave
 spr=chara
@@ -97,7 +103,6 @@ spr=chara
 #     for i in range(255):
 #         fadeout.set_alpha(i+1)
 #         screen.blit(fadeout, (0, 0))
-
 
 def doorPlat(dx,dy):
     global doorCount
@@ -143,7 +148,7 @@ def drawWindow():
     #hidden collision items DRAWN
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
-    p.draw.rect(screen,(0,0,0), hitbox) 
+    p.draw.rect(screen,(0,0,255), hitbox) 
     #the platforms
     plats1=[]
     plat1 = p.Rect(WIDTH-560,HEIGHT-275, 150, 3)
@@ -177,6 +182,8 @@ def drawWindow():
         screen.blit(longplat,(WIDTH-100, HEIGHT-500))
         #door plat 
         doorPlat(WIDTH-660,HEIGHT-420)
+        screen.blit(spikes,(WIDTH-320, HEIGHT-390))
+        screen.blit(smlPlat,(WIDTH-400,HEIGHT-150))
     if bg==cve2:
         screen.blit(longplat,(-50, HEIGHT-500))
         #key plat
@@ -206,8 +213,25 @@ def drawWindow():
 
 while run:   
     clock.tick(27)
+    global acc
     #the collide variable
-    
+    if DEATH:
+        clock.tick(24)
+        screen.blit(chara,(x+14,y))
+        JUMP=False #NEED TO BE ADJUST FOR NEW STUFF
+        # if y<636:
+        #     y+=7
+        # elif y>=636:
+        #     spr=rip
+        # if spr==rip and keys[p.K_LEFT] or keys[p.K_RIGHT]:
+        #     spr=chara
+        #     x=-14
+        #     y=636
+        #     jumpCount=12
+        #     MAX=12
+        #     DEATH=False
+        #     JUMP=False
+
     for event in p.event.get():
         if event.type == p.QUIT:
             run = False
@@ -300,15 +324,13 @@ while run:
             key=True
 
     if not collide: #gravity
-        acc=0
-        acc+=1
+        acc+=1.5
         y+=acc
 
     
     drawWindow()
 
  
-
 
 
 
