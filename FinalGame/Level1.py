@@ -30,7 +30,7 @@ keycount=0
 doorCount=0
 x=30
 y=418
-key=True
+key=False
 doorSeq=False
 Ending=False
 
@@ -89,12 +89,13 @@ openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\
 darkness=p.image.load('FinalGame\images\doorBlack.png')
 bg=forest
 spr=chara
-def fadeout():
-    fadeout = p.Surface((WIDTH, HEIGHT))
-    fadeout.fill((0,0,0))
-    for i in range(255):
-        fadeout.set_alpha(i+1)
-        screen.blit(fadeout, (0, 0))
+
+# def fadeout():
+#     fadeout = p.Surface((WIDTH, HEIGHT))
+#     fadeout.fill((0,0,0))
+#     for i in range(255):
+#         fadeout.set_alpha(i+1)
+#         screen.blit(fadeout, (0, 0))
 
 
 def doorPlat(dx,dy):
@@ -192,8 +193,8 @@ def drawWindow():
         screen.blit(spr, (x,y))  
 
     fs=p.Rect(0,0,WIDTH,HEIGHT)
-    if Ending:
-        fadeout()
+    # if Ending:
+    #     fadeout()
    
 
         
