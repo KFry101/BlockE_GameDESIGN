@@ -305,7 +305,7 @@ while run:
     plats1.append(platd)
     plats1.append(ground)
     Spikes1=[] #############################################################################################
-    spike1=p.Rect(WIDTH*.68, HEIGHT*.825, 150,75)
+    spike1=p.Rect(WIDTH*.68, HEIGHT*.825, 200,75)
     Spikes1.append(spike1)
     if bg==cave:
         for spike in Spikes1:
@@ -340,8 +340,15 @@ while run:
     plats2.append(plat7)
     plats2.append(platk)
     Spikes2=[]
-    spike2=
+    spike2=p.Rect(WIDTH*.1, HEIGHT*.825, 200,75)
+    spike3=p.Rect(WIDTH*.61, HEIGHT*.825, 200,75)
+    Spikes2.append(spike2)
+    Spikes2.append(spike3)
     if bg==cve2:
+        for spike in Spikes2:
+            collidespike=p.Rect.colliderect(hitbox, spike)
+            if collidespike:
+                DEATH=True
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
