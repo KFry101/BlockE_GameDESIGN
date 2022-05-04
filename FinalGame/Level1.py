@@ -215,6 +215,10 @@ while run:
             print(mouse_pos)
     #chara controls
     keys=p.key.get_pressed()
+    if keys[p.K_LSHIFT]:
+        move=10
+    else:
+        move=5
     if keys[p.K_LEFT] and x >=-14:
         x -= move
         left=True

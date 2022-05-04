@@ -22,15 +22,15 @@ DEATH=False
 #variables
 run=True
 move=5
-
+deathcount=0
 jumpCount=10
 left= False
 right=False
 walkCount=0
 keycount=0
 doorCount=0
-x=30
-y=507
+x=WIDTH*.0428
+y=HEIGHT*.845
 key=False
 doorSeq=False
 Ending=False
@@ -91,8 +91,9 @@ clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 darkness=p.image.load('FinalGame\images\doorBlack.png')
 spikes=p.image.load("FinalGame\images\cavespike.png")
-spikes=p.transform.scale(spikes, (70, 30))
-tallSpike=p.transform.scale(spikes,(70,50))
+spikes=p.transform.scale(spikes, (75, 30))
+tallSpike=p.transform.scale(spikes,(100,75))
+dspikes=p.transform.flip(spikes,False,True)
 #CHANGING IMAGE VARIABLES
 bg=cave
 spr=chara
@@ -129,8 +130,8 @@ def doorPlat(dx,dy):
 def keyPlat(px,py): 
     global keycount
     global xk
-    screen.blit(longplat,(px,py))
-    xk=px+longplat.get_width()/2-25
+    screen.blit(medplat,(px,py))
+    xk=px+medplat.get_width()/2-25
     if keycount + 1 >= 36:
         keycount=0
     if not key:
@@ -178,17 +179,29 @@ def drawWindow():
     if bg==cave:
         #steping plats
         # screen.blit(medplat,(WIDTH-560,HEIGHT-275))
-        screen.blit(medplat,((WIDTH/3)-medplat.get_width(), HEIGHT-300))
-        screen.blit(longplat,(WIDTH-100, HEIGHT-500))
+        screen.blit(medplat,((WIDTH/3)-medplat.get_width(), HEIGHT*0.5))
+        screen.blit(smlPlat,(WIDTH*0.542, HEIGHT*.35))
         screen.blit(smlPlat,((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69))
+        screen.blit(longplat,((WIDTH*0.8), HEIGHT*0.225 ))
+        screen.blit(tallSpike,(WIDTH*.68, HEIGHT*.825))
+        screen.blit(tallSpike,((WIDTH*.68)+100, HEIGHT*.825))
         #door plat 
         doorPlat(WIDTH-660,HEIGHT-420)
-        screen.blit(spikes,(WIDTH-320, HEIGHT-390))
+        
         
     if bg==cve2:
-        screen.blit(longplat,(-50, HEIGHT-500))
+        screen.blit(longplat,(-50, HEIGHT*0.225))
+        screen.blit(medplat,(WIDTH*.365, HEIGHT*.028))
+        screen.blit(dspikes,(WIDTH*.365, (HEIGHT*0.028)+30))
+        screen.blit(dspikes,((WIDTH*.365)+75, (HEIGHT*0.028)+30))
+        screen.blit(medplat,(WIDTH*.398, HEIGHT*.625))
+        screen.blit(smlPlat,(WIDTH*0.244, HEIGHT*.458))
+        screen.blit(tallSpike,(WIDTH*.1, HEIGHT*.825))
+        screen.blit(tallSpike,((WIDTH*.1)+100, HEIGHT*.825))
+        screen.blit(tallSpike,(WIDTH*.61, HEIGHT*.825))
+        screen.blit(tallSpike,((WIDTH*.61)+100, HEIGHT*.825))
         #key plat
-        keyPlat(WIDTH-450, HEIGHT-390)
+        keyPlat(WIDTH*.75, HEIGHT*0.42)
 # the character moveent  
     if walkCount + 1 >= 27:
          walkCount = 0
@@ -199,39 +212,30 @@ def drawWindow():
         screen.blit(walkRight[walkCount//3], (x,y))
         walkCount +=1
     else:
-        screen.blit(spr, (x,y))  
-
-    fs=p.Rect(0,0,WIDTH,HEIGHT)
-    # if Ending:
-    #     fadeout()
-   
-
-        
-                
+        screen.blit(spr, (x,y))               
     p.display.update()
-
-
 
 while run:   
     clock.tick(27)
-    global acc
     #the collide variable
     if DEATH:
         clock.tick(24)
         screen.blit(chara,(x+14,y))
         JUMP=False #NEED TO BE ADJUST FOR NEW STUFF
-        # if y<636:
-        #     y+=7
-        # elif y>=636:
-        #     spr=rip
-        # if spr==rip and keys[p.K_LEFT] or keys[p.K_RIGHT]:
-        #     spr=chara
-        #     x=-14
-        #     y=636
-        #     jumpCount=12
-        #     MAX=12
-        #     DEATH=False
-        #     JUMP=False
+        if not collide:
+            y+=7
+        elif collide:
+            spr=rip
+        if spr==rip and keys[p.K_LEFT] or keys[p.K_RIGHT]:
+            deathcount+=1
+            bg=cave
+            spr=chara
+            x=WIDTH*0.0428
+            y=HEIGHT*.845
+            jumpCount=10
+            MAX=10
+            DEATH=False
+            JUMP=False
    
     for event in p.event.get():
         if event.type == p.QUIT:
@@ -289,16 +293,25 @@ while run:
     #platforms
     plats1=[]
     plat1 = p.Rect((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69, 30, 5)
-    plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,5)
-    plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 5)
+    plat2=p.Rect((WIDTH/3)-medplat.get_width(), HEIGHT*0.5, 150,5)
+    plat3=p.Rect(WIDTH*0.542, HEIGHT*.35, 30, 5)
+    plat0=p.Rect((WIDTH*0.8), HEIGHT*0.225, 200,5)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
     ground=p.Rect(0, HEIGHT-30, WIDTH, 25)
     plats1.append(plat1)
     plats1.append(plat2)
     plats1.append(plat3)
+    plats1.append(plat0)
     plats1.append(platd)
     plats1.append(ground)
+    Spikes1=[] #############################################################################################
+    spike1=p.Rect(WIDTH*.68, HEIGHT*.825, 150,75)
+    Spikes1.append(spike1)
     if bg==cave:
+        for spike in Spikes1:
+            collidespike=p.Rect.colliderect(hitbox, spike)
+            if collidespike:
+                DEATH=True
         for plat in plats1:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
@@ -315,20 +328,28 @@ while run:
             if not collidedoor:
                 doorSeq=False
     plats2=[]
-    plat4=p.Rect(-50, HEIGHT-500, 200, 5)
-    plat5=p.Rect(WIDTH-450, HEIGHT-390, 200, 5)
+    plat4=p.Rect(-50, HEIGHT*0.225, 200, 5)
+    plat5=p.Rect(WIDTH*.365, HEIGHT*.028, 150, 5)
+    plat6=p.Rect(WIDTH*.398, HEIGHT*.625, 150, 5)
+    plat7=p.Rect(WIDTH*0.244, HEIGHT*.458, 30, 5)
+    platk=p.Rect(WIDTH*.76, HEIGHT*0.42, 150, 5)
     plats2.append(ground)
     plats2.append(plat4)
     plats2.append(plat5)
+    plats2.append(plat6)
+    plats2.append(plat7)
+    plats2.append(platk)
+    Spikes2=[]
+    spike2=
     if bg==cve2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
                 y = plat.y-63
                 acc=0
-        px=WIDTH-450
-        xck=px+longplat.get_width()/2
-        keybox=p.Rect(xck, HEIGHT-440, 18, 32) #manually put py
+        px=WIDTH*.75
+        xck=px+medplat.get_width()/2
+        keybox=p.Rect(xck,(HEIGHT*0.375)-50, 18, 32) #manually put py
         collidekey=p.Rect.colliderect(hitbox,keybox)
         if collidekey:
             key=True
