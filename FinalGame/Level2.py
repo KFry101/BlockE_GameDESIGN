@@ -29,7 +29,7 @@ right=False
 walkCount=0
 keycount=0
 doorCount=0
-x=WIDTH*.0428
+x=WIDTH*.0028
 y=HEIGHT*.845
 key=False
 doorSeq=False
@@ -171,6 +171,10 @@ def drawWindow():
         for plat in plats2:
             p.draw.rect(screen,(255,0,0),plat)
         p.draw.rect(screen, (0,0,255), keybox)
+        spike2=p.Rect(WIDTH*.1, HEIGHT*.825, 200,75)
+        spike3=p.Rect(WIDTH*.61, HEIGHT*.825, 200,75)
+        p.draw.rect(screen, (0,0,100), spike2)
+        
 
     # background
     screen.blit(bg,(0,0))
@@ -218,15 +222,18 @@ def drawWindow():
 while run:   
     clock.tick(27)
     #the collide variable
+    
     if DEATH:
         clock.tick(24)
         screen.blit(chara,(x+14,y))
         JUMP=False #NEED TO BE ADJUST FOR NEW STUFF
         if not collide:
-            y+=7
-        elif collide:
+            acc=0
+            acc+=0
+            y+=1
+        if p.Rect.colliderect(hitbox, plat):
             spr=rip
-        if spr==rip and keys[p.K_LEFT] or keys[p.K_RIGHT]:
+        if spr==rip and (keys[p.K_LEFT] or keys[p.K_RIGHT]):
             deathcount+=1
             bg=cave
             spr=chara
@@ -236,7 +243,7 @@ while run:
             MAX=10
             DEATH=False
             JUMP=False
-   
+        
     for event in p.event.get():
         if event.type == p.QUIT:
             run = False
@@ -330,7 +337,7 @@ while run:
     plats2=[]
     plat4=p.Rect(-50, HEIGHT*0.225, 200, 5)
     plat5=p.Rect(WIDTH*.365, HEIGHT*.028, 150, 5)
-    plat6=p.Rect(WIDTH*.398, HEIGHT*.625, 150, 5)
+    plat6=p.Rect(WIDTH*.397, HEIGHT*.625, 150, 20)
     plat7=p.Rect(WIDTH*0.244, HEIGHT*.458, 30, 5)
     platk=p.Rect(WIDTH*.76, HEIGHT*0.42, 150, 5)
     plats2.append(ground)
@@ -345,15 +352,15 @@ while run:
     Spikes2.append(spike2)
     Spikes2.append(spike3)
     if bg==cve2:
-        for spike in Spikes2:
-            collidespike=p.Rect.colliderect(hitbox, spike)
-            if collidespike:
-                DEATH=True
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
                 y = plat.y-63
                 acc=0
+            for spike in Spikes2:
+                collidespike=p.Rect.colliderect(hitbox, spike)
+                if collidespike:
+                    DEATH=True
         px=WIDTH*.75
         xck=px+medplat.get_width()/2
         keybox=p.Rect(xck,(HEIGHT*0.375)-50, 18, 32) #manually put py
