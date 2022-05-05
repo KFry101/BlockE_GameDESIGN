@@ -150,8 +150,18 @@ def doorPlat(dx,dy):
         screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
         ds=1
         doorCount+=ds
-    
-def keyPlat(px,py): 
+def wKeyPlat(px,py): 
+    global keycount
+    global xk
+    screen.blit(medplat,(px,py))
+    xk=px+medplat.get_width()/2-25
+    if keycount + 1 >= 36:
+        keycount=0
+    if not key:
+        screen.blit(wkeylist[keycount//3], (xk,py-70))
+        keycount+=1  
+   
+def bKeyPlat(px,py): 
     global keycount
     global xk
     screen.blit(medplat,(px,py))
@@ -214,8 +224,8 @@ def drawWindow():
         screen.blit(medplat,((WIDTH*.74), HEIGHT*.4))
         screen.blit(dspikes,(WIDTH*.74, (HEIGHT*0.4)+30))
         screen.blit(dspikes,((WIDTH*.74)+75, (HEIGHT*0.4)+30))
-        screen.blit(tallSpike,(0, HEIGHT*.6783))
-        screen.blit(tallSpike,((WIDTH-tallSpike.get_width()), HEIGHT*.6783))
+        screen.blit(tallSpike,(0, (HEIGHT*0.785)-tallSpike.get_height()))
+        screen.blit(tallSpike,((WIDTH-tallSpike.get_width()), (HEIGHT*0.785)-tallSpike.get_height()))
         
         #door plat 
         doorPlat((WIDTH/2)-(longplat.get_width()/2), HEIGHT*0.23)
@@ -224,18 +234,16 @@ def drawWindow():
         screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+(dspikes.get_width()*1.6), (HEIGHT*0.23)+30))
         
     if bg==cstle2:
-        screen.blit(longplat,(-50, HEIGHT*0.225))
-        screen.blit(medplat,(WIDTH*.365, HEIGHT*.028))
         screen.blit(dspikes,(WIDTH*.365, (HEIGHT*0.028)+30))
         screen.blit(dspikes,((WIDTH*.365)+75, (HEIGHT*0.028)+30))
         screen.blit(medplat,(WIDTH*.398, HEIGHT*.625))
-        screen.blit(smlPlat,(WIDTH*0.244, HEIGHT*.458))
+        screen.blit(medplat,(WIDTH*0.11, HEIGHT*.47))
         screen.blit(tallSpike,(WIDTH*.1, HEIGHT*.825))
         screen.blit(tallSpike,((WIDTH*.1)+100, HEIGHT*.825))
         screen.blit(tallSpike,(WIDTH*.61, HEIGHT*.825))
         screen.blit(tallSpike,((WIDTH*.61)+100, HEIGHT*.825))
         #key plat
-        keyPlat(WIDTH*.75, HEIGHT*0.42)
+        bKeyPlat(WIDTH*.75, HEIGHT*0.2)
 # the character moveent  
     if walkCount + 1 >= 27:
          walkCount = 0
@@ -368,22 +376,11 @@ while run:
                 doorSeq=False
     
     plats2=[]
-    plat4=p.Rect(-50, HEIGHT*0.225, 200, 5)
-    plat5=p.Rect(WIDTH*.365, HEIGHT*.028, 150, 5)
-    plat6=p.Rect(WIDTH*.397, HEIGHT*.625, 150, 20)
-    plat7=p.Rect(WIDTH*0.244, HEIGHT*.458, 30, 5)
     platk=p.Rect(WIDTH*.76, HEIGHT*0.42, 150, 5)
     plats2.append(ground)
-    plats2.append(plat4)
-    plats2.append(plat5)
-    plats2.append(plat6)
-    plats2.append(plat7)
     plats2.append(platk)
     Spikes2=[]
-    spike2=p.Rect(WIDTH*.1, HEIGHT*.825, 200,75)
-    spike3=p.Rect(WIDTH*.61, HEIGHT*.825, 200,75)
-    Spikes2.append(spike2)
-    Spikes2.append(spike3)
+    
     if bg==cstle2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
