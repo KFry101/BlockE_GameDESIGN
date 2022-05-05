@@ -27,11 +27,11 @@ jumpCount=10
 left= False
 right=False
 walkCount=0
-keycount=0
+wkeycount=0
 doorCount=0
 x=30
 y=418
-key=False
+wkey=False
 doorSeq=False
 Ending=False
 
@@ -60,31 +60,31 @@ medplat=p.image.load('FinalGame\images\\notaslonggrass.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longgrassplat.png')
 longplat=p.transform.scale(longplat,(200,30))
-key1=p.image.load('FinalGame\images\wKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
-key1=p.transform.scale(key1,(70,70))
-key2=p.image.load('FinalGame\images\wKey2.gif')
-key2=p.transform.scale(key2,(70,70))
-key3=p.image.load('FinalGame\images\wKey3.gif')
-key3=p.transform.scale(key3,(70,70))
-key4=p.image.load('FinalGame\images\wKey4.gif')
-key4=p.transform.scale(key4,(70,70))
-key5=p.image.load('FinalGame\images\wKey5.gif')
-key5=p.transform.scale(key5,(70,70))
-key6=p.image.load('FinalGame\images\wKey6.gif')
-key6=p.transform.scale(key6,(70,70))
-key7=p.image.load('FinalGame\images\wKey7.gif')
-key7=p.transform.scale(key7,(70,70))
-key8=p.image.load('FinalGame\images\wKey8.gif')
-key8=p.transform.scale(key8,(70,70))
-key9=p.image.load('FinalGame\images\wKey9.gif')
-key9=p.transform.scale(key9,(70,70))
-key10=p.image.load('FinalGame\images\wKey10.gif')
-key10=p.transform.scale(key10,(70,70))
-key11=p.image.load('FinalGame\images\wKey11.gif')
-key11=p.transform.scale(key11,(70,70))
-key12=p.image.load('FinalGame\images\wKey12.gif')
-key12=p.transform.scale(key12,(70,70))
-keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
+wkey1=p.image.load('FinalGame\images\wwkey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
+wkey1=p.transform.scale(wkey1,(70,70))
+wkey2=p.image.load('FinalGame\images\wwkey2.gif')
+wkey2=p.transform.scale(wkey2,(70,70))
+wkey3=p.image.load('FinalGame\images\wwkey3.gif')
+wkey3=p.transform.scale(wkey3,(70,70))
+wkey4=p.image.load('FinalGame\images\wwkey4.gif')
+wkey4=p.transform.scale(wkey4,(70,70))
+wkey5=p.image.load('FinalGame\images\wwkey5.gif')
+wkey5=p.transform.scale(wkey5,(70,70))
+wkey6=p.image.load('FinalGame\images\wwkey6.gif')
+wkey6=p.transform.scale(wkey6,(70,70))
+wkey7=p.image.load('FinalGame\images\wwkey7.gif')
+wkey7=p.transform.scale(wkey7,(70,70))
+wkey8=p.image.load('FinalGame\images\wwkey8.gif')
+wkey8=p.transform.scale(wkey8,(70,70))
+wkey9=p.image.load('FinalGame\images\wwkey9.gif')
+wkey9=p.transform.scale(wkey9,(70,70))
+wkey10=p.image.load('FinalGame\images\wwkey10.gif')
+wkey10=p.transform.scale(wkey10,(70,70))
+wkey11=p.image.load('FinalGame\images\wwkey11.gif')
+wkey11=p.transform.scale(wkey11,(70,70))
+wkey12=p.image.load('FinalGame\images\wwkey12.gif')
+wkey12=p.transform.scale(wkey12,(70,70))
+wkeylist=[wkey1,wkey2, wkey3, wkey4,wkey5,wkey6,wkey7,wkey8,wkey9,wkey10,wkey11,wkey12]
 clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 darkness=p.image.load('FinalGame\images\doorBlack.png')
@@ -111,26 +111,26 @@ def doorPlat(dx,dy):
         doorCount=11
         p.time.delay(100)
         Ending=True
-    if not doorSeq and not key:
+    if not doorSeq and not wkey:
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
-    elif not doorSeq and key: 
+    elif not doorSeq and wkey: 
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
-    elif doorSeq and key:
+    elif doorSeq and wkey:
         screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
         screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
         ds=1
         doorCount+=ds
     
-def keyPlat(px,py): 
-    global keycount
+def wkeyPlat(px,py): 
+    global wkeycount
     global xk
     screen.blit(longplat,(px,py))
     xk=px+longplat.get_width()/2-25
-    if keycount + 1 >= 36:
-        keycount=0
-    if not key:
-        screen.blit(keylist[keycount//3], (xk,py-70))
-        keycount+=1
+    if wkeycount + 1 >= 36:
+        wkeycount=0
+    if not wkey:
+        screen.blit(wkeylist[wkeycount//3], (xk,py-70))
+        wkeycount+=1
 
 def drawWindow():
     global walkCount 
@@ -164,7 +164,7 @@ def drawWindow():
     if bg==frst2:
         for plat in plats2:
             p.draw.rect(screen,(255,0,0),plat)
-        p.draw.rect(screen, (0,0,255), keybox)
+        p.draw.rect(screen, (0,0,255), wkeybox)
 
     # background
     screen.blit(bg,(0,0))
@@ -179,8 +179,8 @@ def drawWindow():
         doorPlat(WIDTH-660,HEIGHT-420)
     if bg==frst2:
         screen.blit(longplat,(-50, HEIGHT-500))
-        #key plat
-        keyPlat(WIDTH-450, HEIGHT-390)
+        #wkey plat
+        wkeyPlat(WIDTH-450, HEIGHT-390)
 # the character moveent  
     if walkCount + 1 >= 27:
          walkCount = 0
@@ -214,16 +214,16 @@ while run:
             mouse_pos=p.mouse.get_pos()
             print(mouse_pos)
     #chara controls
-    keys=p.key.get_pressed()
-    if keys[p.K_LSHIFT]:
+    wkeys=p.wkey.get_pressed()
+    if wkeys[p.K_LSHIFT]:
         move=10
     else:
         move=5
-    if keys[p.K_LEFT] and x >=-14:
+    if wkeys[p.K_LEFT] and x >=-14:
         x -= move
         left=True
         right=False
-    elif keys[p.K_RIGHT] and x<= WIDTH-50:
+    elif wkeys[p.K_RIGHT] and x<= WIDTH-50:
         x += move
         right=True
         left=False
@@ -237,12 +237,12 @@ while run:
             bg=frst2
             x=-13
 
-    if bg==frst2: #screen with the key
+    if bg==frst2: #screen with the wkey
         if x<=-14:
             bg=forest
             x=WIDTH-50
     if not JUMP:
-        if keys[p.K_SPACE] or keys[p.K_UP]:
+        if wkeys[p.K_SPACE] or wkeys[p.K_UP]:
             JUMP=True
     else:
         if jumpCount>=-MAX:
@@ -297,10 +297,10 @@ while run:
                 acc=0
         px=WIDTH-450
         xck=px+longplat.get_width()/2
-        keybox=p.Rect(xck, HEIGHT-440, 18, 32) #manually put py
-        collidekey=p.Rect.colliderect(hitbox,keybox)
-        if collidekey:
-            key=True
+        wkeybox=p.Rect(xck, HEIGHT-440, 18, 32) #manually put py
+        collidewkey=p.Rect.colliderect(hitbox,wkeybox)
+        if collidewkey:
+            wkey=True
 
     if not collide: #gravity
         acc+=1
