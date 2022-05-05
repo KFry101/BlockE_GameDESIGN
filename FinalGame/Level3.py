@@ -10,6 +10,8 @@ os.system('cls')
 p.init()
 
 p.font.init()
+#this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
+#made by Chequered Ink
 popup = p.font.Font("FinalGame\Fonts\AGoblinAppears-o2aV.ttf",12)
 
 #Constants
@@ -19,31 +21,9 @@ WIDTH=700
 HEIGHT=600
 DEATH=False
 
-
-
-#variables
-run=True
-move=5
-deathcount=0
-jumpCount=10
-left= False
-right=False
-walkCount=0
-keycount=0
-doorCount=0
-x=WIDTH*.454
-y=HEIGHT*.6783
-key=False
-doorSeq=False
-Ending=False
-LOCK=False
-
- 
- 
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Level 3")
-
 
 #clock
 clock = p.time.Clock()
@@ -56,8 +36,12 @@ rip=p.transform.scale(rip,(50,65))
 chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png")
 castle=p.image.load('FinalGame\images\castle.webp')
 castle=p.transform.scale(castle,(700,600))
-cve2=p.image.load('FinalGame\images\castle.webp')
-cve2=p.transform.scale(cve2,(700,600))
+cstle2=p.image.load('FinalGame\images\castle.webp')
+cstle2=p.transform.scale(cstle2,(700,600))
+cstle2=p.transform.flip(cstle2,True, False)
+cstle0=p.image.load('FinalGame\images\castle.webp')
+cstle0=p.transform.scale(cstle0,(700,600))
+cstle0=p.transform.flip(cstle0,True, False)
 smlPlat=p.image.load("FinalGame\images\cubecastle.png")
 smlPlat=p.transform.scale(smlPlat,(50,35))
 medplat=p.image.load('FinalGame\images\mediumcastle.png')
@@ -119,12 +103,30 @@ openingdoor=[p.image.load('FinalGame\images\dbldoor.png'),p.image.load('FinalGam
 darkness=p.image.load('FinalGame\images\dbldoorBlack.png')
 spikes=p.image.load("FinalGame\images\spikes.png")
 spikes=p.transform.scale(spikes, (75, 30))
-tallSpike=p.transform.scale(spikes,(100,75))
+tallSpike=p.transform.scale(spikes,(100,90))
 dspikes=p.transform.flip(spikes,False,True)
 #CHANGING IMAGE VARIABLES
 bg=castle
 spr=chara
 
+#variables
+run=True
+move=5
+deathcount=0
+jumpCount=10
+left= False
+right=False
+walkCount=0
+keycount=0
+doorCount=0
+x=(WIDTH/2)-(spr.get_width()/2)
+y=HEIGHT*.6783
+key=False
+doorSeq=False
+Ending=False
+LOCK=False
+
+ 
 def doorPlat(dx,dy):
     global doorCount
     global Ending
@@ -189,7 +191,7 @@ def drawWindow():
             p.draw.rect(screen,(255,0,0),plat)
     plats2=[]
     plats2.append(ground)
-    if bg==cve2:
+    if bg==cstle2:
         for plat in plats2:
             p.draw.rect(screen,(255,0,0),plat)
         p.draw.rect(screen, (0,0,255), keybox)
@@ -200,14 +202,28 @@ def drawWindow():
     #background
     screen.blit(bg,(0,0))
    #actual graphics
+    # if bg==cstle0:
+
     if bg==castle:
-        #steping plats
         # screen.blit(medplat,(WIDTH-560,HEIGHT-275))
+        screen.blit(smlPlat,((WIDTH*.3)-25, HEIGHT*.605))
+        screen.blit(smlPlat,((WIDTH*.6)+25, HEIGHT*.605))
+        screen.blit(medplat,((WIDTH*.03), HEIGHT*.4))
+        screen.blit(dspikes,(WIDTH*.035, (HEIGHT*0.4)+30))
+        screen.blit(dspikes,((WIDTH*.035)+dspikes.get_width(), (HEIGHT*0.4)+30))
+        screen.blit(medplat,((WIDTH*.74), HEIGHT*.4))
+        screen.blit(dspikes,(WIDTH*.74, (HEIGHT*0.4)+30))
+        screen.blit(dspikes,((WIDTH*.74)+75, (HEIGHT*0.4)+30))
+        screen.blit(tallSpike,(0, HEIGHT*.6783))
+        screen.blit(tallSpike,((WIDTH-tallSpike.get_width()), HEIGHT*.6783))
         
         #door plat 
-        doorPlat((WIDTH/2)-100, HEIGHT*0.23)
+        doorPlat((WIDTH/2)-(longplat.get_width()/2), HEIGHT*0.23)
+        screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2), (HEIGHT*0.23)+30))
+        screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+dspikes.get_width(), (HEIGHT*0.23)+30))
+        screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+(dspikes.get_width()*1.6), (HEIGHT*0.23)+30))
         
-    if bg==cve2:
+    if bg==cstle2:
         screen.blit(longplat,(-50, HEIGHT*0.225))
         screen.blit(medplat,(WIDTH*.365, HEIGHT*.028))
         screen.blit(dspikes,(WIDTH*.365, (HEIGHT*0.028)+30))
@@ -243,7 +259,6 @@ def PopUpM(message):
     xt= WIDTH/2-txt.get_width()/2
     screen.blit(txt,(xt,HEIGHT*.016))
 
-
 while run:   
     clock.tick(27)
     if DEATH:
@@ -277,8 +292,7 @@ while run:
         #     move=5
         if event.type == p.K_LSHIFT:
             move=10
-    keys=p.key.get_pressed()  
-       
+    keys=p.key.get_pressed()     
     #chara controls
     if keys[p.K_LSHIFT]:
         move=10
@@ -296,13 +310,18 @@ while run:
         left=False
         right=False
         walkCount=0
-
+    if bg==cstle0:
+            if x>=WIDTH-50:
+                bg=castle
+                x=-13
     if bg==castle: #screen with the door and
         if x>=WIDTH-50:
-            bg=cve2
+            bg=cstle2
             x=-13
-
-    if bg==cve2: #screen with the key
+        if x<=-14:
+            bg=cstle0
+            x=WIDTH-50
+    if bg==cstle2: 
         if x<=-14:
             bg=castle
             x=WIDTH-50
@@ -327,8 +346,6 @@ while run:
     plats1.append(platd)
     plats1.append(ground)
     Spikes1=[] #############################################################################################
-    spike1=p.Rect(WIDTH*.68, HEIGHT*.825, 200,75)
-    Spikes1.append(spike1)
     if bg==castle:
         for spike in Spikes1:
             collidespike=p.Rect.colliderect(hitbox, spike)
@@ -349,6 +366,7 @@ while run:
                 doorSeq=True
             if not collidedoor:
                 doorSeq=False
+    
     plats2=[]
     plat4=p.Rect(-50, HEIGHT*0.225, 200, 5)
     plat5=p.Rect(WIDTH*.365, HEIGHT*.028, 150, 5)
@@ -366,7 +384,7 @@ while run:
     spike3=p.Rect(WIDTH*.61, HEIGHT*.825, 200,75)
     Spikes2.append(spike2)
     Spikes2.append(spike3)
-    if bg==cve2:
+    if bg==cstle2:
         for plat in plats2:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
@@ -382,7 +400,15 @@ while run:
         collidekey=p.Rect.colliderect(hitbox,keybox)
         if collidekey:
             key=True
-
+    
+    plats0=[]
+    plats0.append(ground)
+    if bg==cstle0:
+            for plat in plats1:
+                collide=p.Rect.colliderect(hitbox, plat)
+                if collide:
+                    y = plat.y-63
+                    acc=0
     if not collide: #gravity
         acc+=1
         y+=acc
