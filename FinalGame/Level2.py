@@ -10,6 +10,8 @@ os.system('cls')
 p.init()
 
 p.font.init()
+#this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
+#made by Chequered Ink
 popup = p.font.Font("FinalGame\Fonts\AGoblinAppears-o2aV.ttf",12)
 
 #Constants
