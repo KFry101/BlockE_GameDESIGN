@@ -1,5 +1,5 @@
 #katie frymire
-#the level 2 of the final gmae
+#the level 3 of the final gmae
 
 
 import os, time, datetime, math
@@ -31,8 +31,8 @@ right=False
 walkCount=0
 keycount=0
 doorCount=0
-x=WIDTH*.0028
-y=HEIGHT*.845
+x=WIDTH*.454
+y=HEIGHT*.6783
 key=False
 doorSeq=False
 Ending=False
@@ -42,7 +42,7 @@ LOCK=False
  
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
-p.display.set_caption("Level 2")
+p.display.set_caption("Level 3")
 
 
 #clock
@@ -54,15 +54,15 @@ walkLeft = [p.image.load('Class Stuff\images\Pygame-Tutorials-master\Game\L1.png
 rip=p.image.load('Class Stuff\images\pngegg.png')
 rip=p.transform.scale(rip,(50,65))
 chara=p.image.load("Class Stuff\images\Pygame-Tutorials-master\Game\standing.png")
-cave=p.image.load('FinalGame\images\cave.png')
-cave=p.transform.scale(cave,(700,600))
-cve2=p.image.load('FinalGame\images\cave.png')
+castle=p.image.load('FinalGame\images\castle.webp')
+castle=p.transform.scale(castle,(700,600))
+cve2=p.image.load('FinalGame\images\castle.webp')
 cve2=p.transform.scale(cve2,(700,600))
-smlPlat=p.image.load("FinalGame\images\cubecave.png")
+smlPlat=p.image.load("FinalGame\images\cubecastle.png")
 smlPlat=p.transform.scale(smlPlat,(50,35))
-medplat=p.image.load('FinalGame\images\mediumcaveplat.png')
+medplat=p.image.load('FinalGame\images\mediumcastle.png')
 medplat=p.transform.scale(medplat,(150,30))
-longplat=p.image.load('FinalGame\images\longcaveplat.png')
+longplat=p.image.load('FinalGame\images\longcastle.png')
 longplat=p.transform.scale(longplat,(200,30))
 key1=p.image.load('FinalGame\images\\bKey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
 key1=p.transform.scale(key1,(70,70))
@@ -89,15 +89,40 @@ key11=p.transform.scale(key11,(70,70))
 key12=p.image.load('FinalGame\images\\bKey12.gif')
 key12=p.transform.scale(key12,(70,70))
 keylist=[key1,key2, key3, key4,key5,key6,key7,key8,key9,key10,key11,key12]
+wkey1=p.image.load('FinalGame\images\wkey1.gif') #   REPLACE WITH IMAGE LIST FOR MOVEMENt
+wkey1=p.transform.scale(wkey1,(70,70))
+wkey2=p.image.load('FinalGame\images\wkey2.gif')
+wkey2=p.transform.scale(wkey2,(70,70))
+wkey3=p.image.load('FinalGame\images\wkey3.gif')
+wkey3=p.transform.scale(wkey3,(70,70))
+wkey4=p.image.load('FinalGame\images\wkey4.gif')
+wkey4=p.transform.scale(wkey4,(70,70))
+wkey5=p.image.load('FinalGame\images\wkey5.gif')
+wkey5=p.transform.scale(wkey5,(70,70))
+wkey6=p.image.load('FinalGame\images\wkey6.gif')
+wkey6=p.transform.scale(wkey6,(70,70))
+wkey7=p.image.load('FinalGame\images\wkey7.gif')
+wkey7=p.transform.scale(wkey7,(70,70))
+wkey8=p.image.load('FinalGame\images\wkey8.gif')
+wkey8=p.transform.scale(wkey8,(70,70))
+wkey9=p.image.load('FinalGame\images\wkey9.gif')
+wkey9=p.transform.scale(wkey9,(70,70))
+wkey10=p.image.load('FinalGame\images\wkey10.gif')
+wkey10=p.transform.scale(wkey10,(70,70))
+wkey11=p.image.load('FinalGame\images\wkey11.gif')
+wkey11=p.transform.scale(wkey11,(70,70))
+wkey12=p.image.load('FinalGame\images\wkey12.gif')
+wkey12=p.transform.scale(wkey12,(70,70))
+wkeylist=[wkey1,wkey2, wkey3, wkey4,wkey5,wkey6,wkey7,wkey8,wkey9,wkey10,wkey11,wkey12]
 clsdoor=p.image.load('FinalGame\images\door1.png')
 openingdoor=[p.image.load('FinalGame\images\door1.png'),p.image.load('FinalGame\images\door2.png'),p.image.load('FinalGame\images\door3.png')]
 darkness=p.image.load('FinalGame\images\doorBlack.png')
-spikes=p.image.load("FinalGame\images\cavespike.png")
+spikes=p.image.load("FinalGame\images\spikes.png")
 spikes=p.transform.scale(spikes, (75, 30))
 tallSpike=p.transform.scale(spikes,(100,75))
 dspikes=p.transform.flip(spikes,False,True)
 #CHANGING IMAGE VARIABLES
-bg=cave
+bg=castle
 spr=chara
 
 def doorPlat(dx,dy):
@@ -105,8 +130,8 @@ def doorPlat(dx,dy):
     global Ending
     global LOCK
 
-    screen.blit(medplat,(dx,dy))
-    xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
+    screen.blit(longplat,(dx,dy))
+    xd=dx+longplat.get_width()/2-clsdoor.get_width()/2
     ds=1
     screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     if doorCount + 1 >=12:
@@ -153,13 +178,13 @@ def drawWindow():
     plat2=p.Rect(WIDTH-320, HEIGHT-390, 150,3)
     plat3=p.Rect(WIDTH-100, HEIGHT-500, 200, 3)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 3)
-    ground=p.Rect(0, HEIGHT-30, WIDTH, 1)
+    ground=p.Rect(0, HEIGHT*0.783, WIDTH, 1)
     plats1.append(plat1)
     plats1.append(plat2)
     plats1.append(plat3)
     plats1.append(platd)
     plats1.append(ground)
-    if bg==cave:
+    if bg==castle:
         for plat in plats1:
             p.draw.rect(screen,(255,0,0),plat)
     plats2=[]
@@ -169,24 +194,18 @@ def drawWindow():
             p.draw.rect(screen,(255,0,0),plat)
         p.draw.rect(screen, (0,0,255), keybox)
         spike2=p.Rect(WIDTH*.1, HEIGHT*.825, 200,75)
-        spike3=p.Rect(WIDTH*.61, HEIGHT*.825, 200,75)
         p.draw.rect(screen, (0,0,100), spike2)
         
 
-    # background
+    #background
     screen.blit(bg,(0,0))
    #actual graphics
-    if bg==cave:
+    if bg==castle:
         #steping plats
         # screen.blit(medplat,(WIDTH-560,HEIGHT-275))
-        screen.blit(medplat,((WIDTH/3)-medplat.get_width(), HEIGHT*0.5))
-        screen.blit(smlPlat,(WIDTH*0.542, HEIGHT*.35))
-        screen.blit(smlPlat,((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69))
-        screen.blit(longplat,((WIDTH*0.8), HEIGHT*0.225 ))
-        screen.blit(tallSpike,(WIDTH*.68, HEIGHT*.825))
-        screen.blit(tallSpike,((WIDTH*.68)+100, HEIGHT*.825))
+        
         #door plat 
-        doorPlat(WIDTH-660,HEIGHT-420)
+        doorPlat((WIDTH/2)-100, HEIGHT*0.23)
         
     if bg==cve2:
         screen.blit(longplat,(-50, HEIGHT*0.225))
@@ -227,7 +246,6 @@ def PopUpM(message):
 
 while run:   
     clock.tick(27)
-    #the collide variable
     if DEATH:
         clock.tick(24)
         screen.blit(chara,(x+14,y))
@@ -240,10 +258,10 @@ while run:
             spr=rip
         if spr==rip and (keys[p.K_LEFT] or keys[p.K_RIGHT]):
             deathcount+=1
-            bg=cave
+            bg=castle
             spr=chara
             x=WIDTH*0.0428
-            y=HEIGHT*.845
+            y=HEIGHT*.6783
             jumpCount=10
             MAX=10
             DEATH=False
@@ -279,14 +297,14 @@ while run:
         right=False
         walkCount=0
 
-    if bg==cave: #screen with the door and
+    if bg==castle: #screen with the door and
         if x>=WIDTH-50:
             bg=cve2
             x=-13
 
     if bg==cve2: #screen with the key
         if x<=-14:
-            bg=cave
+            bg=castle
             x=WIDTH-50
     if not JUMP:
         if keys[p.K_SPACE] or keys[p.K_UP]:
@@ -304,22 +322,14 @@ while run:
     hitbox=p.Rect(x+14,y+14,36,50)
     #platforms
     plats1=[]
-    plat1 = p.Rect((WIDTH/2)-smlPlat.get_width(),HEIGHT*0.69, 30, 5)
-    plat2=p.Rect((WIDTH/3)-medplat.get_width(), HEIGHT*0.5, 150,5)
-    plat3=p.Rect(WIDTH*0.542, HEIGHT*.35, 30, 5)
-    plat0=p.Rect((WIDTH*0.8), HEIGHT*0.225, 200,5)
-    platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
-    ground=p.Rect(0, HEIGHT-30, WIDTH, 25)
-    plats1.append(plat1)
-    plats1.append(plat2)
-    plats1.append(plat3)
-    plats1.append(plat0)
+    platd=p.Rect((WIDTH/2)-100, HEIGHT*0.23, 200, 5)
+    ground=p.Rect(0, HEIGHT*0.783, WIDTH, 25)
     plats1.append(platd)
     plats1.append(ground)
     Spikes1=[] #############################################################################################
     spike1=p.Rect(WIDTH*.68, HEIGHT*.825, 200,75)
     Spikes1.append(spike1)
-    if bg==cave:
+    if bg==castle:
         for spike in Spikes1:
             collidespike=p.Rect.colliderect(hitbox, spike)
             if collidespike:
