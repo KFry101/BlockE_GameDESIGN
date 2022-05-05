@@ -1,5 +1,6 @@
 #katie frymire
-#the level one of the final gmae
+#the level 2 of the final gmae
+
 
 import os, time, datetime, math
 import pygame as p
@@ -8,7 +9,8 @@ os.system('cls')
 #intailize p
 p.init()
 
-
+p.font.init()
+popup = p.font.Font("FinalGame\Fonts\AGoblinAppears-o2aV.ttf",12)
 
 #Constants
 JUMP=False
@@ -34,7 +36,7 @@ y=HEIGHT*.845
 key=False
 doorSeq=False
 Ending=False
-
+LOCK=False
 
  
  
@@ -57,7 +59,7 @@ cave=p.transform.scale(cave,(700,600))
 cve2=p.image.load('FinalGame\images\cave.png')
 cve2=p.transform.scale(cve2,(700,600))
 smlPlat=p.image.load("FinalGame\images\cubecave.png")
-smlPlat=p.transform.scale(smlPlat,(35,35))
+smlPlat=p.transform.scale(smlPlat,(50,35))
 medplat=p.image.load('FinalGame\images\mediumcaveplat.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longcaveplat.png')
@@ -98,16 +100,11 @@ dspikes=p.transform.flip(spikes,False,True)
 bg=cave
 spr=chara
 
-# def fadeout():
-#     fadeout = p.Surface((WIDTH, HEIGHT))
-#     fadeout.fill((0,0,0))
-#     for i in range(255):
-#         fadeout.set_alpha(i+1)
-#         screen.blit(fadeout, (0, 0))
-
 def doorPlat(dx,dy):
     global doorCount
     global Ending
+    global LOCK
+
     screen.blit(medplat,(dx,dy))
     xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
     ds=1
@@ -115,12 +112,12 @@ def doorPlat(dx,dy):
     if doorCount + 1 >=12:
         ds=0
         doorCount=11
-        p.time.delay(100)
-        Ending=True
     if not doorSeq and not key:
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
     elif not doorSeq and key: 
         screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
+    elif collidedoor and not key: 
+        LOCK=True
     elif doorSeq and key:
         screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
         screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
@@ -145,7 +142,7 @@ def drawWindow():
     global plat
     global plat1, plat2, plat3, platd
     global xk
-
+    global LOCK
     #hidden collision items DRAWN
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
@@ -178,7 +175,6 @@ def drawWindow():
 
     # background
     screen.blit(bg,(0,0))
-
    #actual graphics
     if bg==cave:
         #steping plats
@@ -191,7 +187,6 @@ def drawWindow():
         screen.blit(tallSpike,((WIDTH*.68)+100, HEIGHT*.825))
         #door plat 
         doorPlat(WIDTH-660,HEIGHT-420)
-        
         
     if bg==cve2:
         screen.blit(longplat,(-50, HEIGHT*0.225))
@@ -216,13 +211,23 @@ def drawWindow():
         screen.blit(walkRight[walkCount//3], (x,y))
         walkCount +=1
     else:
-        screen.blit(spr, (x,y))               
+        screen.blit(spr, (x,y))    
+    if LOCK:
+        PopUpM("It appears to be locked")  
+        LOCK=False    
     p.display.update()
+
+def PopUpM(message):
+    txt=popup.render(message, 1, (255, 255, 255))
+    #get width of the text
+    #x value = WIDTH/2 - wtext
+    xt= WIDTH/2-txt.get_width()/2
+    screen.blit(txt,(xt,HEIGHT*.016))
+
 
 while run:   
     clock.tick(27)
     #the collide variable
-    
     if DEATH:
         clock.tick(24)
         screen.blit(chara,(x+14,y))
