@@ -40,8 +40,10 @@ CrClrList=['Green', "White", "Lilac", "Navy"]
 SizeList=['800x800', '1000x1000','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
-p.display.set_caption("DOORS")
+p.display.set_caption("DOORS: the game")
 #Fonts
+p.font.init()
+MAIN_FNT=p.font.SysFont("FinalGame\Fonts\AncientModernTales-a7Po.ttf", 80)
 TITLE_FNT= p.font.SysFont("timesnewroman", 80)
 SUBT_FNT= p.font.SysFont("comicsans", 40)
 MENU_FNT= p.font.SysFont("arial", 50)
@@ -84,6 +86,14 @@ sqM_color=colors.get('navy')
 txt=''
 txty=''
 xt=''
+def MainT(message):
+    txt=MAIN_FNT.render(message, 1, (255, 255, 255))
+    screen.fill((background))
+    #get width of the text
+    #x value = WIDTH/2 - wtext
+    xt= WIDTH/2-txt.get_width()/2
+    screen.blit(txt,(xt,50))
+
 def TitleMenu(message):
     txt=TITLE_FNT.render(message, 1, (255, 255, 255))
     screen.fill((background))
@@ -182,6 +192,7 @@ def Level1():
     global keycount
     global doorCount
     global Ending
+    global ticksEnd
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -476,6 +487,9 @@ def Level1():
             acc+=1
             y+=acc
 
+        if Ending:
+            ticksEnd=p.time.get_ticks()
+
         
         drawWindow()
 
@@ -485,6 +499,7 @@ def Level2():
     global keycount
     global doorCount
     global Ending
+    global ticksEnd
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -1408,7 +1423,7 @@ while check:
     keys=p.key.get_pressed()
     if MAIN:
         screen.fill(background)
-        TitleMenu("DOORS")
+        MainT("DOORS")
         mainmenu(MenuList)
     if INSTR:
         screen.fill(background)
@@ -1580,6 +1595,8 @@ while check:
                 if SCOREBOARD:
                     SCOREBOARD=False
                     MAIN=True
+
+                
 
     #THE GAME Level 1
     if LEV_1:
