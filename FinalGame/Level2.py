@@ -311,7 +311,7 @@ while run:
     plat3=p.Rect(WIDTH*0.542, HEIGHT*.35, 30, 5)
     plat0=p.Rect((WIDTH*0.8), HEIGHT*0.225, 200,5)
     platd=p.Rect(WIDTH-660,HEIGHT-420, 150, 5)
-    ground=p.Rect(0, HEIGHT-30, WIDTH, 25)
+    ground=p.Rect(0, HEIGHT-30, WIDTH, 50)
     plats1.append(plat1)
     plats1.append(plat2)
     plats1.append(plat3)

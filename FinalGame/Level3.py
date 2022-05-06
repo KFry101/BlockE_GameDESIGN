@@ -43,7 +43,7 @@ cstle0=p.image.load('FinalGame\images\castle.webp')
 cstle0=p.transform.scale(cstle0,(700,600))
 cstle0=p.transform.flip(cstle0,True, False)
 smlPlat=p.image.load("FinalGame\images\cubecastle.png")
-smlPlat=p.transform.scale(smlPlat,(50,35))
+smlPlat=p.transform.scale(smlPlat,(75,35))
 medplat=p.image.load('FinalGame\images\mediumcastle.png')
 medplat=p.transform.scale(medplat,(150,30))
 longplat=p.image.load('FinalGame\images\longcastle.png')
@@ -122,10 +122,11 @@ doorCount=0
 x=(WIDTH/2)-(spr.get_width()/2)
 y=HEIGHT*.6783
 key=False
+keyw2=False
 doorSeq=False
 Ending=False
 LOCK=False
-
+ANOTHER=False
  
 def doorPlat(dx,dy):
     global doorCount
@@ -146,15 +147,18 @@ def doorPlat(dx,dy):
     elif collidedoor and not key: 
         LOCK=True
     elif doorSeq and key:
+        ANOTHER=True
+    elif doorSeq and key and keyw2:
         screen.blit(darkness, (xd,dy-clsdoor.get_height()+1))
         screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
         ds=1
         doorCount+=ds
+
 def wKeyPlat(px,py): 
     global keycount
     global xk
-    screen.blit(medplat,(px,py))
-    xk=px+medplat.get_width()/2-25
+    screen.blit(smlPlat,(px,py))
+    xk=px+(smlPlat.get_width()*.05)
     if keycount + 1 >= 36:
         keycount=0
     if not key:
@@ -174,12 +178,15 @@ def bKeyPlat(px,py):
 
 def drawWindow():
     global walkCount 
+    global ground
     global hitbox
     global plats1
+    global plats0
     global plat
     global plat1, plat2, plat3, platd
     global xk
     global LOCK
+    global ANOTHER
     #hidden collision items DRAWN
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
@@ -212,8 +219,29 @@ def drawWindow():
     #background
     screen.blit(bg,(0,0))
    #actual graphics
-    # if bg==cstle0:
-
+    if bg==cstle0:
+        #ground
+        screen.blit(tallSpike,((0), (HEIGHT*0.785)-tallSpike.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()), (HEIGHT*0.785)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*2), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*3), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*4), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*5), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*6), (HEIGHT*0.783)-spikes.get_height()))
+        screen.blit(spikes,((tallSpike.get_width()+spikes.get_width()*7), (HEIGHT*0.783)-spikes.get_height()))
+        #plats
+        screen.blit(medplat,(WIDTH*0.77, HEIGHT*.55))
+        screen.blit(medplat,((WIDTH*.35), HEIGHT*.618))
+        screen.blit(smlPlat,((WIDTH*.134), HEIGHT*.4))
+        screen.blit(dspikes,(WIDTH*.134, (HEIGHT*0.4)+30))
+        screen.blit(smlPlat,((WIDTH*.35), HEIGHT*.2))
+        screen.blit(dspikes,(WIDTH*.35, (HEIGHT*0.2)+30))
+        screen.blit(smlPlat,((WIDTH*.57), HEIGHT*.07))
+        screen.blit(dspikes,(WIDTH*.57, (HEIGHT*0.07)+30))
+        #key 
+        wKeyPlat(WIDTH*.77, HEIGHT*.083)
+        screen.blit(dspikes,(WIDTH*.77, (HEIGHT*0.083)+30))
     if bg==castle:
         # screen.blit(medplat,(WIDTH-560,HEIGHT-275))
         screen.blit(smlPlat,((WIDTH*.3)-25, HEIGHT*.605))
@@ -234,16 +262,21 @@ def drawWindow():
         screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+(dspikes.get_width()*1.6), (HEIGHT*0.23)+30))
         
     if bg==cstle2:
-        screen.blit(dspikes,(WIDTH*.365, (HEIGHT*0.028)+30))
-        screen.blit(dspikes,((WIDTH*.365)+75, (HEIGHT*0.028)+30))
         screen.blit(medplat,(WIDTH*.398, HEIGHT*.625))
-        screen.blit(medplat,(WIDTH*0.11, HEIGHT*.47))
-        screen.blit(tallSpike,(WIDTH*.1, HEIGHT*.825))
-        screen.blit(tallSpike,((WIDTH*.1)+100, HEIGHT*.825))
-        screen.blit(tallSpike,(WIDTH*.61, HEIGHT*.825))
-        screen.blit(tallSpike,((WIDTH*.61)+100, HEIGHT*.825))
+        screen.blit(medplat,(WIDTH*0.11, HEIGHT*.5))
+        screen.blit(smlPlat,((WIDTH*.44), HEIGHT*.35))
+        screen.blit(medplat,((WIDTH*.23), HEIGHT*.155))
+        screen.blit(dspikes,((WIDTH*.23), (HEIGHT*0.155)+30))
+        screen.blit(dspikes,((WIDTH*.23)+dspikes.get_width(), (HEIGHT*0.155)+30))
+        screen.blit(tallSpike,(WIDTH*.1, (HEIGHT*0.785)-tallSpike.get_height()))
+        screen.blit(tallSpike,((WIDTH*.1)+100,(HEIGHT*0.785)-tallSpike.get_height()))
+        screen.blit(tallSpike,(WIDTH*.61, (HEIGHT*0.785)-tallSpike.get_height()))
+        screen.blit(tallSpike,((WIDTH*.61)+100, (HEIGHT*0.785)-tallSpike.get_height()))
         #key plat
-        bKeyPlat(WIDTH*.75, HEIGHT*0.2)
+        bKeyPlat(WIDTH*.65, HEIGHT*0.1)
+        screen.blit(dspikes,((WIDTH*.65), (HEIGHT*0.1)+30))
+        screen.blit(dspikes,((WIDTH*.65)+dspikes.get_width(), (HEIGHT*0.1)+30))
+        
 # the character moveent  
     if walkCount + 1 >= 27:
          walkCount = 0
@@ -258,6 +291,9 @@ def drawWindow():
     if LOCK:
         PopUpM("It appears to be locked")  
         LOCK=False    
+    if ANOTHER:
+        PopUpM("There's another lock. You need another key")
+        ANOTHER=False
     p.display.update()
 
 def PopUpM(message):
@@ -268,22 +304,22 @@ def PopUpM(message):
     screen.blit(txt,(xt,HEIGHT*.016))
 
 while run:   
+    global plat
     clock.tick(27)
     if DEATH:
         clock.tick(24)
-        screen.blit(chara,(x+14,y))
         JUMP=False #NEED TO BE ADJUST FOR NEW STUFF
         if not collide:
             acc=0
             acc+=0
             y+=1
-        if p.Rect.colliderect(hitbox, plat):
-            spr=rip
+        if p.Rect.colliderect(hitbox, plat) or collide:
+            spr=rip    
         if spr==rip and (keys[p.K_LEFT] or keys[p.K_RIGHT]):
             deathcount+=1
             bg=castle
             spr=chara
-            x=WIDTH*0.0428
+            x=(WIDTH/2)
             y=HEIGHT*.6783
             jumpCount=10
             MAX=10
@@ -347,28 +383,51 @@ while run:
  #Items for the collision itselfdfsdgwrhryeh
     #hitbox
     hitbox=p.Rect(x+14,y+14,36,50)
-    #platforms
+   
+        # screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2), (HEIGHT*0.23)+30))
+        # screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+dspikes.get_width(), (HEIGHT*0.23)+30))
+        # screen.blit(dspikes,((WIDTH*.501)-(longplat.get_width()/2)+(dspikes.get_width()*1.6), (HEIGHT*0.23)+30))
     plats1=[]
+    plat1=p.Rect((WIDTH*.3)-25, HEIGHT*.605, 75, 5)
+    plat2=p.Rect((WIDTH*.6)+25, HEIGHT*.605, 75, 5)
+    plat3=p.Rect((WIDTH*.74), HEIGHT*.4, 150, 5)
+    plat4=p.Rect(WIDTH*.03, HEIGHT*.4, 150, 5)
     platd=p.Rect((WIDTH/2)-100, HEIGHT*0.23, 200, 5)
-    ground=p.Rect(0, HEIGHT*0.783, WIDTH, 25)
+    ground=p.Rect(0, HEIGHT*0.783, WIDTH, 50)
     plats1.append(platd)
+    plats1.append(plat1)
+    plats1.append(plat2)
+    plats1.append(plat3)
+    plats1.append(plat4)
     plats1.append(ground)
     Spikes1=[] #############################################################################################
+    spike1=p.Rect(0, (HEIGHT*0.783)-tallSpike.get_height(), 100,75)
+    spike2=p.Rect(WIDTH-tallSpike.get_width(), (HEIGHT*0.785)-tallSpike.get_height(), 100,75)
+    spike3=p.Rect((WIDTH*.74)+75, (HEIGHT*0.4)+30, 75,30)
+    spike4=p.Rect((WIDTH*.035)+dspikes.get_width(), (HEIGHT*0.4)+30, 75,30)
+    spike5=p.Rect(WIDTH*.74, (HEIGHT*0.4)+30, 75,30)
+    spike6=p.Rect((WIDTH*.74)+75, (HEIGHT*0.4)+30, 75,30)
+    Spikes1.append(spike1)
+    Spikes1.append(spike2)
+    Spikes1.append(spike3) 
+    Spikes1.append(spike4) 
+    Spikes1.append(spike5)
+    Spikes1.append(spike6) 
     if bg==castle:
-        for spike in Spikes1:
-            collidespike=p.Rect.colliderect(hitbox, spike)
-            if collidespike:
-                DEATH=True
         for plat in plats1:
             collide=p.Rect.colliderect(hitbox, plat)
             if collide:
                 y = plat.y-63
                 acc=0
-            dx=WIDTH-660
+            for spike in Spikes1:
+                collidespike=p.Rect.colliderect(hitbox, spike)
+                if collidespike:
+                    DEATH=True
+            dx=(WIDTH/2)-100
             wd=clsdoor.get_width()
             hd=clsdoor.get_height()
-            xcd=dx+medplat.get_width()/2-clsdoor.get_width()/2
-            doorbox=p.Rect(xcd,HEIGHT-420-hd, wd ,hd) #manually put dy
+            xcd=dx+longplat.get_width()/2-clsdoor.get_width()/2
+            doorbox=p.Rect(xcd,HEIGHT*0.23-hd, wd ,hd) #manually put dy
             collidedoor=p.Rect.colliderect(hitbox, doorbox)
             if collidedoor:
                 doorSeq=True
@@ -376,7 +435,7 @@ while run:
                 doorSeq=False
     
     plats2=[]
-    platk=p.Rect(WIDTH*.76, HEIGHT*0.42, 150, 5)
+    platk=p.Rect(WIDTH*.66, HEIGHT*0.1, 150, 5)
     plats2.append(ground)
     plats2.append(platk)
     Spikes2=[]
@@ -387,27 +446,62 @@ while run:
             if collide:
                 y = plat.y-63
                 acc=0
-            for spike in Spikes2:
-                collidespike=p.Rect.colliderect(hitbox, spike)
-                if collidespike:
-                    DEATH=True
-        px=WIDTH*.75
+        for spike in Spikes2:
+            collidespike=p.Rect.colliderect(hitbox, spike)
+            if collidespike:
+                DEATH=True
+        px=WIDTH*.66
         xck=px+medplat.get_width()/2
-        keybox=p.Rect(xck,(HEIGHT*0.375)-50, 18, 32) #manually put py
+        keybox=p.Rect(xck,(HEIGHT*0.1)-50, 18, 32) #manually put py
         collidekey=p.Rect.colliderect(hitbox,keybox)
         if collidekey:
             key=True
-    
+      
     plats0=[]
+    platA=p.Rect(WIDTH*.35, HEIGHT*.618, 150, 5)
+    platB=p.Rect(WIDTH*0.77, HEIGHT*.55, 150, 5)
+    platC=p.Rect(WIDTH*.35, HEIGHT*.2, 75, 5)
+    platD=p.Rect(WIDTH*.57, HEIGHT*.07, 75, 5)
+    platE=p.Rect(WIDTH*0.77, HEIGHT*.5, 150, 5)
+    platK2=p.Rect(WIDTH*.77, HEIGHT*.083, 150, 5)
     plats0.append(ground)
+    plats0.append(platA)
+    plats0.append(platB)
+    plats0.append(platC)
+    plats0.append(platD)
+    plats0.append(platK2)
+
+    spikes0=[]
+    spikeA=p.Rect(WIDTH*.134, (HEIGHT*0.4)+30, 75,30)
+    spikeB=p.Rect(WIDTH*.35, (HEIGHT*0.2)+30, 75,30)
+    spikeC=p.Rect(WIDTH*.57, (HEIGHT*0.07)+30, 75,29)
+    spikeD=p.Rect(WIDTH*.77, (HEIGHT*0.083)+30, 75,29)
+    spikeE=p.Rect(0, (HEIGHT*0.783)-tallSpike.get_height(), 75,30)
+    spikeF=p.Rect(0, (HEIGHT*0.783)-spikes.get_height(), WIDTH,30)
+    spikes0.append(spikeA)
+    spikes0.append(spikeB)
+    spikes0.append(spikeC)
+    spikes0.append(spikeD)
+    spikes0.append(spikeE)
+    spikes0.append(spikeF)
     if bg==cstle0:
-            for plat in plats1:
-                collide=p.Rect.colliderect(hitbox, plat)
-                if collide:
-                    y = plat.y-63
-                    acc=0
+        for plat in plats0:
+            collide=p.Rect.colliderect(hitbox, plat)
+            if collide:
+                y = plat.y-63
+                acc=0
+            for spike in spikes0:
+                collidespike=p.Rect.colliderect(hitbox, spike)
+                if collidespike:
+                    DEATH=True    
+        pxa=WIDTH*.77
+        xck=pxa+medplat.get_width()/2
+        keybox=p.Rect(xck,(HEIGHT*0.1)-50, 18, 32) #manually put py
+        collidekey=p.Rect.colliderect(hitbox,keybox)
+        if collidekey:
+            key=True
     if not collide: #gravity
-        acc+=1
+        acc+=1.5
         y+=acc
 
     
