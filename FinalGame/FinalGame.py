@@ -36,7 +36,6 @@ Ending=False
 MenuList=["Instructions", 'Settings', '  Level 1', '  Level 2', "  Level 3", "Scoreboard", "Exit"]
 SettingList=[ 'Background Color','Screen size']
 BackColorList=['Aqua',"Magenta", "Yellow", "Orange"]
-# CrClrList=['Green', "White", "Lilac", "Navy"]
 SizeList=['800x800', '1000x1000','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
