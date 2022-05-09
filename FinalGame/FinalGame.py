@@ -1620,7 +1620,7 @@ while check:
                 mouse_pos=(0,0)
                 
         #return to Menu
-        if not MAIN and not LEV_1 and not PSCORE1:
+        if not MAIN and not LEV_1:
             if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
                 if INSTR:
                     INSTR=False
