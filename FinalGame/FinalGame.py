@@ -294,6 +294,7 @@ def Level1():
         global doorCount
         global LEV_1
         global PSCORE1
+        global Ending
         screen.blit(medplat,(dx,dy))
         xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
         ds=1
@@ -301,10 +302,6 @@ def Level1():
         if doorCount + 1 >=12:
             ds=0
             doorCount=11
-            if doorCount==11:
-                LEV_1=False
-                PSCORE1=True
-
         if not doorSeq and not key:
             screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
         elif not doorSeq and key: 
@@ -513,8 +510,15 @@ def Level1():
             print(ticksStart, ticksEnd) 
             END=True
             Ending=False 
+
+        if doorCount==11:
+            ticksEnd=p.time.get_ticks()
+            run=False
         drawWindow()
-          
+        
+    if not run:
+        LEV_1=False
+        PSCORE1=True   
 
 def Level2():
     global DEATH
@@ -893,12 +897,14 @@ def Level2():
             acc+=1
             y+=acc
 
-        
-        drawWindow()
-
-        if Ending:
+        if doorCount==11:
             ticksEnd=p.time.get_ticks()
-
+            run=False
+        drawWindow()
+        
+    if not run:
+        LEV_1=False
+        PSCORE1=True   
 def Level3():
     global DEATH
     global walkCount
@@ -1436,10 +1442,14 @@ def Level3():
         if not collide: #gravity
             acc+=1.5
             y+=acc
-
-        drawWindow()
-        if Ending:
+        if doorCount==11:
             ticksEnd=p.time.get_ticks()
+            run=False
+        drawWindow()
+        
+    if not run:
+        LEV_1=False
+        PSCORE1=True   
 
 ######################################################################################################################
 MAX=10
@@ -1509,12 +1519,12 @@ while check:
         screen.blit(txt,(xt,240))
         p.time.delay(4000)
         p.QUIT    
-    if Ending:
-        LEV_1=False
-        PSCORE1=True
-        ticksEnd=p.time.get_ticks()
-        print(ticksStart, ticksEnd)
-        Ending=False
+    # if Ending:
+    #     LEV_1=False
+    #     PSCORE1=True
+    #     ticksEnd=p.time.get_ticks()
+    #     print(ticksStart, ticksEnd)
+    #     Ending=False
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False 
@@ -1640,18 +1650,29 @@ while check:
             if event.type == p.QUIT:
                 LEV_1=False
                 MAIN=True
+
+        if Ending:
+            LEV_1=False
+            PSCORE1=True
     if LEV_2:        
         Level2()
         for event in p.event.get():
             if event.type == p.QUIT:
                 LEV_1=False
                 MAIN=True
+        
+        if Ending:
+            LEV_2=False
+            PSCORE1=True
     if LEV_3:        
-       Level3()
-       for event in p.event.get():
+        Level3()
+        for event in p.event.get():
             if event.type == p.QUIT:
                 LEV_1=False
                 MAIN=True
+        if Ending:
+            LEV_3=False
+            PSCORE1=True
        
 
         
