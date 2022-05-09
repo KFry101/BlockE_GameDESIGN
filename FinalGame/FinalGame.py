@@ -1488,11 +1488,6 @@ while check:
         TitleMenu("Background Color")
         ReturnBut("Back")
         mainmenu(BackColorList)   
-    if CRCLR:
-        screen.fill(background)
-        TitleMenu("Circle Color")
-        ReturnBut("Back")
-        mainmenu(CrClrList)
     if SIZE:
         screen.fill(background)
         TitleMenu("Screen Size")
