@@ -144,9 +144,9 @@ def instr():
     screen.blit(txt,(xt,200))
     txt=INST_FNT.render("jump with space bar. Run by holding shift.", 1, (5, 31, 64)) 
     screen.blit(txt,(xt,240))
-    txt=INST_FNT.render("You need to find the key to the many doors",1, (5, 31, 64))
+    txt=INST_FNT.render("You need to find the keys to the many doors",1, (5, 31, 64))
     screen.blit(txt, (xt,280))
-    txt=INST_FNT.render("you will encounter. Good luck adventurer!!",1, (5, 31, 64))
+    txt=INST_FNT.render("you will encounter. Good luck adventurer!!!",1, (5, 31, 64))
     screen.blit(txt, (xt,320)) 
 
 def keepScore(score):
@@ -1462,6 +1462,8 @@ def Level3():
 
 ######################################################################################################################
 MAX=10
+WIDTH=700
+HEIGHT=700
 jumpCount=10
 JUMP=False
 mouse_pos=(0,0)
@@ -1591,25 +1593,6 @@ while check:
             if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
                 background=colors.get('orange')   
         
-        # if CRCLR:
-
-        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
-        #         cr_color=colors.get('forest') 
-        #         inscribSq_color=colors.get('forest')  
-        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
-        #         cr_color=colors.get('white') 
-        #         inscribSq_color=colors.get('white')   
-        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
-        #         cr_color=colors.get('litpur')  
-        #         inscribSq_color=colors.get('litpur')  
-        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
-        #         cr_color=colors.get('navy')  
-        #         inscribSq_color=colors.get('navy')  
-        #     if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
-        #         CRCLR=False
-        #         SETT=True
-        #         p.time.delay(400)
-        #         mouse_pos=(0,0)
         if SIZE:
             print("i am here!!!")
             changeScreenSize(xm,ym)
