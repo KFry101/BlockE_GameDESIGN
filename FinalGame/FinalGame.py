@@ -20,6 +20,8 @@ ys=250
 wb=30
 hb=30
 #declare constants
+global LEV_1
+global PSCORE1
 MAIN=True
 INSTR=False
 SETT=False
@@ -32,6 +34,7 @@ LEV_3=False
 PSCORE1=False
 SCOREBOARD=False
 EXIT=False
+Ending=False
 #lists fr messages
 MenuList=["Instructions", 'Settings', '  Level 1', '  Level 2', "  Level 3", "Scoreboard", "Exit"]
 SettingList=[ 'Background Color', 'Circle Color','Screen size']
@@ -40,10 +43,11 @@ CrClrList=['Green', "White", "Lilac", "Navy"]
 SizeList=['800x800', '1000x1000','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
-p.display.set_caption("DOORS: the game")
+p.display.set_caption("Doors: the game")
 #Fonts
 p.font.init()
-MAIN_FNT=p.font.SysFont("FinalGame\Fonts\AncientModernTales-a7Po.ttf", 80)
+popup = p.font.Font("FinalGame\Fonts\AGoblinAppears-o2aV.ttf",12)
+fancy= p.font.Font("FinalGame\Fonts\AncientModernTales-a7Po.ttf", 100)
 TITLE_FNT= p.font.SysFont("timesnewroman", 80)
 SUBT_FNT= p.font.SysFont("comicsans", 40)
 MENU_FNT= p.font.SysFont("arial", 50)
@@ -86,14 +90,19 @@ sqM_color=colors.get('navy')
 txt=''
 txty=''
 xt=''
-def MainT(message):
-    txt=MAIN_FNT.render(message, 1, (255, 255, 255))
+def PopUpM(message):
+        txt=popup.render(message, 1, (255, 255, 255))
+        #get width of the text
+        #x value = WIDTH/2 - wtext
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,HEIGHT*.016))
+def FancyM(message):
+    txt=fancy.render(message, 1, (255, 255, 255))
     screen.fill((background))
     #get width of the text
     #x value = WIDTH/2 - wtext
     xt= WIDTH/2-txt.get_width()/2
     screen.blit(txt,(xt,50))
-
 def TitleMenu(message):
     txt=TITLE_FNT.render(message, 1, (255, 255, 255))
     screen.fill((background))
@@ -113,12 +122,12 @@ def round_up(n, decimals=0):
 # got this from https://realpython.com/python-rounding/#rounding-up
 #this function uses parameters fr menu
 def mainmenu(Mlist):
-    txty=245
-    square.y=250
+    txty=HEIGHT*.35
+    square.y=HEIGHT*.357
     for i in range(len(Mlist)):
         message=Mlist[i]
         txt=INST_FNT.render(message, 1, (5, 31, 64) )
-        screen.blit(txt, (90,txty))
+        screen.blit(txt, (WIDTH*.128,txty))
         txty+=50
         p.draw.rect(screen, sqM_color, square)
         square.y+=50
@@ -141,7 +150,7 @@ def keepScore(score):
     scoreLine=str(score)+"\t"+name+"\t"+date.strftime('%m/%d/%Y'+'\n')
     print (scoreLine)
     #open file and write in it
-    myFile=open('Class Stuff\CircleEatsSquare\ScrBrd.txt', 'a')
+    myFile=open('FinalGame\SCore.txt', 'a')
     myFile.write(scoreLine)
     myFile.close()
 
@@ -193,6 +202,9 @@ def Level1():
     global doorCount
     global Ending
     global ticksEnd
+    global LOCK
+    global LEV_1
+    global PSCORE1
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -219,7 +231,7 @@ def Level1():
     key=False
     doorSeq=False
     Ending=False
-
+    LOCK=False
 
     
     
@@ -280,7 +292,8 @@ def Level1():
 
     def doorPlat(dx,dy):
         global doorCount
-        global Ending
+        global LEV_1
+        global PSCORE1
         screen.blit(medplat,(dx,dy))
         xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
         ds=1
@@ -288,7 +301,10 @@ def Level1():
         if doorCount + 1 >=12:
             ds=0
             doorCount=11
-            Ending=True
+            if doorCount==11:
+                LEV_1=False
+                PSCORE1=True
+
         if not doorSeq and not key:
             screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
         elif not doorSeq and key: 
@@ -298,7 +314,7 @@ def Level1():
             screen.blit(openingdoor[doorCount//4], (xd,dy-clsdoor.get_height()))
             ds=1
             doorCount+=ds
-        
+       
     def keyPlat(px,py): 
         global keycount
         global xk
@@ -317,7 +333,10 @@ def Level1():
         global plat
         global plat1, plat2, plat3, platd
         global xk
-
+        global LOCK
+        global ticksEnd
+        global LEV_1
+        global PSCORE1
         #hidden collision items DRAWN
         #hitbox
         hitbox=p.Rect(x+14,y+14,36,50) #use hitbox for collisions
@@ -371,12 +390,15 @@ def Level1():
         else:
             screen.blit(spr, (x,y))  
 
-        fs=p.Rect(0,0,WIDTH,HEIGHT)
+        if LOCK:
+            PopUpM("It appears to be locked")  
+            LOCK=False   
         # if Ending:
-        #     fadeout()
-    
+        #     LEV_1=False
+        #     PSCORE1=True
+        #     ticksEnd=p.time.get_ticks()
+        #     print(ticksStart, ticksEnd)  
 
-            
                     
         p.display.update()
 
@@ -486,12 +508,13 @@ def Level1():
         if not collide: #gravity
             acc+=1
             y+=acc
-
         if Ending:
             ticksEnd=p.time.get_ticks()
-
-        
+            print(ticksStart, ticksEnd) 
+            END=True
+            Ending=False 
         drawWindow()
+          
 
 def Level2():
     global DEATH
@@ -500,6 +523,7 @@ def Level2():
     global doorCount
     global Ending
     global ticksEnd
+    global LOCK
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -531,7 +555,6 @@ def Level2():
     Ending=False
     LOCK=False
 
-    
     
     #screen
     screen=p.display.set_mode((WIDTH,HEIGHT))
@@ -873,12 +896,17 @@ def Level2():
         
         drawWindow()
 
+        if Ending:
+            ticksEnd=p.time.get_ticks()
+
 def Level3():
     global DEATH
     global walkCount
     global keycount
     global doorCount
     global Ending
+    global ticksEnd
+    global LOCK
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -1409,8 +1437,9 @@ def Level3():
             acc+=1.5
             y+=acc
 
-        
         drawWindow()
+        if Ending:
+            ticksEnd=p.time.get_ticks()
 
 ######################################################################################################################
 MAX=10
@@ -1423,7 +1452,7 @@ while check:
     keys=p.key.get_pressed()
     if MAIN:
         screen.fill(background)
-        MainT("DOORS")
+        FancyM("D o o r s")
         mainmenu(MenuList)
     if INSTR:
         screen.fill(background)
@@ -1451,6 +1480,7 @@ while check:
         ReturnBut("Back")
         mainmenu(SizeList)     
     if PSCORE1:
+        print("here")
         timePlayed=((ticksEnd/1000)-(ticksStart/1000))
         timePlyR=round_up(timePlayed)
         screen.fill(background)
@@ -1459,7 +1489,7 @@ while check:
         txt=INST_FNT.render("Your score is:", 1,(5, 31, 64))
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt,(xt,200))
-        score= ((eaten)*5-2*(timePlyR))
+        score= 100000-(timePlyR)
         txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt,(xt,250))       
@@ -1471,13 +1501,20 @@ while check:
     if EXIT:
         screen.fill(background)
         txt=INST_FNT.render("Thank you for Playing", 1,(5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt,(xt,200))
         txt=INST_FNT.render("Play again soon...", 1, (5, 31, 64)) 
+        xt= WIDTH/2-txt.get_width()/2
         p.time.delay(2000)
         screen.blit(txt,(xt,240))
-        p.time.delay(5000)
+        p.time.delay(4000)
         p.QUIT    
-
+    if Ending:
+        LEV_1=False
+        PSCORE1=True
+        ticksEnd=p.time.get_ticks()
+        print(ticksStart, ticksEnd)
+        Ending=False
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False 
@@ -1596,12 +1633,27 @@ while check:
                     SCOREBOARD=False
                     MAIN=True
 
-                
-
     #THE GAME Level 1
     if LEV_1:
         Level1()
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                LEV_1=False
+                MAIN=True
     if LEV_2:        
         Level2()
+        for event in p.event.get():
+            if event.type == p.QUIT:
+                LEV_1=False
+                MAIN=True
     if LEV_3:        
-        Level3()
+       Level3()
+       for event in p.event.get():
+            if event.type == p.QUIT:
+                LEV_1=False
+                MAIN=True
+       
+
+        
+    p.display.update()
+    p.time.delay(9)
