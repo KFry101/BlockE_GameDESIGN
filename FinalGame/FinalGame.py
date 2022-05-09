@@ -37,9 +37,9 @@ EXIT=False
 Ending=False
 #lists fr messages
 MenuList=["Instructions", 'Settings', '  Level 1', '  Level 2', "  Level 3", "Scoreboard", "Exit"]
-SettingList=[ 'Background Color', 'Circle Color','Screen size']
+SettingList=[ 'Background Color','Screen size']
 BackColorList=['Aqua',"Magenta", "Yellow", "Orange"]
-CrClrList=['Green', "White", "Lilac", "Navy"]
+# CrClrList=['Green', "White", "Lilac", "Navy"]
 SizeList=['800x800', '1000x1000','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
@@ -114,8 +114,15 @@ def TitleMenu(message):
 def ReturnBut(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
     xt= WIDTH/2-txt.get_width()/2
-    screen.blit(txt,(xt,550))
-    
+    screen.blit(txt,(xt,HEIGHT*.7857))
+def ReturnButP(message):
+    txt=MENU_FNT.render(message, 1, (255, 255, 255))
+    xt= WIDTH/4-txt.get_width()/2
+    screen.blit(txt,(xt,HEIGHT*.7857))
+def continueP(message):
+    txt=MENU_FNT.render(message, 1, (255, 255, 255))
+    xt= WIDTH*.75-txt.get_width()/2
+    screen.blit(txt,(xt,HEIGHT*.7857))    
 def round_up(n, decimals=0):
     multiplier = 10 ** decimals
     return math.ceil(n * multiplier) / multiplier
@@ -134,14 +141,14 @@ def mainmenu(Mlist):
   
 def instr(): 
      
-    txt=INST_FNT.render("Control the circle with the arrow keys", 1,(5, 31, 64))
+    txt=INST_FNT.render("Move with left and right arrows keys and ", 1,(5, 31, 64))
     xt= WIDTH/2-txt.get_width()/2
     screen.blit(txt,(xt,200))
-    txt=INST_FNT.render("and absorb the square. If there is a ", 1, (5, 31, 64)) 
+    txt=INST_FNT.render("jump with space bar. Run by holding shift.", 1, (5, 31, 64)) 
     screen.blit(txt,(xt,240))
-    txt=INST_FNT.render("second player, control the square with",1, (5, 31, 64))
+    txt=INST_FNT.render("You need to find the key to the many doors",1, (5, 31, 64))
     screen.blit(txt, (xt,280))
-    txt=INST_FNT.render("the wasd keys. You got to be quick!",1, (5, 31, 64))
+    txt=INST_FNT.render("you will encounter. Good luck adventurer!!",1, (5, 31, 64))
     screen.blit(txt, (xt,320)) 
 
 def keepScore(score):
@@ -1519,12 +1526,6 @@ while check:
         screen.blit(txt,(xt,240))
         p.time.delay(4000)
         p.QUIT    
-    # if Ending:
-    #     LEV_1=False
-    #     PSCORE1=True
-    #     ticksEnd=p.time.get_ticks()
-    #     print(ticksStart, ticksEnd)
-    #     Ending=False
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False 
@@ -1574,11 +1575,6 @@ while check:
                 mouse_pos=(0,0)
             if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340))or CRCLR:
                 SETT=False
-                CRCLR=True
-                p.time.delay(300)
-                mouse_pos=(0,0)
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
-                SETT=False
                 SIZE=True
                 p.time.delay(400)
                 mouse_pos=(0,0) 
@@ -1598,25 +1594,25 @@ while check:
             if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
                 background=colors.get('orange')   
         
-        if CRCLR:
+        # if CRCLR:
 
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
-                cr_color=colors.get('forest') 
-                inscribSq_color=colors.get('forest')  
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
-                cr_color=colors.get('white') 
-                inscribSq_color=colors.get('white')   
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
-                cr_color=colors.get('litpur')  
-                inscribSq_color=colors.get('litpur')  
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
-                cr_color=colors.get('navy')  
-                inscribSq_color=colors.get('navy')  
-            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
-                CRCLR=False
-                SETT=True
-                p.time.delay(400)
-                mouse_pos=(0,0)
+        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+        #         cr_color=colors.get('forest') 
+        #         inscribSq_color=colors.get('forest')  
+        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+        #         cr_color=colors.get('white') 
+        #         inscribSq_color=colors.get('white')   
+        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+        #         cr_color=colors.get('litpur')  
+        #         inscribSq_color=colors.get('litpur')  
+        #     if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
+        #         cr_color=colors.get('navy')  
+        #         inscribSq_color=colors.get('navy')  
+        #     if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+        #         CRCLR=False
+        #         SETT=True
+        #         p.time.delay(400)
+        #         mouse_pos=(0,0)
         if SIZE:
             print("i am here!!!")
             changeScreenSize(xm,ym)
@@ -1627,7 +1623,7 @@ while check:
                 mouse_pos=(0,0)
                 
         #return to Menu
-        if not MAIN and not LEV_1:
+        if not MAIN and not LEV_1 and not PSCORE1:
             if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
                 if INSTR:
                     INSTR=False
