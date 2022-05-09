@@ -1,8 +1,5 @@
 #Katie Frymire
-#3/8/22
-#make a pacman like game, move thing around screen, how to draw shape, how to use keys to move objects, dictionary
-#objective of game: rectange to run away from circle;if the 2 collide, rect disappears and circle gets bigger
-#C:\Users\Katie\coding and game design\BlockE_GameDESIGN\Class Stuff\colorCycle.py
+#Final Project for Class
 from decimal import ROUND_UP
 import os, random, math,datetime
 import pygame as p
@@ -46,6 +43,7 @@ screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Doors: the game")
 #Fonts
 p.font.init()
+#all non-SysFont fonts are made by "Chequered Ink"
 popup = p.font.Font("FinalGame\Fonts\AGoblinAppears-o2aV.ttf",12)
 fancy= p.font.Font("FinalGame\Fonts\AncientModernTales-a7Po.ttf", 100)
 TITLE_FNT= p.font.SysFont("timesnewroman", 80)
@@ -163,7 +161,7 @@ def keepScore(score):
 
 def scoreb():
     myFile=open('FinalGame\SCore.txt', 'r')
-    yi=150
+    yi=HEIGHT*.2142
     stuff= myFile.readlines()
     myFile.close()
     stuff.sort(reverse=True)
@@ -204,6 +202,7 @@ def changeScreenSize(xm,ym):
 
 def Level1():
     global DEATH
+    global deathcount
     global walkCount
     global keycount
     global doorCount
@@ -225,6 +224,7 @@ def Level1():
     DEATH=False
 
     #variables
+    deathcount=0
     run=True
     move=5
     jumpCount=10
@@ -529,6 +529,7 @@ def Level1():
 
 def Level2():
     global DEATH
+    global deathcount
     global walkCount
     global keycount
     global doorCount
@@ -914,6 +915,7 @@ def Level2():
         PSCORE1=True   
 def Level3():
     global DEATH
+    global deathcount
     global walkCount
     global keycount
     global doorCount
@@ -1506,7 +1508,7 @@ while check:
         txt=INST_FNT.render("Your score is:", 1,(5, 31, 64))
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt,(xt,200))
-        score= 100000-(timePlyR)
+        score= 1000-(timePlyR)-(deathcount*2)
         txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt,(xt,250))       
