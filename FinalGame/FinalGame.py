@@ -99,14 +99,14 @@ def FancyM(message):
     #get width of the text
     #x value = WIDTH/2 - wtext
     xt= WIDTH/2-txt.get_width()/2
-    screen.blit(txt,(xt,50))
+    screen.blit(txt,(xt,HEIGHT*.0714))
 def TitleMenu(message):
     txt=TITLE_FNT.render(message, 1, (255, 255, 255))
     screen.fill((background))
     #get width of the text
     #x value = WIDTH/2 - wtext
     xt= WIDTH/2-txt.get_width()/2
-    screen.blit(txt,(xt,50))
+    screen.blit(txt,(xt,HEIGHT*.0714))
 
 def ReturnBut(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
@@ -132,9 +132,9 @@ def mainmenu(Mlist):
         message=Mlist[i]
         txt=INST_FNT.render(message, 1, (5, 31, 64) )
         screen.blit(txt, (WIDTH*.128,txty))
-        txty+=50
+        txty+=(HEIGHT*.0714)
         p.draw.rect(screen, sqM_color, square)
-        square.y+=50
+        square.y+=HEIGHT*.0714
   
 def instr(): 
      
@@ -169,7 +169,7 @@ def scoreb():
         txt=INST_FNT.render(i,1,"navy")
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt, (xt,yi))
-        yi+=50
+        yi+=HEIGHT*.0714
 
 def changeClr():
     global randColor
@@ -185,16 +185,16 @@ sq_color=colors.get(randColor)
 
 def changeScreenSize(xm,ym):
     global HEIGHT, WIDTH, screen
-    if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+    if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
         HEIGHT=800
         WIDTH=800
         print('here!')
 
-    if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+    if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
         HEIGHT=1000
         WIDTH=1000
         
-    if ((mouse_pos[0] >0 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+    if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
         HEIGHT=700
         WIDTH=700
     screen=p.display.set_mode((WIDTH,HEIGHT))
@@ -1536,66 +1536,66 @@ while check:
         if MAIN:
             eaten=0
             rad=15
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <280))or INSTR:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.3571 and mouse_pos[1] <HEIGHT*.414))or INSTR:
                 MAIN=False
                 screen.fill(background)
                 INSTR=True
-            if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <330))or SETT:
+            if((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.4285 and mouse_pos[1] <HEIGHT*.4714))or SETT:
                 MAIN=False 
                 SETT=True
                 p.time.delay(300)
                 mouse_pos=(0,0)    
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <380))or LEV_1:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.5 and mouse_pos[1] <HEIGHT*.5428))or LEV_1:
                 MAIN=False
                 LEV_1=True
                 ticksStart=p.time.get_ticks()
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <430))or LEV_2:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.5714 and mouse_pos[1] <HEIGHT*.6142))or LEV_2:
                 MAIN=False
                 LEV_2=True
                 ticksStart=p.time.get_ticks()
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >450 and mouse_pos[1] <480))or LEV_3:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.6428 and mouse_pos[1] <HEIGHT*.6857))or LEV_3:
                 MAIN=False
                 LEV_3=True
                 ticksStart=p.time.get_ticks()
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >500 and mouse_pos[1] <530))or SCOREBOARD:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.7142 and mouse_pos[1] <HEIGHT*.7571))or SCOREBOARD:
                 MAIN=False
                 SCOREBOARD=True
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >550 and mouse_pos[1] <580))or EXIT:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.7857 and mouse_pos[1] <HEIGHT*.8285))or EXIT:
                 MAIN=False
                 EXIT=True
 
         if SETT:
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290))or BACKCLR:
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.3571 and mouse_pos[1] <HEIGHT*.4142))or BACKCLR:
                 SETT=False
                 screen.fill(background)
                 BACKCLR=True
                 p.time.delay(300)
                 mouse_pos=(0,0)
-            if((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340))or CRCLR:
+            if((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.4285 and mouse_pos[1] <HEIGHT*.4857))or CRCLR:
                 SETT=False
                 SIZE=True
                 p.time.delay(400)
                 mouse_pos=(0,0) 
 
         if BACKCLR:
-            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85)) or SETT:
                 BACKCLR=False
                 SETT=True
                 p.time.delay(400)
                 mouse_pos=(0,0)
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.3571 and mouse_pos[1] <HEIGHT*.4142)):
                 background=colors.get('aqua')  
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.4285 and mouse_pos[1] <HEIGHT*.4857)):
                 background=colors.get('mag')     
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
+            if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.5 and mouse_pos[1] <HEIGHT*.5571)):
                 background=colors.get('yellow')
-            if ((mouse_pos[0] >50 and mouse_pos[0] <80) and (mouse_pos[1] >400 and mouse_pos[1] <440)):
+            if ((mouse_pos[0] >WIDTH*.07140 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.5714 and mouse_pos[1] <440)):
                 background=colors.get('orange')   
         
         if SIZE:
             print("i am here!!!")
             changeScreenSize(xm,ym)
-            if ((mouse_pos[0] >306 and mouse_pos[0] <393) and (mouse_pos[1] >560 and mouse_pos[1] <595)) or SETT:
+            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85)) or SETT:
                 SIZE=False
                 SETT=True
                 p.time.delay(400)
@@ -1603,7 +1603,7 @@ while check:
                 
         #return to Menu
         if not MAIN and not LEV_1:
-            if ((mouse_pos[0] >210 and mouse_pos[0] <490) and (mouse_pos[1] >561 and mouse_pos[1] <595))or MAIN:
+            if ((mouse_pos[0] >WIDTH*.3 and mouse_pos[0] <WIDTH*.7) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85))or MAIN:
                 if INSTR:
                     INSTR=False
                     MAIN=True
@@ -1619,32 +1619,30 @@ while check:
                     MAIN=True
 
     #THE GAME Level 1
+    keys=p.key.get_pressed()
+
     if LEV_1:
         Level1()
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                LEV_1=False
-                MAIN=True
+        if keys[p.K_ESCAPE]:
+            LEV_1=False
+            MAIN=True
 
         if Ending:
             LEV_1=False
             PSCORE1=True
     if LEV_2:        
         Level2()
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                LEV_1=False
-                MAIN=True
-        
+        if keys[p.K_ESCAPE]:
+            LEV_2=False
+            MAIN=True
         if Ending:
             LEV_2=False
             PSCORE1=True
     if LEV_3:        
         Level3()
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                LEV_1=False
-                MAIN=True
+        if keys[p.K_ESCAPE]:
+            LEV_3=False
+            MAIN=True
         if Ending:
             LEV_3=False
             PSCORE1=True
