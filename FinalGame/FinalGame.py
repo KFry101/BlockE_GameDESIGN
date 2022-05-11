@@ -290,6 +290,7 @@ def Level1():
         global LEV_1
         global PSCORE1
         global Ending
+        global LOCK
         screen.blit(medplat,(dx,dy))
         xd=dx+medplat.get_width()/2-clsdoor.get_width()/2
         ds=1
@@ -297,6 +298,8 @@ def Level1():
         if doorCount + 1 >=12:
             ds=0
             doorCount=11
+        elif collidedoor and not key: 
+            LOCK=True
         if not doorSeq and not key:
             screen.blit(clsdoor,(xd,dy-clsdoor.get_height()))
         elif not doorSeq and key: 
@@ -384,13 +387,7 @@ def Level1():
 
         if LOCK:
             PopUpM("It appears to be locked")  
-            LOCK=False   
-        # if Ending:
-        #     LEV_1=False
-        #     PSCORE1=True
-        #     ticksEnd=p.time.get_ticks()
-        #     print(ticksStart, ticksEnd)  
-
+            LOCK=False    
                     
         p.display.update()
 
@@ -1607,16 +1604,16 @@ while check:
                     SCOREBOARD=False
                     MAIN=True
 
-    #THE GAME Level 1
+    #THE GAME 
     keys=p.key.get_pressed()
 
     if LEV_1:
         Level1()
-        if keys[p.K_ESCAPE]:
+        if keys[p.K_ESCAPE]: #leave the level
             LEV_1=False
             MAIN=True
 
-        if Ending:
+        if Ending: 
             LEV_1=False
             PSCORE1=True
     if LEV_2:        
