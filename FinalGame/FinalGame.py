@@ -98,7 +98,6 @@ def TitleMenu(message):
     #x value = WIDTH/2 - wtext
     xt= WIDTH/2-txt.get_width()/2
     screen.blit(txt,(xt,HEIGHT*.0714))
-
 def ReturnBut(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
     xt= WIDTH/2-txt.get_width()/2
@@ -1626,7 +1625,6 @@ while check:
                 SETT=True
                 p.time.delay(400)
                 mouse_pos=(0,0)
-                
         #return to Menu
         if not MAIN and not LEV_1 and not LEV_2 and not LEV_3 and not PSCORE1 and not PSCORE2:
             if ((mouse_pos[0] >WIDTH*.3 and mouse_pos[0] <WIDTH*.7) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.75))or MAIN:
@@ -1666,7 +1664,6 @@ while check:
                 LEV_3=True
                 keepScore(score)
         
-
     #THE GAME 
     keys=p.key.get_pressed()
 
@@ -1695,8 +1692,6 @@ while check:
         if Ending:
             LEV_3=False
             PSCORE3=True
-       
-
-        
+          
     p.display.update()
     p.time.delay(9)
