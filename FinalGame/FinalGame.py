@@ -11,7 +11,7 @@ p.init()
 
 #MENU VARIABLES
 WIDTH=700
-HEIGHT=700
+HEIGHT=600
 xs=50
 ys=250
 wb=30
@@ -28,6 +28,8 @@ LEV_1=False
 LEV_2=False
 LEV_3=False
 PSCORE1=False
+PSCORE2=False
+PSCORE3=False
 SCOREBOARD=False
 EXIT=False
 Ending=False
@@ -100,15 +102,15 @@ def TitleMenu(message):
 def ReturnBut(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
     xt= WIDTH/2-txt.get_width()/2
-    screen.blit(txt,(xt,HEIGHT*.7857))
+    screen.blit(txt,(xt,HEIGHT*.69))
 def ReturnButP(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
     xt= WIDTH/4-txt.get_width()/2
-    screen.blit(txt,(xt,HEIGHT*.7857))
+    screen.blit(txt,(xt,HEIGHT*.69))
 def continueP(message):
     txt=MENU_FNT.render(message, 1, (255, 255, 255))
     xt= WIDTH*.75-txt.get_width()/2
-    screen.blit(txt,(xt,HEIGHT*.7857))    
+    screen.blit(txt,(xt,HEIGHT*.69))    
 def round_up(n, decimals=0):
     multiplier = 10 ** decimals
     return math.ceil(n * multiplier) / multiplier
@@ -175,17 +177,17 @@ sq_color=colors.get(randColor)
 def changeScreenSize(xm,ym):
     global HEIGHT, WIDTH, screen
     if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
-        HEIGHT=800
+        HEIGHT=700
         WIDTH=800
         print('here!')
 
     if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >300 and mouse_pos[1] <340)):
-        HEIGHT=1000
+        HEIGHT=900
         WIDTH=1000
         
     if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >350 and mouse_pos[1] <390)):
         HEIGHT=700
-        WIDTH=700
+        WIDTH=600
     screen=p.display.set_mode((WIDTH,HEIGHT))
 
 def Level1():
@@ -196,9 +198,11 @@ def Level1():
     global doorCount
     global Ending
     global ticksEnd
+    global Leave
     global LOCK
     global LEV_1
     global PSCORE1
+    global MAIN
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -226,6 +230,7 @@ def Level1():
     key=False
     doorSeq=False
     Ending=False
+    Leave=False
     LOCK=False
 
     
@@ -407,6 +412,9 @@ def Level1():
                 print(mouse_pos)
         #chara controls
         keys=p.key.get_pressed()
+        if event.type == p.QUIT:
+            Leave= True
+            run=False
         if keys[p.K_LSHIFT]:
             move=10
         else:
@@ -507,9 +515,12 @@ def Level1():
             run=False
         drawWindow()
         
-    if not run:
+    if not run and not Leave:
         LEV_1=False
-        PSCORE1=True   
+        PSCORE1=True  
+    if not run and Leave:
+        LEV_1=False
+        MAIN=True 
 
 def Level2():
     global DEATH
@@ -520,6 +531,9 @@ def Level2():
     global Ending
     global ticksEnd
     global LOCK
+    global MAIN
+    global LEV_1
+    global PSCORE2
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -761,9 +775,6 @@ def Level2():
                 DEATH=False
                 JUMP=False
             
-        for event in p.event.get():
-            if event.type == p.QUIT:
-                run = False
             if event.type==p.MOUSEBUTTONDOWN:
                 mouse_pos=p.mouse.get_pos()
                 print(mouse_pos)
@@ -893,10 +904,13 @@ def Level2():
             ticksEnd=p.time.get_ticks()
             run=False
         drawWindow()
-        
-    if not run:
-        LEV_1=False
-        PSCORE1=True   
+    if not run and not Leave:
+        LEV_2=False
+        PSCORE2=True  
+    if not run and Leave:
+        LEV_2=False
+        MAIN=True 
+         
 def Level3():
     global DEATH
     global deathcount
@@ -906,6 +920,7 @@ def Level3():
     global Ending
     global ticksEnd
     global LOCK
+    global Leave
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -1022,6 +1037,7 @@ def Level3():
     keyw2=False
     doorSeq=False
     Ending=False
+    Leave=False
     LOCK=False
     ANOTHER=False
     
@@ -1246,8 +1262,9 @@ def Level3():
                 JUMP=False
             
         for event in p.event.get():
+
             if event.type == p.QUIT:
-                run = False
+                Leave= True
             if event.type==p.MOUSEBUTTONDOWN:
                 mouse_pos=p.mouse.get_pos()
                 print(mouse_pos)
@@ -1477,7 +1494,35 @@ while check:
         ReturnBut("Back")
         mainmenu(SizeList)     
     if PSCORE1:
-        print("here")
+        timePlayed=((ticksEnd/1000)-(ticksStart/1000))
+        timePlyR=round_up(timePlayed)
+        screen.fill(background)
+        TitleMenu("Your Score")
+
+        ReturnButP("Return to Menu")
+        continueP("Next Level")
+        txt=INST_FNT.render("Your score is:", 1,(5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,200))
+        score= 1000-(timePlyR)-(deathcount*2)
+        txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,250))       
+    if PSCORE2:
+        timePlayed=((ticksEnd/1000)-(ticksStart/1000))
+        timePlyR=round_up(timePlayed)
+        screen.fill(background)
+        TitleMenu("Your Score")
+        ReturnButP("Return to Menu")
+        continueP("Next Level")
+        txt=INST_FNT.render("Your score is:", 1,(5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,200))
+        score= 1000-(timePlyR)-(deathcount*2)
+        txt=SUBT_FNT.render(str(score), 1, (5, 31, 64))
+        xt= WIDTH/2-txt.get_width()/2
+        screen.blit(txt,(xt,250))       
+    if PSCORE3:
         timePlayed=((ticksEnd/1000)-(ticksStart/1000))
         timePlyR=round_up(timePlayed)
         screen.fill(background)
@@ -1560,7 +1605,7 @@ while check:
                 mouse_pos=(0,0) 
 
         if BACKCLR:
-            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85)) or SETT:
+            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.75)) or SETT:
                 BACKCLR=False
                 SETT=True
                 p.time.delay(400)
@@ -1575,30 +1620,52 @@ while check:
                 background=colors.get('orange')   
         
         if SIZE:
-            print("i am here!!!")
             changeScreenSize(xm,ym)
-            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85)) or SETT:
+            if ((mouse_pos[0] >WIDTH*.4371 and mouse_pos[0] <WIDTH*.5614) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.75)) or SETT:
                 SIZE=False
                 SETT=True
                 p.time.delay(400)
                 mouse_pos=(0,0)
                 
         #return to Menu
-        if not MAIN and not LEV_1:
-            if ((mouse_pos[0] >WIDTH*.3 and mouse_pos[0] <WIDTH*.7) and (mouse_pos[1] >HEIGHT*.8 and mouse_pos[1] <HEIGHT*.85))or MAIN:
+        if not MAIN and not LEV_1 and not LEV_2 and not LEV_3 and not PSCORE1 and not PSCORE2:
+            if ((mouse_pos[0] >WIDTH*.3 and mouse_pos[0] <WIDTH*.7) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.75))or MAIN:
                 if INSTR:
                     INSTR=False
                     MAIN=True
                 if SETT:
                     SETT=False
                     MAIN=True
-                if PSCORE1:
+                if PSCORE3:
                     PSCORE1=False
                     MAIN=True
                     keepScore(score)
                 if SCOREBOARD:
                     SCOREBOARD=False
                     MAIN=True
+        if PSCORE1:
+            if ((mouse_pos[0] >WIDTH*.25 and mouse_pos[0] <WIDTH*.65) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.85))or MAIN:
+                PSCORE1=False
+                MAIN=True
+                keepScore(score)
+            if ((mouse_pos[0] >WIDTH*.75 and mouse_pos[0] <WIDTH*.9) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.85))or LEV_2:
+                if PSCORE1:
+                    PSCORE1=False
+                    LEV_2=True
+                    keepScore(score)
+        if PSCORE2:
+            if ((mouse_pos[0] >WIDTH*.25 and mouse_pos[0] <WIDTH*.65) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.85))or MAIN:
+                PSCORE2=False
+                MAIN=True
+                keepScore(score)
+            if ((mouse_pos[0] >WIDTH*.75 and mouse_pos[0] <WIDTH*.9) and (mouse_pos[1] >HEIGHT*.69 and mouse_pos[1] <HEIGHT*.85))or LEV_3:
+                PSCORE2=False
+                LEV_3=True
+                keepScore(score)
+                PSCORE2=False
+                LEV_3=True
+                keepScore(score)
+        
 
     #THE GAME 
     keys=p.key.get_pressed()
@@ -1619,7 +1686,7 @@ while check:
             MAIN=True
         if Ending:
             LEV_2=False
-            PSCORE1=True
+            PSCORE2=True
     if LEV_3:        
         Level3()
         if keys[p.K_ESCAPE]:
@@ -1627,7 +1694,7 @@ while check:
             MAIN=True
         if Ending:
             LEV_3=False
-            PSCORE1=True
+            PSCORE3=True
        
 
         
