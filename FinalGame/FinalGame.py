@@ -23,7 +23,6 @@ MAIN=True
 INSTR=False
 SETT=False
 BACKCLR=False
-CRCLR=False
 SIZE=False
 LEV_1=False
 LEV_2=False
@@ -54,22 +53,12 @@ INST_FNT= p.font.SysFont('comicsans', 30)
 check=True
 move=5
 grow=5
-eaten=0
 sec=0
 #squareG variables
 xsg=20
 ysg=20
 wbox=30
 hbox=30
-#circle variables
-rad=15
-xc=random.randint(rad, WIDTH-rad)
-yc=random.randint(rad, HEIGHT-rad)
-#inner box
-ibox=rad*math.sqrt(2)
-xig= xc-(ibox/2)
-yig= yc-(ibox/2)
-inscribSq=p.Rect(xig,yig,ibox,ibox)
 #create the rect object
 squareG=p.Rect(xsg, ysg, wbox, hbox)
 square=p.Rect(xs,ys,wb,hb)
@@ -78,7 +67,7 @@ colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':
 'forest':[16, 46, 12],'aqua':[51, 153, 255], 'pink': [200,75,125], 'litpur':[203,160,227],
 'mag':[255, 0, 255], 'yellow':[240, 180, 14] }
 #Get colors
-background=colors.get('pink')
+background=colors.get('litpur')
 sq_color=colors.get('navy')
 cr_color=colors.get('white')
 inscribSq_color=colors.get('white')
@@ -1571,7 +1560,7 @@ while check:
                 BACKCLR=True
                 p.time.delay(300)
                 mouse_pos=(0,0)
-            if((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.4285 and mouse_pos[1] <HEIGHT*.4857))or CRCLR:
+            if((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >HEIGHT*.4285 and mouse_pos[1] <HEIGHT*.4857))or SIZE:
                 SETT=False
                 SIZE=True
                 p.time.delay(400)
