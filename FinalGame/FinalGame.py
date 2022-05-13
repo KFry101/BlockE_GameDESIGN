@@ -54,7 +54,6 @@ INST_FNT= p.font.SysFont('comicsans', 30)
 #declare consants,variables, lists and dictionary
 check=True
 move=5
-grow=5
 sec=0
 #squareG variables
 xsg=20
@@ -71,8 +70,6 @@ colors={'white': [255,255,255], 'red': [255,0,0], 'orange':[255, 85, 0], 'navy':
 #Get colors
 background=colors.get('litpur')
 sq_color=colors.get('navy')
-cr_color=colors.get('white')
-inscribSq_color=colors.get('white')
 sqM_color=colors.get('navy')
 #GLobalization setup
 txt=''
@@ -114,7 +111,7 @@ def round_up(n, decimals=0):
     multiplier = 10 ** decimals
     return math.ceil(n * multiplier) / multiplier
 # got this from https://realpython.com/python-rounding/#rounding-up
-#this function uses parameters fr menu
+#this function uses parameters for menu
 def mainmenu(Mlist):
     txty=HEIGHT*.35
     square.y=HEIGHT*.357
@@ -124,8 +121,7 @@ def mainmenu(Mlist):
         screen.blit(txt, (WIDTH*.128,txty))
         txty+=(HEIGHT*.0714)
         p.draw.rect(screen, sqM_color, square)
-        square.y+=HEIGHT*.0714
-  
+        square.y+=HEIGHT*.0714  
 def instr(): 
      
     txt=INST_FNT.render("Move with left and right arrows keys and ", 1,(5, 31, 64))
@@ -137,7 +133,6 @@ def instr():
     screen.blit(txt, (xt,280))
     txt=INST_FNT.render("you will encounter. Good luck adventurer!!!",1, (5, 31, 64))
     screen.blit(txt, (xt,320)) 
-
 def keepScore(score):
     date=datetime.datetime.now()
     print(date.strftime('%m/%d/%Y'))
@@ -147,7 +142,6 @@ def keepScore(score):
     myFile=open('FinalGame\SCore.txt', 'a')
     myFile.write(scoreLine)
     myFile.close()
-
 def scoreb():
     myFile=open('FinalGame\SCore.txt', 'r')
     yi=HEIGHT*.2142
@@ -160,7 +154,6 @@ def scoreb():
         xt= WIDTH/2-txt.get_width()/2
         screen.blit(txt, (xt,yi))
         yi+=HEIGHT*.0714
-
 def changeClr():
     global randColor
     colorCheck=True
@@ -172,7 +165,6 @@ def changeClr():
             colorCheck=False
 changeClr()
 sq_color=colors.get(randColor)  
-
 def changeScreenSize(xm,ym):
     global HEIGHT, WIDTH, screen
     if ((mouse_pos[0] >WIDTH*.0714 and mouse_pos[0] <WIDTH*0.114) and (mouse_pos[1] >250 and mouse_pos[1] <290)):
