@@ -560,6 +560,7 @@ def Level2():
     x=WIDTH*.0028
     y=HEIGHT*.845
     key=False
+    Leave=False
     doorSeq=False
     Ending=False
     LOCK=False
@@ -782,7 +783,9 @@ def Level2():
             if event.type == p.K_LSHIFT:
                 move=10
         keys=p.key.get_pressed()  
-        
+        if event.type == p.QUIT:
+            Leave= True
+            run=False
         #chara controls
         if keys[p.K_LSHIFT]:
             move=10
@@ -903,6 +906,7 @@ def Level2():
             ticksEnd=p.time.get_ticks()
             run=False
         drawWindow()
+    global LEV_2
     if not run and not Leave:
         LEV_2=False
         PSCORE2=True  
@@ -920,6 +924,9 @@ def Level3():
     global ticksEnd
     global LOCK
     global Leave
+    global LEV_3
+    global MAIN
+    global PSCORE3
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -1261,16 +1268,12 @@ def Level3():
                 JUMP=False
             
         for event in p.event.get():
-
             if event.type == p.QUIT:
                 Leave= True
+                run=False
             if event.type==p.MOUSEBUTTONDOWN:
                 mouse_pos=p.mouse.get_pos()
                 print(mouse_pos)
-            # if event.type ==  p.K_LSHIFT:
-            #     move=5
-            if event.type == p.K_LSHIFT:
-                move=10
         keys=p.key.get_pressed()     
         #chara controls
         if keys[p.K_LSHIFT]:
@@ -1455,12 +1458,21 @@ def Level3():
             ticksEnd=p.time.get_ticks()
             run=False
         drawWindow()
+    global LEV_3
+    global MAIN
+    global PSCORE3
+    if not run and not Leave:
+        LEV_3=False
+        PSCORE3=True  
+    if not run and Leave:
+        LEV_3=False
+        MAIN=True 
+    
         
-
 ######################################################################################################################
 MAX=10
 WIDTH=700
-HEIGHT=700
+HEIGHT=600
 jumpCount=10
 JUMP=False
 mouse_pos=(0,0)
