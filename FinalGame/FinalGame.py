@@ -37,7 +37,7 @@ Ending=False
 MenuList=["Instructions", 'Settings', '  Level 1', '  Level 2', "  Level 3", "Scoreboard", "Exit"]
 SettingList=[ 'Background Color','Screen size']
 BackColorList=['Aqua',"Magenta", "Yellow", "Orange"]
-SizeList=['800x800', '1000x1000','Orginal']
+SizeList=['800x700', '1000x900','Orginal']
 #screen
 screen=p.display.set_mode((WIDTH,HEIGHT))
 p.display.set_caption("Doors: the game")
@@ -1550,9 +1550,9 @@ while check:
         screen.blit(txt,(xt,200))
         txt=INST_FNT.render("Play again soon...", 1, (5, 31, 64)) 
         xt= WIDTH/2-txt.get_width()/2
-        p.time.delay(2000)
+        p.time.delay(800)
         screen.blit(txt,(xt,240))
-        p.time.delay(4000)
+        p.time.delay(2000)
         p.QUIT    
     for event in p.event.get():
         if event.type == p.QUIT:
