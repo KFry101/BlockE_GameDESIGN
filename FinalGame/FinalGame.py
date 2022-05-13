@@ -766,7 +766,8 @@ def Level2():
                 MAX=10
                 DEATH=False
                 JUMP=False
-            
+        
+        for event in p.event.get():    
             if event.type==p.MOUSEBUTTONDOWN:
                 mouse_pos=p.mouse.get_pos()
                 print(mouse_pos)
@@ -787,7 +788,7 @@ def Level2():
             x -= move
             left=True
             right=False
-        elif keys[p.K_RIGHT] and x<= WIDTH1-50:
+        elif keys[p.K_RIGHT] and x<= WIDTH-50:
             x += move
             right=True
             left=False
@@ -919,6 +920,7 @@ def Level3():
     global LEV_3
     global MAIN
     global PSCORE3
+    global ANOTHER
     p.font.init()
     #this font is from https://www.fontspace.com/a-goblin-appears-font-f30019
     #made by Chequered Ink
@@ -1227,6 +1229,8 @@ def Level3():
         clock.tick(27)
         if DEATH:
             JUMP=False #NEED TO BE ADJUST FOR NEW STUFF
+            # key=False
+            # keyw2=False
             if not collide:
                 acc=0
                 acc+=0
