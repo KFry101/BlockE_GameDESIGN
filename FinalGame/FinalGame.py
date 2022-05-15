@@ -1561,7 +1561,7 @@ while check:
     for event in p.event.get():
         if event.type == p.QUIT:
             check = False 
-    #Mouse Controls
+    #Mouse Control
     #Menu Navigation
     if event.type ==p.MOUSEBUTTONDOWN:
         mouse_pos=p.mouse.get_pos()
