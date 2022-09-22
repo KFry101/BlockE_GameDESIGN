@@ -2,9 +2,7 @@
 
 import os
 os.system('cls')
-
 import random
-
 numRolls= int(input("Enter a number: "))
 
 results={2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0, 11:0, 12:0}
@@ -13,8 +11,6 @@ for r in range(numRolls):
     dice2=random.randint(1,6)
     total=dice1+dice2
     results[total] = results[total] + 1
-
-
 
 for i, key in iter(results.items()):
     actPerct= key/numRolls
