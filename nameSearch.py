@@ -4,32 +4,33 @@ import os
 os.system('cls')
 
 nameLib={}
-years=[2016, 2017, 2018, 2019, 2020, 2021]
-Name= input("Enter a name (Case-Sensitive): ")
-key=Name
+
 import csv
 with open('Names.csv', newline='') as csvfile:
     reader = csv.DictReader(csvfile)
-    
-    #Old Code
-    # for row in reader:
-    #     nameLib[row["NAME"]]={row["YEAR"]: row["NUMBER"]}
-    #     if row["NAME"] in nameLib:
-    #        
+    for row in reader:
+        name= row["NAME"]
+        year=row["YEAR"]
 
-#New Code
-if not (Name in nameLib):
-    nameLib[key]={}
+        if not (name in nameLib):
+            nameLib[name]={}
 
-if not (years in nameLib):
-    nameLib[key][years]=10
-else: 
-    nameLib[key][years]= nameLib[key][years]+10
+        if not (year in nameLib[name]):
+            nameLib[name][year]=int(row["NUMBER"])
+        else: 
+            nameLib[name][year]+= int(row["NUMBER"])
+        
 
-    
+nameS= input("Enter a Namem (Case-Sensitive): ")   
+key=nameS          
 try:
-    print(nameLib[key])
-    print(nameLib[key][years])
+    print(key)
+    print("2021: ", nameLib[key]["2021"])
+    print("2020: ", nameLib[key]["2020"])
+    print("2019: ", nameLib[key]["2019"])
+    print("2018: ", nameLib[key]["2018"])
+    print("2017: ", nameLib[key]["2017"])
+
 except:
     print("Name is not valid for search.")
 
