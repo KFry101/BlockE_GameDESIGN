@@ -2,10 +2,22 @@
     <head>
         <script>
             function getData(){
-                name = document.getElementById("name").value;
-                console.error(name);
-                document.getElementById("out").innerHTML = name;
-                document.getElementById("name").value = "";
+               const fetchPromise = fetch("https://raw.githubusercontent.com/meagherj/json_names/main/names.json")
+
+               output = [];
+               name = document.getElementById("name").value;
+               fetchPromise
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error: ${response.status}`);
+                    }
+                    return response.json();
+                })
+
+                
+
+
+
             }
         </script>
     </head>
