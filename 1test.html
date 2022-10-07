@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <script>
+            function getData(){
+                name = document.getElementById("name").value;
+                console.error(name);
+                document.getElementById("out").innerHTML = name;
+                document.getElementById("name").value = "";
+            }
+        </script>
+    </head>
+
+    <body>
+        <img src="https://assets.website-files.com/5bff8886c3964a992e90d465/5c00621b7aefa4f9ee0f4303_wide-shot.svg" />
+        <div>
+            <form action="javascript:getData();">
+                <input type="text" id="name"/>
+                <input type="Submit"/>
+            </form>
+        </div>
+        <div id="out">
+
+        </div>
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+    </body>
+</html>
