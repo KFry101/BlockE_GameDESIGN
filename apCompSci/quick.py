@@ -7,6 +7,7 @@ def whoInClass():
     names=[]
     if (len(name)>3):
         names.append(name)
+        
     else:
         print("invalid name")
 
