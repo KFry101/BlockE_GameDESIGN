@@ -11,7 +11,7 @@ def getPassword(leng):
     password = ""
     #branching path for test case 1
     if int(leng)<6:
-        print("This password is may not be secure. Please something longer.")
+        print("This password may not be secure. Please try something longer.")
    #branching path for test case 2
     else:
         #a loop thorugh 0 to paramenter leng
@@ -21,4 +21,4 @@ def getPassword(leng):
         print(password)
 
 #calls the method and requests user input for the parameter "leng"
-getPassword(input('length of password: '))
+getPassword(input('length of password: ')) 
